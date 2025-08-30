@@ -16,6 +16,16 @@ export interface Tool {
   url: string;
 }
 
+export interface ApiPlatform {
+  name: string;
+  description: string;
+  availableModels: string;
+  freeLimits: string;
+  apiUrl: string;
+  compatibleWithOpenAI: boolean;
+  isLocal: boolean;
+}
+
 export interface Action {
   stage: string;
   action: string;
@@ -185,7 +195,72 @@ export const tools: Tool[] = [
     notes: 'Ótimo para landing e telas iniciais',
     url: 'https://v0.app/'
   }
-  // Add more tools as needed
+];
+
+export const apiPlatforms: ApiPlatform[] = [
+  {
+    name: 'OpenRouter',
+    description: 'Plataforma que roteia para múltiplos provedores de LLMs, incluindo DeepSeek. Oferece acesso gratuito a modelos como DeepSeek-R1 via API compatível com OpenAI.',
+    availableModels: 'DeepSeek-R1, Llama, Mistral e outros open-source',
+    freeLimits: '1M tokens gratuitos iniciais + créditos de teste; limites de taxa diários',
+    apiUrl: 'https://openrouter.ai',
+    compatibleWithOpenAI: true,
+    isLocal: false
+  },
+  {
+    name: 'Hugging Face Inference API',
+    description: 'Hospeda milhares de modelos open-source, incluindo DeepSeek-V3 e alternativas como Qwen, Mistral e Llama. API gratuita para inferência em modelos hospedados.',
+    availableModels: 'DeepSeek-V3, Qwen2.5, Mistral-7B, Llama-3.1 (até 70B params)',
+    freeLimits: 'Até 1.000 requisições/dia; limites de tokens por minuto',
+    apiUrl: 'https://huggingface.co/docs/inference-endpoints',
+    compatibleWithOpenAI: false,
+    isLocal: false
+  },
+  {
+    name: 'Google AI Studio (Gemini API)',
+    description: 'API gratuita para modelos do Google, com foco em raciocínio, codificação e multimodal (texto + imagem). Semelhante à DeepSeek em eficiência.',
+    availableModels: 'Gemini 1.5 Flash, Gemini Pro (versões gratuitas)',
+    freeLimits: '60 requisições/minuto; 1.500/dia para testes',
+    apiUrl: 'https://aistudio.google.com/app/apikey',
+    compatibleWithOpenAI: false,
+    isLocal: false
+  },
+  {
+    name: 'Groq',
+    description: 'Plataforma de inferência rápida para modelos open-source, com API gratuita para desenvolvedores. Excelente para codificação e respostas velozes.',
+    availableModels: 'Llama-3, Mixtral, Gemma (até 70B params)',
+    freeLimits: 'Créditos gratuitos iniciais (ex.: 1M tokens); limites de taxa',
+    apiUrl: 'https://console.groq.com/keys',
+    compatibleWithOpenAI: true,
+    isLocal: false
+  },
+  {
+    name: 'Together AI',
+    description: 'Oferece API para mais de 200 modelos open-source, incluindo DeepSeek-R1. Foco em pay-per-token, mas com tier gratuito para testes.',
+    availableModels: 'DeepSeek-R1, Qwen, Llama-Vision, Mistral',
+    freeLimits: 'Tokens gratuitos para novos usuários; limites de throughput',
+    apiUrl: 'https://www.together.ai/models',
+    compatibleWithOpenAI: true,
+    isLocal: false
+  },
+  {
+    name: 'AI/ML API',
+    description: 'Plataforma que unifica APIs para modelos open-source como DeepSeek-V3. Tier gratuito para sandbox e testes, ideal para integração rápida.',
+    availableModels: 'DeepSeek-V3, Llama, Stable Diffusion (para texto e imagem)',
+    freeLimits: 'Acesso gratuito a sandbox; limites de requisições diárias',
+    apiUrl: 'https://aimlapi.com/models/deepseek-v3',
+    compatibleWithOpenAI: true,
+    isLocal: false
+  },
+  {
+    name: 'Ollama',
+    description: 'Ferramenta para rodar modelos localmente via API (não hospedada, mas gratuita). Suporta DeepSeek e similares; perfeito se você quiser evitar limites de nuvem.',
+    availableModels: 'DeepSeek-Coder, Llama-3, Mistral (baixe e rode localmente)',
+    freeLimits: 'Ilimitado (depende do seu hardware); API local',
+    apiUrl: 'https://ollama.com',
+    compatibleWithOpenAI: true,
+    isLocal: true
+  }
 ];
 
 export const actions: Action[] = [

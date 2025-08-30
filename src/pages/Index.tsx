@@ -4,11 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
-import { Search, Code2, Users, Zap, BarChart3 } from "lucide-react";
+import { Search, Code2, Users, Zap, BarChart3, Brain } from "lucide-react";
 import { WorkflowStageCard } from "@/components/WorkflowStageCard";
 import { ToolCard } from "@/components/ToolCard";
+import { ApiPlatformCard } from "@/components/ApiPlatformCard";
 import { StageDetail } from "@/components/StageDetail";
-import { workflowStages, tools, WorkflowStage } from "@/data/workflowData";
+import { workflowStages, tools, apiPlatforms, WorkflowStage } from "@/data/workflowData";
 import { cn } from "@/lib/utils";
 
 const Index = () => {
@@ -19,6 +20,12 @@ const Index = () => {
     tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     tool.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
     tool.usage.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const filteredApiPlatforms = apiPlatforms.filter(platform => 
+    platform.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    platform.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    platform.availableModels.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const completedStages = workflowStages.filter(stage => stage.status === 'completed').length;
@@ -101,7 +108,7 @@ const Index = () => {
       <section className="py-12">
         <div className="container mx-auto px-4">
           <Tabs defaultValue="stages" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-8">
+            <TabsList className="grid w-full grid-cols-3 mb-8">
               <TabsTrigger value="stages" className="flex items-center gap-2">
                 <Code2 className="h-4 w-4" />
                 Etapas do Workflow
@@ -109,6 +116,10 @@ const Index = () => {
               <TabsTrigger value="tools" className="flex items-center gap-2">
                 <Users className="h-4 w-4" />
                 Catálogo de Ferramentas
+              </TabsTrigger>
+              <TabsTrigger value="api-platforms" className="flex items-center gap-2">
+                <Brain className="h-4 w-4" />
+                APIs Gratuitas
               </TabsTrigger>
             </TabsList>
 
@@ -164,6 +175,96 @@ const Index = () => {
                   </p>
                 </div>
               )}
+            </TabsContent>
+
+            <TabsContent value="api-platforms" className="space-y-8">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl font-bold mb-4">Plataformas API Gratuitas</h2>
+                <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+                  APIs gratuitas (ou com tiers gratuitos) para modelos de IA generativa, 
+                  semelhantes à DeepSeek. Perfeitas para desenvolvimento e testes.
+                </p>
+              </div>
+
+              <div className="max-w-md mx-auto mb-8">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                  <Input
+                    placeholder="Buscar plataformas API..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredApiPlatforms.map((platform, index) => (
+                  <ApiPlatformCard key={index} platform={platform} />
+                ))}
+              </div>
+
+              {filteredApiPlatforms.length === 0 && (
+                <div className="text-center py-12">
+                  <p className="text-muted-foreground">
+                    Nenhuma plataforma encontrada para "{searchTerm}"
+                  </p>
+                </div>
+              )}
+
+              {/* Tips Section */}
+              <div className="mt-12 bg-gradient-to-r from-primary/5 to-primary/10 rounded-lg p-8">
+                <h3 className="text-2xl font-bold mb-6 text-center">Dicas para Começar</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <Card className="bg-background/80 backdrop-blur-sm">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-lg">🔌 Integração Fácil</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-muted-foreground">
+                        A maioria é compatível com o SDK do OpenAI. Basta alterar a URL base da API 
+                        (ex.: <code className="bg-muted px-1 rounded">base_url="https://api.openrouter.ai/v1"</code>).
+                      </p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-background/80 backdrop-blur-sm">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-lg">💰 Limites e Custos</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-muted-foreground">
+                        Os tiers gratuitos são para desenvolvimento e testes. Para produção, 
+                        espere custos por token (geralmente mais baratos que OpenAI).
+                      </p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-background/80 backdrop-blur-sm">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-lg">🏠 Open-Source Local</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-muted-foreground">
+                        Para zero custo e privacidade total, baixe modelos da DeepSeek ou Qwen 
+                        do Hugging Face e rode com Ollama ou LM Studio.
+                      </p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-background/80 backdrop-blur-sm">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-lg">⚡ Performance</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-muted-foreground">
+                        Verifique status de serviço, pois tráfego alto pode causar filas. 
+                        Tenha sempre uma alternativa configurada.
+                      </p>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
             </TabsContent>
           </Tabs>
         </div>
