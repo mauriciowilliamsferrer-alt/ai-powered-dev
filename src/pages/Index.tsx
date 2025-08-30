@@ -1,12 +1,173 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Input } from "@/components/ui/input";
+import { Search, Code2, Users, Zap, BarChart3 } from "lucide-react";
+import { WorkflowStageCard } from "@/components/WorkflowStageCard";
+import { ToolCard } from "@/components/ToolCard";
+import { StageDetail } from "@/components/StageDetail";
+import { workflowStages, tools, WorkflowStage } from "@/data/workflowData";
+import { cn } from "@/lib/utils";
 
 const Index = () => {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+  const [selectedStage, setSelectedStage] = useState<WorkflowStage | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredTools = tools.filter(tool => 
+    tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    tool.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    tool.usage.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const completedStages = workflowStages.filter(stage => stage.status === 'completed').length;
+  const currentStages = workflowStages.filter(stage => stage.status === 'current').length;
+  const pendingStages = workflowStages.filter(stage => stage.status === 'pending').length;
+
+  if (selectedStage) {
+    return (
+      <div className="min-h-screen bg-background">
+        <div className="container mx-auto px-4 py-8">
+          <StageDetail 
+            stage={selectedStage} 
+            onBack={() => setSelectedStage(null)} 
+          />
+        </div>
       </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Hero Section */}
+      <section className="bg-gradient-to-r from-primary/10 via-primary/5 to-background py-16">
+        <div className="container mx-auto px-4">
+          <div className="text-center max-w-4xl mx-auto">
+            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent mb-6">
+              Workflow de Desenvolvimento
+            </h1>
+            <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
+              Guia completo para desenvolvimento moderno com IA e automação. 
+              Transforme seu processo de desenvolvimento com as melhores ferramentas e práticas.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button size="lg" className="bg-primary hover:bg-primary/90">
+                <Zap className="h-5 w-5 mr-2" />
+                Iniciar Workflow
+              </Button>
+              <Button size="lg" variant="outline">
+                <BarChart3 className="h-5 w-5 mr-2" />
+                Ver Progresso
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-8 border-b bg-card/50">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <Card className="text-center bg-gradient-to-br from-stage-completed/10 to-stage-completed/5">
+              <CardContent className="pt-6">
+                <div className="text-3xl font-bold text-stage-completed mb-2">{completedStages}</div>
+                <p className="text-sm text-muted-foreground">Etapas Concluídas</p>
+              </CardContent>
+            </Card>
+            <Card className="text-center bg-gradient-to-br from-stage-current/10 to-stage-current/5">
+              <CardContent className="pt-6">
+                <div className="text-3xl font-bold text-stage-current mb-2">{currentStages}</div>
+                <p className="text-sm text-muted-foreground">Em Andamento</p>
+              </CardContent>
+            </Card>
+            <Card className="text-center bg-gradient-to-br from-stage-pending/10 to-stage-pending/5">
+              <CardContent className="pt-6">
+                <div className="text-3xl font-bold text-stage-pending mb-2">{pendingStages}</div>
+                <p className="text-sm text-muted-foreground">Pendentes</p>
+              </CardContent>
+            </Card>
+            <Card className="text-center bg-gradient-to-br from-primary/10 to-primary/5">
+              <CardContent className="pt-6">
+                <div className="text-3xl font-bold text-primary mb-2">{tools.length}+</div>
+                <p className="text-sm text-muted-foreground">Ferramentas Integradas</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Main Content */}
+      <section className="py-12">
+        <div className="container mx-auto px-4">
+          <Tabs defaultValue="stages" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 mb-8">
+              <TabsTrigger value="stages" className="flex items-center gap-2">
+                <Code2 className="h-4 w-4" />
+                Etapas do Workflow
+              </TabsTrigger>
+              <TabsTrigger value="tools" className="flex items-center gap-2">
+                <Users className="h-4 w-4" />
+                Catálogo de Ferramentas
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="stages" className="space-y-8">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl font-bold mb-4">Etapas do Workflow</h2>
+                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                  Acompanhe seu progresso através das 9 etapas essenciais do desenvolvimento moderno com IA.
+                </p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {workflowStages.map((stage) => (
+                  <WorkflowStageCard
+                    key={stage.id}
+                    stage={stage}
+                    onClick={() => setSelectedStage(stage)}
+                  />
+                ))}
+              </div>
+            </TabsContent>
+
+            <TabsContent value="tools" className="space-y-8">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl font-bold mb-4">Catálogo de Ferramentas</h2>
+                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                  Explore as melhores ferramentas de IA e automação para seu workflow de desenvolvimento.
+                </p>
+              </div>
+
+              <div className="max-w-md mx-auto mb-8">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                  <Input
+                    placeholder="Buscar ferramentas..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredTools.map((tool, index) => (
+                  <ToolCard key={index} tool={tool} />
+                ))}
+              </div>
+
+              {filteredTools.length === 0 && (
+                <div className="text-center py-12">
+                  <p className="text-muted-foreground">
+                    Nenhuma ferramenta encontrada para "{searchTerm}"
+                  </p>
+                </div>
+              )}
+            </TabsContent>
+          </Tabs>
+        </div>
+      </section>
     </div>
   );
 };
