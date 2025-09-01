@@ -4,12 +4,15 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
-import { Search, Code2, Users, Zap, BarChart3, Brain } from "lucide-react";
+import { Search, Code2, Users, Zap, BarChart3, Brain, Lightbulb } from "lucide-react";
 import { WorkflowStageCard } from "@/components/WorkflowStageCard";
-import { ToolCard } from "@/components/ToolCard";
+import { EnhancedToolCard } from "@/components/EnhancedToolCard";
 import { ApiPlatformCard } from "@/components/ApiPlatformCard";
 import { StageDetail } from "@/components/StageDetail";
-import { workflowStages, tools, apiPlatforms, WorkflowStage } from "@/data/workflowData";
+import { EducationalResources } from "@/components/EducationalResources";
+import { ProgressTracker } from "@/components/ProgressTracker";
+import { ValidationCriteria } from "@/components/ValidationCriteria";
+import { workflowStages, tools, apiPlatforms, actions, educationalResources, validationCriteria, WorkflowStage } from "@/data/workflowData";
 import { cn } from "@/lib/utils";
 
 const Index = () => {

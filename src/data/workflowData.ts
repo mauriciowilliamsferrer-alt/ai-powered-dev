@@ -14,6 +14,31 @@ export interface Tool {
   usage: string;
   notes: string;
   url: string;
+  difficulty: 'Iniciante' | 'Intermediário' | 'Avançado';
+  pricing: 'Gratuito' | 'Freemium' | 'Pago' | 'Beta';
+  tags: string[];
+  rating: number;
+  integrations: string[];
+}
+
+export interface EducationalResource {
+  id: string;
+  title: string;
+  type: 'tutorial' | 'video' | 'documentation' | 'guide' | 'example';
+  description: string;
+  url: string;
+  duration?: string;
+  difficulty: 'Iniciante' | 'Intermediário' | 'Avançado';
+  relatedStages: string[];
+  relatedTools: string[];
+}
+
+export interface ValidationCriteria {
+  stage: string;
+  deliverable: string;
+  criteria: string[];
+  examples: string[];
+  commonMistakes: string[];
 }
 
 export interface ApiPlatform {
@@ -130,70 +155,276 @@ export const tools: Tool[] = [
     category: 'Agente git-first',
     usage: 'Gerar diffs/patches e commits guiados por IA',
     notes: 'Excelente para tarefas focadas; mantém histórico limpo',
-    url: 'https://aider.chat/'
+    url: 'https://aider.chat/',
+    difficulty: 'Intermediário',
+    pricing: 'Freemium',
+    tags: ['git', 'commits', 'patches', 'cli'],
+    rating: 4.5,
+    integrations: ['GitHub', 'VS Code', 'Terminal']
   },
   {
     name: 'Amp',
     category: 'Mudanças em larga escala',
     usage: 'Refactors amplos, renomes e migrações',
     notes: 'Use com branch isolada e revisão atenta',
-    url: 'https://ampcode.com'
+    url: 'https://ampcode.com',
+    difficulty: 'Avançado',
+    pricing: 'Pago',
+    tags: ['refactor', 'migration', 'large-scale'],
+    rating: 4.2,
+    integrations: ['GitHub', 'GitLab']
   },
   {
     name: 'bolt.new',
     category: 'Builder no navegador',
     usage: 'Criar app base (Next.js/TS) e editar online',
     notes: 'Ótimo para MVP rápido; depois traga ao seu repo',
-    url: 'https://bolt.new/'
+    url: 'https://bolt.new/',
+    difficulty: 'Iniciante',
+    pricing: 'Freemium',
+    tags: ['nextjs', 'typescript', 'mvp', 'online'],
+    rating: 4.6,
+    integrations: ['GitHub', 'Vercel', 'Netlify']
   },
   {
     name: 'ChatGPT – Code',
     category: 'Oráculo de código',
     usage: 'Decisões técnicas, geração de trechos e revisões',
     notes: 'Mantenha prompts com contexto e limites claros',
-    url: 'https://chatgpt.com/codex'
+    url: 'https://chatgpt.com/',
+    difficulty: 'Iniciante',
+    pricing: 'Freemium',
+    tags: ['chat', 'code-generation', 'review', 'decisions'],
+    rating: 4.4,
+    integrations: ['API', 'Plugins', 'Extensions']
   },
   {
     name: 'Claude Code',
     category: 'Agente/CLI & editor',
     usage: 'Refactors, navegação de base e execuções guiadas',
     notes: 'Bom em raciocínio passo a passo',
-    url: 'https://claude.ai/settings/claude-code'
+    url: 'https://claude.ai/',
+    difficulty: 'Intermediário',
+    pricing: 'Freemium',
+    tags: ['reasoning', 'refactor', 'analysis'],
+    rating: 4.7,
+    integrations: ['API', 'CLI', 'Cline']
   },
   {
     name: 'Cline',
     category: 'Agente no editor',
     usage: 'Planejar→editar→testar→commitar dentro do VS Code',
     notes: 'Dê tarefas granulares para convergir',
-    url: 'https://cline.bot/'
+    url: 'https://cline.bot/',
+    difficulty: 'Intermediário',
+    pricing: 'Gratuito',
+    tags: ['vscode', 'automation', 'planning', 'commit'],
+    rating: 4.3,
+    integrations: ['VS Code', 'Claude', 'GitHub']
   },
   {
     name: 'Cursor',
     category: 'IDE com IA',
     usage: 'Daily driver para TS/React com agentes embutidos',
     notes: 'Alternativa ao VS Code com recursos nativos de IA',
-    url: 'https://cursor.com/en/dashboard'
+    url: 'https://cursor.com/',
+    difficulty: 'Iniciante',
+    pricing: 'Freemium',
+    tags: ['ide', 'typescript', 'react', 'ai-native'],
+    rating: 4.8,
+    integrations: ['GitHub', 'Extensions', 'OpenAI']
   },
   {
     name: 'GitHub Copilot',
     category: 'Copiloto de código/PR',
     usage: 'Compleções, chat, sugestões de PR',
     notes: 'Verifique políticas de privacidade/licenças',
-    url: 'https://docs.github.com/pt/copilot'
+    url: 'https://github.com/features/copilot',
+    difficulty: 'Iniciante',
+    pricing: 'Pago',
+    tags: ['completion', 'pr-suggestions', 'chat'],
+    rating: 4.5,
+    integrations: ['GitHub', 'VS Code', 'JetBrains']
   },
   {
     name: 'Lovable',
     category: 'Builder low-code',
     usage: 'Criar landing/flows simples e publicar rápido',
     notes: 'Ideal para páginas de marketing/validação',
-    url: 'https://lovable.dev/'
+    url: 'https://lovable.dev/',
+    difficulty: 'Iniciante',
+    pricing: 'Freemium',
+    tags: ['low-code', 'landing', 'marketing'],
+    rating: 4.4,
+    integrations: ['GitHub', 'Vercel', 'Supabase']
   },
   {
     name: 'v0 (Vercel)',
     category: 'Gerador de UI',
     usage: 'Componentes/variantes de UI e colaborações',
     notes: 'Ótimo para landing e telas iniciais',
-    url: 'https://v0.app/'
+    url: 'https://v0.app/',
+    difficulty: 'Iniciante',
+    pricing: 'Freemium',
+    tags: ['ui', 'components', 'design', 'collaboration'],
+    rating: 4.6,
+    integrations: ['Vercel', 'React', 'Tailwind']
+  },
+  {
+    name: 'Replit AI',
+    category: 'IDE + Execução',
+    usage: 'Desenvolver e executar código online com assistente IA',
+    notes: 'Ideal para prototipagem rápida e aprendizado',
+    url: 'https://replit.com/',
+    difficulty: 'Iniciante',
+    pricing: 'Freemium',
+    tags: ['online-ide', 'execution', 'prototyping'],
+    rating: 4.2,
+    integrations: ['GitHub', 'NPM', 'Multiple Languages']
+  },
+  {
+    name: 'Warp',
+    category: 'Terminal inteligente',
+    usage: 'Terminal com IA para comandos e automação',
+    notes: 'Melhor produtividade com sugestões e blocos',
+    url: 'https://warp.dev/',
+    difficulty: 'Iniciante',
+    pricing: 'Freemium',
+    tags: ['terminal', 'ai-suggestions', 'blocks'],
+    rating: 4.3,
+    integrations: ['Zsh', 'Bash', 'Git', 'AWS']
+  },
+  {
+    name: 'Amazon Q Developer',
+    category: 'Assistente AWS',
+    usage: 'Consultorias sobre AWS e otimizações de código',
+    notes: 'Especializado em ecossistema AWS',
+    url: 'https://aws.amazon.com/q/developer/',
+    difficulty: 'Intermediário',
+    pricing: 'Freemium',
+    tags: ['aws', 'cloud', 'optimization', 'consulting'],
+    rating: 4.1,
+    integrations: ['AWS', 'VS Code', 'JetBrains']
+  },
+  {
+    name: 'CodeRabbit',
+    category: 'Review automático',
+    usage: 'Bot para revisar PRs com sugestões inteligentes',
+    notes: 'Configura checks de qualidade e padrões',
+    url: 'https://coderabbit.ai/',
+    difficulty: 'Intermediário',
+    pricing: 'Freemium',
+    tags: ['pr-review', 'quality', 'automation'],
+    rating: 4.4,
+    integrations: ['GitHub', 'GitLab', 'Bitbucket']
+  },
+  {
+    name: 'Qodo.ai (ex-CodiumAI)',
+    category: 'Testes e qualidade',
+    usage: 'Geração automática de testes e análise de código',
+    notes: 'Foco em test generation e code analysis',
+    url: 'https://qodo.ai/',
+    difficulty: 'Intermediário',
+    pricing: 'Freemium',
+    tags: ['testing', 'quality', 'analysis'],
+    rating: 4.2,
+    integrations: ['VS Code', 'JetBrains', 'GitHub']
+  },
+  {
+    name: 'Jules (Google)',
+    category: 'Orquestração',
+    usage: 'Gerenciar tarefas e projetos com IA',
+    notes: 'Conecta requisitos com PRs e deploys',
+    url: 'https://jules.ai/',
+    difficulty: 'Avançado',
+    pricing: 'Beta',
+    tags: ['project-management', 'orchestration', 'tasks'],
+    rating: 4.0,
+    integrations: ['Google Workspace', 'GitHub']
+  },
+  {
+    name: 'Augment',
+    category: 'Context-aware assistant',
+    usage: 'Assistente que entende contexto completo do projeto',
+    notes: 'Navega e entende toda a codebase',
+    url: 'https://augmentcode.com/',
+    difficulty: 'Intermediário',
+    pricing: 'Pago',
+    tags: ['context-aware', 'codebase-analysis'],
+    rating: 4.3,
+    integrations: ['VS Code', 'GitHub']
+  },
+  {
+    name: 'BLACKBOX.AI',
+    category: 'Code search & snippets',
+    usage: 'Buscar código e snippets em repositórios',
+    notes: 'Grande base de código para referência',
+    url: 'https://blackbox.ai/',
+    difficulty: 'Iniciante',
+    pricing: 'Freemium',
+    tags: ['code-search', 'snippets', 'reference'],
+    rating: 4.0,
+    integrations: ['Browser', 'Extensions']
+  },
+  {
+    name: 'KiloCode',
+    category: 'Code execution',
+    usage: 'Execução segura de código em sandbox',
+    notes: 'Ambiente isolado para teste de código',
+    url: 'https://kilocode.com/',
+    difficulty: 'Intermediário',
+    pricing: 'Freemium',
+    tags: ['sandbox', 'execution', 'testing'],
+    rating: 3.9,
+    integrations: ['API', 'Multiple Languages']
+  },
+  {
+    name: 'Kiro',
+    category: 'AI runner',
+    usage: 'Executar scripts e automações com IA',
+    notes: 'Foco em automação de tarefas repetitivas',
+    url: 'https://kiro.ai/',
+    difficulty: 'Intermediário',
+    pricing: 'Beta',
+    tags: ['automation', 'scripts', 'ai-runner'],
+    rating: 3.8,
+    integrations: ['CLI', 'Scripts']
+  },
+  {
+    name: 'Trae',
+    category: 'Testing runner',
+    usage: 'Executar e gerenciar suites de teste',
+    notes: 'Otimizado para CI/CD pipelines',
+    url: 'https://trae.dev/',
+    difficulty: 'Avançado',
+    pricing: 'Freemium',
+    tags: ['testing', 'ci-cd', 'runner'],
+    rating: 4.1,
+    integrations: ['GitHub Actions', 'Jenkins']
+  },
+  {
+    name: 'MCP Servers',
+    category: 'Protocol & Integration',
+    usage: 'Conectar diferentes ferramentas via protocolo padronizado',
+    notes: 'Padrão emergente para interoperabilidade',
+    url: 'https://modelcontextprotocol.io/',
+    difficulty: 'Avançado',
+    pricing: 'Gratuito',
+    tags: ['protocol', 'integration', 'interoperability'],
+    rating: 4.0,
+    integrations: ['Claude', 'Multiple Tools']
+  },
+  {
+    name: 'Leap.new',
+    category: 'AI App Builder',
+    usage: 'Criar aplicações completas com prompts',
+    notes: 'Foco em full-stack development',
+    url: 'https://leap.new/',
+    difficulty: 'Iniciante',
+    pricing: 'Freemium',
+    tags: ['full-stack', 'app-builder', 'prompts'],
+    rating: 4.2,
+    integrations: ['GitHub', 'Deployment Platforms']
   }
 ];
 
@@ -264,10 +495,11 @@ export const apiPlatforms: ApiPlatform[] = [
 ];
 
 export const actions: Action[] = [
+  // Stage A: Fundamentos & Acesso
   {
     stage: 'A',
     action: 'Gerar GitHub PATs com escopos mínimos (repo, workflow)',
-    tools: ['GitHub Tokens (PATs)'],
+    tools: ['GitHub'],
     expectedResult: 'Credenciais criadas e guardadas no cofre',
     notes: 'Expirar tokens que não usa mais'
   },
@@ -279,6 +511,22 @@ export const actions: Action[] = [
     notes: 'Não commitar .env; usar .gitignore'
   },
   {
+    stage: 'A',
+    action: 'Configurar Amazon Q Developer com credenciais AWS',
+    tools: ['Amazon Q Developer', 'AWS'],
+    expectedResult: 'Acesso Q funcionando com permissões adequadas',
+    notes: 'Usar IAM roles com princípio do menor privilégio'
+  },
+  {
+    stage: 'A',
+    action: 'Personalizar Warp com aliases e scripts úteis',
+    tools: ['Warp'],
+    expectedResult: 'Terminal otimizado com comandos personalizados',
+    notes: 'Sincronizar configuração entre dispositivos'
+  },
+
+  // Stage B: Editor/IDE + Assistentes
+  {
     stage: 'B',
     action: 'Instalar e escolher IDE principal (Cursor ou JetBrains)',
     tools: ['Cursor', 'JetBrains'],
@@ -286,11 +534,344 @@ export const actions: Action[] = [
     notes: 'Evite manter 2 IDEs como principal'
   },
   {
+    stage: 'B',
+    action: 'Configurar GitHub Copilot com settings adequados',
+    tools: ['GitHub Copilot'],
+    expectedResult: 'Sugestões funcionando em diferentes linguagens',
+    notes: 'Ajustar configurações de privacidade se necessário'
+  },
+  {
+    stage: 'B',
+    action: 'Instalar e testar Cline no VS Code/Cursor',
+    tools: ['Cline', 'VS Code', 'Cursor'],
+    expectedResult: 'Agente capaz de fazer commits simples',
+    notes: 'Comece com tarefas pequenas para avaliar comportamento'
+  },
+  {
+    stage: 'B',
+    action: 'Configurar ChatGPT/Claude com contexto de projeto',
+    tools: ['ChatGPT – Code', 'Claude Code'],
+    expectedResult: 'Assistentes cientes do stack tecnológico',
+    notes: 'Manter prompts padrão para consultas recorrentes'
+  },
+
+  // Stage C: Protótipo UI & Esqueleto do App
+  {
     stage: 'C',
     action: 'Gerar UI inicial (componentes/páginas)',
     tools: ['v0 (Vercel)'],
     expectedResult: 'Componentes exportados para o repo',
     notes: 'Padronizar design tokens'
+  },
+  {
+    stage: 'C',
+    action: 'Criar projeto base Next.js/TS via bolt.new',
+    tools: ['bolt.new'],
+    expectedResult: 'Aplicação funcional com estrutura básica',
+    notes: 'Exportar código limpo para repositório próprio'
+  },
+  {
+    stage: 'C',
+    action: 'Usar Lovable para landing pages/marketing',
+    tools: ['Lovable'],
+    expectedResult: 'Páginas de apresentação publicadas',
+    notes: 'Ideal para validação rápida de conceito'
+  },
+  {
+    stage: 'C',
+    action: 'Configurar deploy automático (Vercel/Netlify)',
+    tools: ['Vercel', 'Netlify'],
+    expectedResult: 'Pipeline de deploy funcionando',
+    notes: 'Conectar repositório para deploys automáticos'
+  },
+
+  // Stage D: Implementação Agentic no Repo
+  {
+    stage: 'D',
+    action: 'Configurar Aider para commits estruturados',
+    tools: ['Aider'],
+    expectedResult: 'Fluxo git limpo com mensagens padronizadas',
+    notes: 'Usar .aiderignore para arquivos sensíveis'
+  },
+  {
+    stage: 'D',
+    action: 'Implementar features via Claude Code/Cline',
+    tools: ['Claude Code', 'Cline'],
+    expectedResult: 'Funcionalidades implementadas com testes',
+    notes: 'Dividir tarefas grandes em subtarefas específicas'
+  },
+  {
+    stage: 'D',
+    action: 'Usar Amazon Q para otimizações AWS',
+    tools: ['Amazon Q Developer'],
+    expectedResult: 'Código otimizado para serviços AWS',
+    notes: 'Focar em performance e custos'
+  },
+  {
+    stage: 'D',
+    action: 'Documentar decisões arquiteturais (ADR)',
+    tools: ['Markdown', 'GitHub'],
+    expectedResult: 'Histórico de decisões técnicas',
+    notes: 'Template padrão para consistency'
+  },
+
+  // Stage E: Integrações avançadas (MCP/Runners)
+  {
+    stage: 'E',
+    action: 'Configurar servidores MCP básicos',
+    tools: ['MCP Servers'],
+    expectedResult: '2-3 integrações MCP funcionando',
+    notes: 'Começar com integrações simples e estáveis'
+  },
+  {
+    stage: 'E',
+    action: 'Testar execução com KiloCode',
+    tools: ['KiloCode'],
+    expectedResult: 'Ambiente de sandbox configurado',
+    notes: 'Usar para testes de código não confiável'
+  },
+  {
+    stage: 'E',
+    action: 'Experimentar runners alternativos (Kiro/Trae)',
+    tools: ['Kiro', 'Trae'],
+    expectedResult: 'Comparativo de performance dos runners',
+    notes: 'Documentar vantagens/desvantagens'
+  },
+
+  // Stage F: Qualidade de código & PRs
+  {
+    stage: 'F',
+    action: 'Configurar CodeRabbit para review automático',
+    tools: ['CodeRabbit'],
+    expectedResult: 'Bot ativo fazendo reviews inteligentes',
+    notes: 'Ajustar configurações para evitar spam'
+  },
+  {
+    stage: 'F',
+    action: 'Implementar Qodo.ai para geração de testes',
+    tools: ['Qodo.ai'],
+    expectedResult: 'Testes automáticos para funcionalidades críticas',
+    notes: 'Revisar testes gerados antes de comitar'
+  },
+  {
+    stage: 'F',
+    action: 'Configurar template padrão de PR',
+    tools: ['GitHub'],
+    expectedResult: 'PRs com checklist e informações padronizadas',
+    notes: 'Incluir links para preview e documentação'
+  },
+  {
+    stage: 'F',
+    action: 'Usar BLACKBOX.AI para referências de código',
+    tools: ['BLACKBOX.AI'],
+    expectedResult: 'Snippets de qualidade para problemas comuns',
+    notes: 'Sempre adaptar código encontrado ao contexto'
+  },
+
+  // Stage G: Execução & Testes
+  {
+    stage: 'G',
+    action: 'Criar scripts de build/test no package.json',
+    tools: ['NPM', 'Warp'],
+    expectedResult: 'Comandos padronizados para desenvolvimento',
+    notes: 'Incluir scripts para diferentes ambientes'
+  },
+  {
+    stage: 'G',
+    action: 'Configurar sandbox no Replit para PoCs',
+    tools: ['Replit AI'],
+    expectedResult: 'Ambiente de testes isolado funcionando',
+    notes: 'Usar para validar conceitos antes da implementação'
+  },
+  {
+    stage: 'G',
+    action: 'Implementar métricas básicas de performance',
+    tools: ['Lighthouse', 'Web Vitals'],
+    expectedResult: 'Dashboard de métricas de performance',
+    notes: 'Automatizar coleta via CI/CD'
+  },
+
+  // Stage H: Orquestração de trabalho
+  {
+    stage: 'H',
+    action: 'Configurar Jules para gestão de tarefas',
+    tools: ['Jules (Google)'],
+    expectedResult: 'Quadro Kanban conectado com desenvolvimento',
+    notes: 'Integrar com GitHub Issues/Projects'
+  },
+  {
+    stage: 'H',
+    action: 'Criar templates para diferentes tipos de tarefa',
+    tools: ['GitHub', 'Notion'],
+    expectedResult: 'Templates padronizados para features/bugs/refactors',
+    notes: 'Incluir critérios de aceitação claros'
+  },
+  {
+    stage: 'H',
+    action: 'Implementar automação de deploy por ambiente',
+    tools: ['GitHub Actions', 'Vercel'],
+    expectedResult: 'Pipeline automatizado dev→staging→prod',
+    notes: 'Incluir rollback automático se necessário'
+  },
+
+  // Stage I: Manutenção contínua & Evolução
+  {
+    stage: 'I',
+    action: 'Configurar sweeps periódicos com Amp',
+    tools: ['Amp'],
+    expectedResult: 'Refactors automáticos agendados',
+    notes: 'Sempre revisar mudanças em larga escala'
+  },
+  {
+    stage: 'I',
+    action: 'Implementar monitoramento de dependências',
+    tools: ['Dependabot', 'npm audit'],
+    expectedResult: 'Atualizações e patches de segurança automáticos',
+    notes: 'Configurar auto-merge para patches seguros'
+  },
+  {
+    stage: 'I',
+    action: 'Criar changelog automático',
+    tools: ['Conventional Commits', 'GitHub'],
+    expectedResult: 'Histórico de mudanças gerado automaticamente',
+    notes: 'Seguir padrão de conventional commits'
+  },
+  {
+    stage: 'I',
+    action: 'Avaliar e integrar novas ferramentas mensalmente',
+    tools: ['Augment', 'Novos MCP servers'],
+    expectedResult: 'Workflow sempre atualizado com melhores práticas',
+    notes: 'Manter lista de ferramentas candidatas'
   }
-  // Add more actions as needed
+];
+
+export const educationalResources: EducationalResource[] = [
+  {
+    id: 'cursor-setup',
+    title: 'Configuração Inicial do Cursor IDE',
+    type: 'tutorial',
+    description: 'Guia completo para configurar o Cursor IDE com todas as extensões e configurações necessárias',
+    url: 'https://cursor.com/docs',
+    duration: '15 min',
+    difficulty: 'Iniciante',
+    relatedStages: ['B'],
+    relatedTools: ['Cursor']
+  },
+  {
+    id: 'aider-workflow',
+    title: 'Workflow Eficiente com Aider',
+    type: 'video',
+    description: 'Como usar Aider para manter um histórico Git limpo e produtivo',
+    url: 'https://aider.chat/docs/usage.html',
+    duration: '25 min',
+    difficulty: 'Intermediário',
+    relatedStages: ['D'],
+    relatedTools: ['Aider']
+  },
+  {
+    id: 'mcp-servers-intro',
+    title: 'Introdução aos MCP Servers',
+    type: 'documentation',
+    description: 'Entenda o protocolo MCP e como configurar seus primeiros servidores',
+    url: 'https://modelcontextprotocol.io/docs',
+    difficulty: 'Avançado',
+    relatedStages: ['E'],
+    relatedTools: ['MCP Servers', 'Claude Code']
+  },
+  {
+    id: 'github-tokens-security',
+    title: 'Segurança com GitHub PATs',
+    type: 'guide',
+    description: 'Melhores práticas para criar e gerenciar Personal Access Tokens',
+    url: 'https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token',
+    duration: '10 min',
+    difficulty: 'Iniciante',
+    relatedStages: ['A'],
+    relatedTools: ['GitHub']
+  },
+  {
+    id: 'nextjs-typescript-setup',
+    title: 'Next.js + TypeScript: Setup Perfeito',
+    type: 'tutorial',
+    description: 'Configure um projeto Next.js com TypeScript, ESLint e Prettier',
+    url: 'https://nextjs.org/docs/getting-started/typescript',
+    duration: '20 min',
+    difficulty: 'Iniciante',
+    relatedStages: ['C'],
+    relatedTools: ['bolt.new', 'v0 (Vercel)']
+  },
+  {
+    id: 'pr-review-automation',
+    title: 'Automatizando Review de PRs',
+    type: 'example',
+    description: 'Exemplos práticos de configuração de bots de review automático',
+    url: 'https://coderabbit.ai/docs',
+    duration: '30 min',
+    difficulty: 'Intermediário',
+    relatedStages: ['F'],
+    relatedTools: ['CodeRabbit', 'Qodo.ai']
+  }
+];
+
+export const validationCriteria: ValidationCriteria[] = [
+  {
+    stage: 'A',
+    deliverable: '.env.local seguro',
+    criteria: [
+      'Arquivo está no .gitignore',
+      'Variáveis têm nomes descritivos',
+      'Valores sensíveis não estão expostos',
+      'Documentação de variáveis existe'
+    ],
+    examples: [
+      'GITHUB_PAT=ghp_xxxxxxxxxxxx',
+      'AWS_ACCESS_KEY_ID=AKIA...',
+      'DATABASE_URL=postgresql://...'
+    ],
+    commonMistakes: [
+      'Commitar .env no repositório',
+      'Usar valores de produção em desenvolvimento',
+      'Não documentar variáveis obrigatórias'
+    ]
+  },
+  {
+    stage: 'B',
+    deliverable: 'IDE configurada',
+    criteria: [
+      'Extensions essenciais instaladas',
+      'Configurações de formatação ativas',
+      'Atalhos personalizados configurados',
+      'Integração com Git funcionando'
+    ],
+    examples: [
+      'ESLint + Prettier configurados',
+      'GitLens extension ativa',
+      'Snippets personalizados criados'
+    ],
+    commonMistakes: [
+      'Instalar muitas extensions desnecessárias',
+      'Não sincronizar configurações',
+      'Ignorar configurações de workspace'
+    ]
+  },
+  {
+    stage: 'C',
+    deliverable: 'Repo Next.js/TS',
+    criteria: [
+      'Estrutura de pastas padronizada',
+      'TypeScript configurado corretamente',
+      'Build sem erros',
+      'Deploy automático funcionando'
+    ],
+    examples: [
+      'pages/ ou app/ estruturado',
+      'components/ organizados por feature',
+      'tsconfig.json otimizado'
+    ],
+    commonMistakes: [
+      'Estrutura de pastas inconsistente',
+      'Tipos TypeScript muito permissivos',
+      'Não configurar ESLint rules'
+    ]
+  }
 ];
