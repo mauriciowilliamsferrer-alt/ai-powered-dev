@@ -27,9 +27,9 @@ export const EducationalResources = ({ resources, selectedStage }: EducationalRe
 
   const getDifficultyColor = (difficulty: EducationalResource['difficulty']) => {
     switch (difficulty) {
-      case 'Iniciante': return 'bg-green-100 text-green-800 border-green-200';
-      case 'Intermediário': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'Avançado': return 'bg-red-100 text-red-800 border-red-200';
+      case 'Iniciante': return 'bg-muted text-muted-foreground border-border';
+      case 'Intermediário': return 'bg-accent text-accent-foreground border-border';
+      case 'Avançado': return 'bg-destructive/10 text-destructive border-destructive/20';
     }
   };
 
@@ -65,7 +65,7 @@ export const EducationalResources = ({ resources, selectedStage }: EducationalRe
               <div className="flex items-start justify-between">
                 <div className="flex items-center space-x-2">
                   {getTypeIcon(resource.type)}
-                  <CardTitle className="text-base line-clamp-2">{resource.title}</CardTitle>
+                  <CardTitle className="text-base overflow-hidden text-ellipsis line-clamp-2">{resource.title}</CardTitle>
                 </div>
                 <Button size="sm" variant="ghost" asChild>
                   <a 
@@ -90,7 +90,7 @@ export const EducationalResources = ({ resources, selectedStage }: EducationalRe
               </div>
             </CardHeader>
             <CardContent className="pt-0">
-              <CardDescription className="text-sm line-clamp-3 mb-3">
+              <CardDescription className="text-sm overflow-hidden text-ellipsis line-clamp-3 mb-3">
                 {resource.description}
               </CardDescription>
               

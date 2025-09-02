@@ -13,18 +13,18 @@ interface EnhancedToolCardProps {
 export const EnhancedToolCard = ({ tool, onFavorite, isFavorited = false }: EnhancedToolCardProps) => {
   const getDifficultyColor = (difficulty: Tool['difficulty']) => {
     switch (difficulty) {
-      case 'Iniciante': return 'bg-green-100 text-green-800 border-green-200';
-      case 'Intermediário': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'Avançado': return 'bg-red-100 text-red-800 border-red-200';
+      case 'Iniciante': return 'bg-muted text-muted-foreground border-border';
+      case 'Intermediário': return 'bg-accent text-accent-foreground border-border';
+      case 'Avançado': return 'bg-destructive/10 text-destructive border-destructive/20';
     }
   };
 
   const getPricingColor = (pricing: Tool['pricing']) => {
     switch (pricing) {
-      case 'Gratuito': return 'bg-green-100 text-green-800 border-green-200';
-      case 'Freemium': return 'bg-blue-100 text-blue-800 border-blue-200';
-      case 'Pago': return 'bg-purple-100 text-purple-800 border-purple-200';
-      case 'Beta': return 'bg-gray-100 text-gray-800 border-gray-200';
+      case 'Gratuito': return 'bg-muted text-muted-foreground border-border';
+      case 'Freemium': return 'bg-primary/10 text-primary border-primary/20';
+      case 'Pago': return 'bg-secondary text-secondary-foreground border-border';
+      case 'Beta': return 'bg-accent text-accent-foreground border-border';
     }
   };
 
@@ -99,12 +99,12 @@ export const EnhancedToolCard = ({ tool, onFavorite, isFavorited = false }: Enha
       <CardContent className="pt-0 space-y-4">
         <div>
           <p className="text-sm font-medium text-foreground mb-1">Onde usar:</p>
-          <p className="text-sm text-muted-foreground line-clamp-2">{tool.usage}</p>
+          <p className="text-sm text-muted-foreground overflow-hidden text-ellipsis line-clamp-2">{tool.usage}</p>
         </div>
         
         <div>
           <p className="text-sm font-medium text-foreground mb-1">Observações:</p>
-          <p className="text-sm text-muted-foreground line-clamp-2">{tool.notes}</p>
+          <p className="text-sm text-muted-foreground overflow-hidden text-ellipsis line-clamp-2">{tool.notes}</p>
         </div>
         
         {/* Tags */}
