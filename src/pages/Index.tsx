@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -12,12 +12,44 @@ import { StageDetail } from "@/components/StageDetail";
 import { EducationalResources } from "@/components/EducationalResources";
 import { ProgressTracker } from "@/components/ProgressTracker";
 import { ValidationCriteria } from "@/components/ValidationCriteria";
-import { workflowStages, tools, apiPlatforms, actions, educationalResources, validationCriteria, WorkflowStage } from "@/data/workflowData";
+import { 
+  workflowStages, 
+  loadTools, 
+  loadApiPlatforms, 
+  loadEducationalResources, 
+  loadActions, 
+  loadValidationCriteria,
+  WorkflowStage,
+  Tool,
+  ApiPlatform 
+} from "@/data/workflowDataOptimized";
 import { cn } from "@/lib/utils";
 
 const Index = () => {
   const [selectedStage, setSelectedStage] = useState<WorkflowStage | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [tools, setTools] = useState<Tool[]>([]);
+  const [apiPlatforms, setApiPlatforms] = useState<ApiPlatform[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const [toolsData, apiPlatformsData] = await Promise.all([
+          loadTools(),
+          loadApiPlatforms()
+        ]);
+        setTools(toolsData);
+        setApiPlatforms(apiPlatformsData);
+      } catch (error) {
+        console.error('Error loading data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadData();
+  }, []);
 
   const filteredTools = tools.filter(tool => 
     tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -165,18 +197,30 @@ const Index = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredTools.map((tool, index) => (
-                  <EnhancedToolCard key={index} tool={tool} />
-                ))}
-              </div>
-
-              {filteredTools.length === 0 && (
-                <div className="text-center py-12">
-                  <p className="text-muted-foreground">
-                    Nenhuma ferramenta encontrada para "{searchTerm}"
-                  </p>
+              {loading ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {[...Array(6)].map((_, i) => (
+                    <div key={i} className="animate-pulse">
+                      <div className="bg-muted rounded-lg h-48"></div>
+                    </div>
+                  ))}
                 </div>
+              ) : (
+                <>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {filteredTools.map((tool, index) => (
+                      <EnhancedToolCard key={index} tool={tool} />
+                    ))}
+                  </div>
+
+                  {filteredTools.length === 0 && !loading && (
+                    <div className="text-center py-12">
+                      <p className="text-muted-foreground">
+                        Nenhuma ferramenta encontrada para "{searchTerm}"
+                      </p>
+                    </div>
+                  )}
+                </>
               )}
             </TabsContent>
 
@@ -201,18 +245,30 @@ const Index = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredApiPlatforms.map((platform, index) => (
-                  <ApiPlatformCard key={index} platform={platform} />
-                ))}
-              </div>
-
-              {filteredApiPlatforms.length === 0 && (
-                <div className="text-center py-12">
-                  <p className="text-muted-foreground">
-                    Nenhuma plataforma encontrada para "{searchTerm}"
-                  </p>
+              {loading ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {[...Array(6)].map((_, i) => (
+                    <div key={i} className="animate-pulse">
+                      <div className="bg-muted rounded-lg h-48"></div>
+                    </div>
+                  ))}
                 </div>
+              ) : (
+                <>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {filteredApiPlatforms.map((platform, index) => (
+                      <ApiPlatformCard key={index} platform={platform} />
+                    ))}
+                  </div>
+
+                  {filteredApiPlatforms.length === 0 && !loading && (
+                    <div className="text-center py-12">
+                      <p className="text-muted-foreground">
+                        Nenhuma plataforma encontrada para "{searchTerm}"
+                      </p>
+                    </div>
+                  )}
+                </>
               )}
 
               {/* Tips Section */}
