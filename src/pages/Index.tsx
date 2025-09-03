@@ -1,36 +1,37 @@
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useState, useEffect, useMemo } from "react";
 import { Input } from "@/components/ui/input";
-import { Search, Code2, Users, Zap, BarChart3, Brain, Lightbulb } from "lucide-react";
-import { WorkflowStageCard } from "@/components/WorkflowStageCard";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { ToolCard } from "@/components/ToolCard";
 import { EnhancedToolCard } from "@/components/EnhancedToolCard";
 import { ApiPlatformCard } from "@/components/ApiPlatformCard";
-import { StageDetail } from "@/components/StageDetail";
-import { EducationalResources } from "@/components/EducationalResources";
+import { WorkflowStageCard } from "@/components/WorkflowStageCard";
 import { ProgressTracker } from "@/components/ProgressTracker";
-import { ValidationCriteria } from "@/components/ValidationCriteria";
+import { Search, Filter, Star, Code2, Users, Brain, Zap, BarChart3, Menu } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   workflowStages, 
   loadTools, 
   loadApiPlatforms, 
-  loadEducationalResources, 
-  loadActions, 
-  loadValidationCriteria,
   WorkflowStage,
   Tool,
   ApiPlatform 
 } from "@/data/workflowDataOptimized";
-import { cn } from "@/lib/utils";
 
 const Index = () => {
-  const [selectedStage, setSelectedStage] = useState<WorkflowStage | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedDifficulty, setSelectedDifficulty] = useState("all");
+  const [selectedPricing, setSelectedPricing] = useState("all");
+  const [favoriteTools, setFavoriteTools] = useState<string[]>([]);
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [tools, setTools] = useState<Tool[]>([]);
   const [apiPlatforms, setApiPlatforms] = useState<ApiPlatform[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [stages, setStages] = useState<WorkflowStage[]>([]);
 
   useEffect(() => {
     const loadData = async () => {
@@ -41,293 +42,183 @@ const Index = () => {
         ]);
         setTools(toolsData);
         setApiPlatforms(apiPlatformsData);
+        setStages(workflowStages);
       } catch (error) {
         console.error('Error loading data:', error);
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
-    
     loadData();
   }, []);
 
-  const filteredTools = tools.filter(tool => 
-    tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    tool.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    tool.usage.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const filteredApiPlatforms = apiPlatforms.filter(platform => 
-    platform.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    platform.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    platform.availableModels.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const completedStages = workflowStages.filter(stage => stage.status === 'completed').length;
-  const currentStages = workflowStages.filter(stage => stage.status === 'current').length;
-  const pendingStages = workflowStages.filter(stage => stage.status === 'pending').length;
-
-  if (selectedStage) {
-    return (
-      <div className="min-h-screen bg-background">
-        <div className="container mx-auto px-4 py-8">
-          <StageDetail 
-            stage={selectedStage} 
-            onBack={() => setSelectedStage(null)} 
-          />
-        </div>
-      </div>
+  const handleFavoriteToggle = (toolName: string) => {
+    setFavoriteTools(prev => 
+      prev.includes(toolName) 
+        ? prev.filter(name => name !== toolName)
+        : [...prev, toolName]
     );
-  }
+  };
+
+  const filteredTools = useMemo(() => {
+    return tools.filter(tool => {
+      const matchesSearch = tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           tool.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           tool.usage.toLowerCase().includes(searchTerm.toLowerCase());
+      
+      const matchesCategory = selectedCategory === "all" || tool.category === selectedCategory;
+      const matchesDifficulty = selectedDifficulty === "all" || tool.difficulty === selectedDifficulty;
+      const matchesPricing = selectedPricing === "all" || 
+                            (selectedPricing === "Grátis" && tool.pricing?.toLowerCase().includes("grátis")) ||
+                            (selectedPricing === "Pago" && tool.pricing?.toLowerCase().includes("pago")) ||
+                            (selectedPricing === "Freemium" && tool.pricing?.toLowerCase().includes("freemium"));
+      
+      const matchesFavorites = !showFavoritesOnly || favoriteTools.includes(tool.name);
+      
+      return matchesSearch && matchesCategory && matchesDifficulty && matchesPricing && matchesFavorites;
+    });
+  }, [tools, searchTerm, selectedCategory, selectedDifficulty, selectedPricing, showFavoritesOnly, favoriteTools]);
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-primary/10 via-primary/5 to-background py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent mb-6">
-              Workflow de Desenvolvimento
-            </h1>
-            <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-              Guia completo para desenvolvimento moderno com IA e automação. 
-              Transforme seu processo de desenvolvimento com as melhores ferramentas e práticas.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-primary hover:bg-primary/90">
-                <Zap className="h-5 w-5 mr-2" />
-                Iniciar Workflow
-              </Button>
-              <Button size="lg" variant="outline">
-                <BarChart3 className="h-5 w-5 mr-2" />
-                Ver Progresso
-              </Button>
-            </div>
-          </div>
+    <div className="min-h-screen bg-background mobile-padding pb-safe-bottom">
+      {/* Mobile-First Header */}
+      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur safe-area-top mb-4">
+        <div className="mobile-padding py-3">
+          <h1 className="text-lg md:text-4xl font-bold text-center">Workflow de Desenvolvimento IA</h1>
+          <p className="text-xs md:text-xl text-muted-foreground text-center mt-1 md:mt-2">
+            Guia completo para desenvolvimento com IA
+          </p>
         </div>
-      </section>
+      </header>
 
-      {/* Stats Section */}
-      <section className="py-8 border-b bg-card/50">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <Card className="text-center bg-gradient-to-br from-stage-completed/10 to-stage-completed/5">
-              <CardContent className="pt-6">
-                <div className="text-3xl font-bold text-stage-completed mb-2">{completedStages}</div>
-                <p className="text-sm text-muted-foreground">Etapas Concluídas</p>
-              </CardContent>
-            </Card>
-            <Card className="text-center bg-gradient-to-br from-stage-current/10 to-stage-current/5">
-              <CardContent className="pt-6">
-                <div className="text-3xl font-bold text-stage-current mb-2">{currentStages}</div>
-                <p className="text-sm text-muted-foreground">Em Andamento</p>
-              </CardContent>
-            </Card>
-            <Card className="text-center bg-gradient-to-br from-stage-pending/10 to-stage-pending/5">
-              <CardContent className="pt-6">
-                <div className="text-3xl font-bold text-stage-pending mb-2">{pendingStages}</div>
-                <p className="text-sm text-muted-foreground">Pendentes</p>
-              </CardContent>
-            </Card>
-            <Card className="text-center bg-gradient-to-br from-primary/10 to-primary/5">
-              <CardContent className="pt-6">
-                <div className="text-3xl font-bold text-primary mb-2">{tools.length}+</div>
-                <p className="text-sm text-muted-foreground">Ferramentas Integradas</p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
+      <div className="space-y-4 md:space-y-8">
+        {/* Mobile Stats Grid */}
+        <section className="mobile-grid gap-3 md:gap-6">
+          <Card className="text-center p-3 md:p-6 mobile-card-hover">
+            <CardContent className="p-0">
+              <div className="text-lg md:text-3xl font-bold text-primary mb-1">{tools.length}</div>
+              <p className="text-xs md:text-sm text-muted-foreground">Ferramentas</p>
+            </CardContent>
+          </Card>
+          <Card className="text-center p-3 md:p-6 mobile-card-hover">
+            <CardContent className="p-0">
+              <div className="text-lg md:text-3xl font-bold text-primary mb-1">{apiPlatforms.length}</div>
+              <p className="text-xs md:text-sm text-muted-foreground">Plataformas</p>
+            </CardContent>
+          </Card>
+        </section>
 
-      {/* Main Content */}
-      <section className="py-12">
-        <div className="container mx-auto px-4">
-          <Tabs defaultValue="stages" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-8">
-              <TabsTrigger value="stages" className="flex items-center gap-2">
-                <Code2 className="h-4 w-4" />
-                Etapas do Workflow
-              </TabsTrigger>
-              <TabsTrigger value="tools" className="flex items-center gap-2">
-                <Users className="h-4 w-4" />
-                Catálogo de Ferramentas
-              </TabsTrigger>
-              <TabsTrigger value="api-platforms" className="flex items-center gap-2">
-                <Brain className="h-4 w-4" />
-                APIs Gratuitas
-              </TabsTrigger>
-            </TabsList>
+        {/* Progress Tracker */}
+        {!isLoading && <ProgressTracker stages={stages} actions={[]} />}
 
-            <TabsContent value="stages" className="space-y-8">
-              <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold mb-4">Etapas do Workflow</h2>
-                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                  Acompanhe seu progresso através das 9 etapas essenciais do desenvolvimento moderno com IA.
-                </p>
+        {/* Main Tabs */}
+        <Tabs defaultValue="workflow" className="w-full">
+          <TabsList className="mobile-grid grid-cols-3 w-full mb-4">
+            <TabsTrigger value="workflow" className="text-xs md:text-sm touch-target">
+              <Code2 className="h-3 w-3 md:h-4 md:w-4 mr-1" />
+              Workflow
+            </TabsTrigger>
+            <TabsTrigger value="tools" className="text-xs md:text-sm touch-target">
+              <Users className="h-3 w-3 md:h-4 md:w-4 mr-1" />
+              Ferramentas
+            </TabsTrigger>
+            <TabsTrigger value="apis" className="text-xs md:text-sm touch-target">
+              <Brain className="h-3 w-3 md:h-4 md:w-4 mr-1" />
+              APIs
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="workflow" className="space-y-4 md:space-y-6">
+            {isLoading ? (
+              <div className="space-y-3">
+                {[...Array(5)].map((_, i) => (
+                  <Skeleton key={i} className="h-24 md:h-32" />
+                ))}
               </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {workflowStages.map((stage) => (
-                  <WorkflowStageCard
-                    key={stage.id}
-                    stage={stage}
-                    onClick={() => setSelectedStage(stage)}
+            ) : (
+              <div className="space-y-4 md:space-y-6">
+                {stages.map((stage) => (
+                  <WorkflowStageCard key={stage.id} stage={stage} />
+                ))}
+              </div>
+            )}
+          </TabsContent>
+
+          <TabsContent value="tools" className="space-y-4">
+            {/* Mobile-First Search */}
+            <div className="space-y-3">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Pesquisar ferramentas..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 touch-target mobile-focus"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                  <SelectTrigger className="touch-target">
+                    <SelectValue placeholder="Categoria" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Todas</SelectItem>
+                    {Array.from(new Set(tools.map(tool => tool.category))).map(category => (
+                      <SelectItem key={category} value={category}>{category}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <Button
+                  variant={showFavoritesOnly ? "default" : "outline"}
+                  onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
+                  className="touch-target mobile-focus"
+                >
+                  <Star className={`mr-2 h-4 w-4 ${showFavoritesOnly ? "fill-current" : ""}`} />
+                  Favoritos
+                </Button>
+              </div>
+            </div>
+
+            {/* Tools Grid */}
+            {isLoading ? (
+              <div className="mobile-grid gap-4">
+                {[...Array(6)].map((_, i) => (
+                  <Skeleton key={i} className="h-48 md:h-64" />
+                ))}
+              </div>
+            ) : (
+              <div className="mobile-grid gap-4">
+                {filteredTools.map((tool) => (
+                  <EnhancedToolCard
+                    key={tool.name}
+                    tool={tool}
+                    onFavorite={handleFavoriteToggle}
+                    isFavorited={favoriteTools.includes(tool.name)}
                   />
                 ))}
               </div>
-            </TabsContent>
+            )}
+          </TabsContent>
 
-            <TabsContent value="tools" className="space-y-8">
-              <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold mb-4">Catálogo de Ferramentas</h2>
-                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                  Explore as melhores ferramentas de IA e automação para seu workflow de desenvolvimento.
-                </p>
+          <TabsContent value="apis" className="space-y-4">
+            {isLoading ? (
+              <div className="mobile-grid gap-4">
+                {[...Array(4)].map((_, i) => (
+                  <Skeleton key={i} className="h-40" />
+                ))}
               </div>
-
-              <div className="max-w-md mx-auto mb-8">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                  <Input
-                    placeholder="Buscar ferramentas..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10"
-                  />
-                </div>
+            ) : (
+              <div className="mobile-grid gap-4">
+                {apiPlatforms.map((platform) => (
+                  <ApiPlatformCard key={platform.name} platform={platform} />
+                ))}
               </div>
-
-              {loading ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {[...Array(6)].map((_, i) => (
-                    <div key={i} className="animate-pulse">
-                      <div className="bg-muted rounded-lg h-48"></div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {filteredTools.map((tool, index) => (
-                      <EnhancedToolCard key={index} tool={tool} />
-                    ))}
-                  </div>
-
-                  {filteredTools.length === 0 && !loading && (
-                    <div className="text-center py-12">
-                      <p className="text-muted-foreground">
-                        Nenhuma ferramenta encontrada para "{searchTerm}"
-                      </p>
-                    </div>
-                  )}
-                </>
-              )}
-            </TabsContent>
-
-            <TabsContent value="api-platforms" className="space-y-8">
-              <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold mb-4">Plataformas API Gratuitas</h2>
-                <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-                  APIs gratuitas (ou com tiers gratuitos) para modelos de IA generativa, 
-                  semelhantes à DeepSeek. Perfeitas para desenvolvimento e testes.
-                </p>
-              </div>
-
-              <div className="max-w-md mx-auto mb-8">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                  <Input
-                    placeholder="Buscar plataformas API..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10"
-                  />
-                </div>
-              </div>
-
-              {loading ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {[...Array(6)].map((_, i) => (
-                    <div key={i} className="animate-pulse">
-                      <div className="bg-muted rounded-lg h-48"></div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {filteredApiPlatforms.map((platform, index) => (
-                      <ApiPlatformCard key={index} platform={platform} />
-                    ))}
-                  </div>
-
-                  {filteredApiPlatforms.length === 0 && !loading && (
-                    <div className="text-center py-12">
-                      <p className="text-muted-foreground">
-                        Nenhuma plataforma encontrada para "{searchTerm}"
-                      </p>
-                    </div>
-                  )}
-                </>
-              )}
-
-              {/* Tips Section */}
-              <div className="mt-12 bg-gradient-to-r from-primary/5 to-primary/10 rounded-lg p-8">
-                <h3 className="text-2xl font-bold mb-6 text-center">Dicas para Começar</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <Card className="bg-background/80 backdrop-blur-sm">
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-lg">🔌 Integração Fácil</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-muted-foreground">
-                        A maioria é compatível com o SDK do OpenAI. Basta alterar a URL base da API 
-                        (ex.: <code className="bg-muted px-1 rounded">base_url="https://api.openrouter.ai/v1"</code>).
-                      </p>
-                    </CardContent>
-                  </Card>
-
-                  <Card className="bg-background/80 backdrop-blur-sm">
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-lg">💰 Limites e Custos</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-muted-foreground">
-                        Os tiers gratuitos são para desenvolvimento e testes. Para produção, 
-                        espere custos por token (geralmente mais baratos que OpenAI).
-                      </p>
-                    </CardContent>
-                  </Card>
-
-                  <Card className="bg-background/80 backdrop-blur-sm">
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-lg">🏠 Open-Source Local</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-muted-foreground">
-                        Para zero custo e privacidade total, baixe modelos da DeepSeek ou Qwen 
-                        do Hugging Face e rode com Ollama ou LM Studio.
-                      </p>
-                    </CardContent>
-                  </Card>
-
-                  <Card className="bg-background/80 backdrop-blur-sm">
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-lg">⚡ Performance</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-muted-foreground">
-                        Verifique status de serviço, pois tráfego alto pode causar filas. 
-                        Tenha sempre uma alternativa configurada.
-                      </p>
-                    </CardContent>
-                  </Card>
-                </div>
-              </div>
-            </TabsContent>
-          </Tabs>
-        </div>
-      </section>
+            )}
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   );
 };
