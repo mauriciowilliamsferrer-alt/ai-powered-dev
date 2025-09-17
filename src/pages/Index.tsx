@@ -82,12 +82,10 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background mobile-padding pb-safe-bottom">
       {/* Mobile-First Header */}
-      <header className="sticky top-0 z-50 w-full border-b gradient-hero text-white shadow-elevation safe-area-top mb-4">
-        <div className="mobile-padding py-6">
-          <h1 className="text-lg md:text-4xl font-bold text-center animate-fade-in">
-            🚀 Workflow de Desenvolvimento IA
-          </h1>
-          <p className="text-xs md:text-xl text-white/90 text-center mt-1 md:mt-2 animate-slide-up">
+      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur safe-area-top mb-4">
+        <div className="mobile-padding py-3">
+          <h1 className="text-lg md:text-4xl font-bold text-center">Workflow de Desenvolvimento IA</h1>
+          <p className="text-xs md:text-xl text-muted-foreground text-center mt-1 md:mt-2">
             Guia completo para desenvolvimento com IA
           </p>
         </div>
@@ -96,19 +94,15 @@ const Index = () => {
       <div className="space-y-4 md:space-y-8">
         {/* Mobile Stats Grid */}
         <section className="mobile-grid gap-3 md:gap-6">
-          <Card className="card-enhanced text-center p-3 md:p-6 interactive-glow">
+          <Card className="text-center p-3 md:p-6 mobile-card-hover">
             <CardContent className="p-0">
-              <div className="text-lg md:text-3xl font-bold gradient-accent bg-clip-text text-transparent mb-1">
-                {tools.length}
-              </div>
+              <div className="text-lg md:text-3xl font-bold text-primary mb-1">{tools.length}</div>
               <p className="text-xs md:text-sm text-muted-foreground">Ferramentas</p>
             </CardContent>
           </Card>
-          <Card className="card-enhanced text-center p-3 md:p-6 interactive-glow">
+          <Card className="text-center p-3 md:p-6 mobile-card-hover">
             <CardContent className="p-0">
-              <div className="text-lg md:text-3xl font-bold gradient-secondary bg-clip-text text-transparent mb-1">
-                {apiPlatforms.length}
-              </div>
+              <div className="text-lg md:text-3xl font-bold text-primary mb-1">{apiPlatforms.length}</div>
               <p className="text-xs md:text-sm text-muted-foreground">Plataformas</p>
             </CardContent>
           </Card>
@@ -119,16 +113,16 @@ const Index = () => {
 
         {/* Main Tabs */}
         <Tabs defaultValue="workflow" className="w-full">
-          <TabsList className="mobile-grid grid-cols-3 w-full mb-4 gradient-card shadow-card">
-            <TabsTrigger value="workflow" className="text-xs md:text-sm touch-target interactive-glow">
+          <TabsList className="mobile-grid grid-cols-3 w-full mb-4">
+            <TabsTrigger value="workflow" className="text-xs md:text-sm touch-target">
               <Code2 className="h-3 w-3 md:h-4 md:w-4 mr-1" />
               Workflow
             </TabsTrigger>
-            <TabsTrigger value="tools" className="text-xs md:text-sm touch-target interactive-glow">
+            <TabsTrigger value="tools" className="text-xs md:text-sm touch-target">
               <Users className="h-3 w-3 md:h-4 md:w-4 mr-1" />
               Ferramentas
             </TabsTrigger>
-            <TabsTrigger value="apis" className="text-xs md:text-sm touch-target interactive-glow">
+            <TabsTrigger value="apis" className="text-xs md:text-sm touch-target">
               <Brain className="h-3 w-3 md:h-4 md:w-4 mr-1" />
               APIs
             </TabsTrigger>
@@ -179,7 +173,7 @@ const Index = () => {
                 <Button
                   variant={showFavoritesOnly ? "default" : "outline"}
                   onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
-                  className="touch-target mobile-focus interactive-glow"
+                  className="touch-target mobile-focus"
                 >
                   <Star className={`mr-2 h-4 w-4 ${showFavoritesOnly ? "fill-current" : ""}`} />
                   Favoritos

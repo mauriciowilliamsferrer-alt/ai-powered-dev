@@ -10,18 +10,16 @@ interface ToolCardProps {
 
 export const ToolCard = ({ tool }: ToolCardProps) => {
   return (
-    <Card className="card-enhanced h-full transition-all duration-300 interactive-glow">
+    <Card className="h-full transition-all duration-300 hover:shadow-md">
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
           <div className="flex-1">
-            <CardTitle className="text-lg bg-gradient-accent bg-clip-text text-transparent">
-              {tool.name}
-            </CardTitle>
-            <Badge variant="outline" className="mt-1 text-xs gradient-secondary text-white border-0">
+            <CardTitle className="text-lg">{tool.name}</CardTitle>
+            <Badge variant="outline" className="mt-1 text-xs">
               {tool.category}
             </Badge>
           </div>
-          <Button size="sm" variant="ghost" asChild className="interactive-glow">
+          <Button size="sm" variant="ghost" asChild>
             <a 
               href={tool.url} 
               target="_blank" 

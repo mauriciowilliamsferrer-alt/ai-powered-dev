@@ -8,51 +8,39 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Base colors - Rich gradient background */
-    --background: 245 100% 97%;
-    --foreground: 222 47% 11%;
+    --background: 0 0% 100%;
+    --foreground: 224 71.4% 4.1%;
 
-    /* Card colors with subtle gradients */
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 224 71.4% 4.1%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover-foreground: 224 71.4% 4.1%;
 
-    /* Vibrant primary colors */
-    --primary: 262 83% 58%;
-    --primary-foreground: 0 0% 100%;
-    --primary-glow: 262 83% 70%;
+    --primary: 262.1 83.3% 57.8%;
+    --primary-foreground: 210 20% 98%;
 
-    /* Rich secondary colors */
-    --secondary: 280 60% 50%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 220 14.3% 95.9%;
+    --secondary-foreground: 220.9 39.3% 11%;
 
-    /* Sophisticated muted tones */
-    --muted: 240 5% 96%;
-    --muted-foreground: 240 4% 46%;
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
 
-    /* Bright accent colors */
-    --accent: 200 95% 50%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 220 14.3% 95.9%;
+    --accent-foreground: 220.9 39.3% 11%;
 
-    /* Enhanced workflow colors */
-    --stage-completed: 142 76% 36%;
-    --stage-current: 280 60% 50%;
-    --stage-pending: 215 16% 47%;
+    /* Custom workflow colors */
+    --stage-completed: 142.1 76.2% 36.3%;
+    --stage-current: 47.9 95.8% 53.1%;
+    --stage-pending: 215.4 16.3% 46.9%;
     
-    /* Rich gradients for visual appeal */
-    --gradient-hero: linear-gradient(135deg, hsl(262 83% 58%), hsl(280 60% 50%), hsl(200 95% 50%));
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(240 12% 98%));
-    --gradient-background: linear-gradient(180deg, hsl(245 100% 97%), hsl(250 100% 99%));
-    --gradient-accent: linear-gradient(135deg, hsl(280 60% 50%), hsl(262 83% 58%));
-    --gradient-secondary: linear-gradient(90deg, hsl(200 95% 50%), hsl(220 95% 55%));
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(262.1 83.3% 57.8%), hsl(262.1 83.3% 67.8%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(220 14.3% 99%));
     
-    /* Enhanced shadows with color */
-    --shadow-elevation: 0 20px 40px -10px hsl(262 83% 58% / 0.25);
-    --shadow-card: 0 8px 25px -8px hsl(240 4% 46% / 0.15);
-    --shadow-glow: 0 0 40px hsl(262 83% 70% / 0.3);
-    --shadow-accent: 0 10px 30px -5px hsl(280 60% 50% / 0.4);
+    /* Shadows */
+    --shadow-elevation: 0 10px 30px -10px hsl(262.1 83.3% 57.8% / 0.3);
+    --shadow-card: 0 4px 20px -4px hsl(220 8.9% 46.1% / 0.1);
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
@@ -126,8 +114,6 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
-    background: var(--gradient-background);
-    min-height: 100vh;
   }
 }
 
@@ -188,55 +174,5 @@ All colors MUST be HSL.
   /* Card hover states optimized for touch */
   .mobile-card-hover {
     @apply transition-all duration-200 active:scale-95 active:shadow-sm;
-  }
-
-  /* Enhanced design utilities */
-  .gradient-hero {
-    background: var(--gradient-hero);
-  }
-
-  .gradient-card {
-    background: var(--gradient-card);
-  }
-
-  .gradient-accent {
-    background: var(--gradient-accent);
-  }
-
-  .gradient-secondary {
-    background: var(--gradient-secondary);
-  }
-
-  .shadow-elevation {
-    box-shadow: var(--shadow-elevation);
-  }
-
-  .shadow-glow {
-    box-shadow: var(--shadow-glow);
-  }
-
-  .shadow-accent {
-    box-shadow: var(--shadow-accent);
-  }
-
-  /* Enhanced card styles */
-  .card-enhanced {
-    @apply bg-card border shadow-card rounded-xl transition-all duration-300;
-    background: var(--gradient-card);
-  }
-
-  .card-enhanced:hover {
-    @apply shadow-elevation transform;
-    transform: translateY(-2px);
-  }
-
-  /* Interactive elements */
-  .interactive-glow {
-    @apply transition-all duration-300;
-  }
-
-  .interactive-glow:hover {
-    box-shadow: var(--shadow-glow);
-    transform: scale(1.02);
   }
 }

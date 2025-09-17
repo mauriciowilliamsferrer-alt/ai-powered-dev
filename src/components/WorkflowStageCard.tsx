@@ -42,23 +42,24 @@ export const WorkflowStageCard = ({ stage, onClick }: WorkflowStageCardProps) =>
   return (
     <Card 
       className={cn(
-        "card-enhanced cursor-pointer interactive-glow",
-        stage.status === 'current' && "ring-2 ring-stage-current/30 shadow-glow",
-        stage.status === 'completed' && "ring-1 ring-stage-completed/30 shadow-accent"
+        "cursor-pointer transition-all duration-300 hover:shadow-lg",
+        "bg-gradient-to-br from-card to-card/50",
+        stage.status === 'current' && "ring-2 ring-stage-current/20",
+        stage.status === 'completed' && "ring-1 ring-stage-completed/20"
       )}
       onClick={onClick}
     >
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full gradient-accent shadow-glow">
-              <span className="text-sm font-semibold text-white">{stage.id}</span>
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10">
+              <span className="text-sm font-semibold text-primary">{stage.id}</span>
             </div>
             {getStatusIcon()}
           </div>
           {getStatusBadge()}
         </div>
-        <CardTitle className="text-xl bg-gradient-accent bg-clip-text text-transparent">{stage.title}</CardTitle>
+        <CardTitle className="text-xl">{stage.title}</CardTitle>
         <CardDescription className="text-sm text-muted-foreground">
           {stage.objective}
         </CardDescription>
@@ -66,15 +67,15 @@ export const WorkflowStageCard = ({ stage, onClick }: WorkflowStageCardProps) =>
       <CardContent className="pt-0">
         <div className="space-y-3">
           <div>
-            <p className="text-sm font-medium gradient-secondary bg-clip-text text-transparent mb-2">Ferramentas principais:</p>
+            <p className="text-sm font-medium text-foreground mb-2">Ferramentas principais:</p>
             <div className="flex flex-wrap gap-1">
               {stage.mainTools.slice(0, 3).map((tool, index) => (
-                <Badge key={index} variant="secondary" className="text-xs gradient-card border-0">
+                <Badge key={index} variant="secondary" className="text-xs">
                   {tool}
                 </Badge>
               ))}
               {stage.mainTools.length > 3 && (
-                <Badge variant="secondary" className="text-xs gradient-accent text-white border-0">
+                <Badge variant="secondary" className="text-xs">
                   +{stage.mainTools.length - 3} mais
                 </Badge>
               )}

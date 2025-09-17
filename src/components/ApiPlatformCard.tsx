@@ -10,34 +10,34 @@ interface ApiPlatformCardProps {
 
 export const ApiPlatformCard = ({ platform }: ApiPlatformCardProps) => {
   return (
-    <Card className="card-enhanced h-full border-l-4 border-l-primary/40 interactive-glow">
+    <Card className="h-full transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 border-l-4 border-l-primary/20">
       <CardHeader className="pb-4">
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1">
-            <CardTitle className="text-lg font-bold gradient-accent bg-clip-text text-transparent mb-2">
+            <CardTitle className="text-lg font-bold text-foreground mb-2">
               {platform.name}
             </CardTitle>
             <div className="flex flex-wrap gap-1 mb-3">
               {platform.compatibleWithOpenAI && (
-                <Badge variant="outline" className="text-xs gradient-secondary text-white border-0 shadow-glow">
+                <Badge variant="outline" className="text-xs bg-green-50 text-green-700 border-green-200">
                   <Zap className="h-3 w-3 mr-1" />
                   OpenAI Compatible
                 </Badge>
               )}
               {platform.isLocal ? (
-                <Badge variant="outline" className="text-xs bg-accent text-accent-foreground border-accent/20">
+                <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
                   <Monitor className="h-3 w-3 mr-1" />
                   Local
                 </Badge>
               ) : (
-                <Badge variant="outline" className="text-xs gradient-accent text-white border-0">
+                <Badge variant="outline" className="text-xs bg-purple-50 text-purple-700 border-purple-200">
                   <CloudUpload className="h-3 w-3 mr-1" />
                   Cloud
                 </Badge>
               )}
             </div>
           </div>
-          <Button size="sm" variant="ghost" asChild className="shrink-0 interactive-glow">
+          <Button size="sm" variant="ghost" asChild className="shrink-0">
             <a 
               href={platform.apiUrl} 
               target="_blank" 
@@ -57,7 +57,7 @@ export const ApiPlatformCard = ({ platform }: ApiPlatformCardProps) => {
         
         <div className="space-y-3">
           <div>
-            <p className="text-xs font-semibold bg-gradient-accent bg-clip-text text-transparent uppercase tracking-wide mb-1">
+            <p className="text-xs font-semibold text-foreground uppercase tracking-wide mb-1">
               Modelos Disponíveis
             </p>
             <p className="text-sm text-muted-foreground">
@@ -66,7 +66,7 @@ export const ApiPlatformCard = ({ platform }: ApiPlatformCardProps) => {
           </div>
           
           <div>
-            <p className="text-xs font-semibold bg-gradient-secondary bg-clip-text text-transparent uppercase tracking-wide mb-1">
+            <p className="text-xs font-semibold text-foreground uppercase tracking-wide mb-1">
               Limites Gratuitos
             </p>
             <p className="text-sm text-muted-foreground">
