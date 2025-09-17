@@ -150,6 +150,7 @@ export const workflowStages: WorkflowStage[] = [
 ];
 
 export const tools: Tool[] = [
+  // === AGENTES E DESENVOLVIMENTO ===
   {
     name: 'Aider',
     category: 'Agente git-first',
@@ -163,54 +164,6 @@ export const tools: Tool[] = [
     integrations: ['GitHub', 'VS Code', 'Terminal']
   },
   {
-    name: 'Amp',
-    category: 'Mudanças em larga escala',
-    usage: 'Refactors amplos, renomes e migrações',
-    notes: 'Use com branch isolada e revisão atenta',
-    url: 'https://ampcode.com',
-    difficulty: 'Avançado',
-    pricing: 'Pago',
-    tags: ['refactor', 'migration', 'large-scale'],
-    rating: 4.2,
-    integrations: ['GitHub', 'GitLab']
-  },
-  {
-    name: 'bolt.new',
-    category: 'Builder no navegador',
-    usage: 'Criar app base (Next.js/TS) e editar online',
-    notes: 'Ótimo para MVP rápido; depois traga ao seu repo',
-    url: 'https://bolt.new/',
-    difficulty: 'Iniciante',
-    pricing: 'Freemium',
-    tags: ['nextjs', 'typescript', 'mvp', 'online'],
-    rating: 4.6,
-    integrations: ['GitHub', 'Vercel', 'Netlify']
-  },
-  {
-    name: 'ChatGPT – Code',
-    category: 'Oráculo de código',
-    usage: 'Decisões técnicas, geração de trechos e revisões',
-    notes: 'Mantenha prompts com contexto e limites claros',
-    url: 'https://chatgpt.com/',
-    difficulty: 'Iniciante',
-    pricing: 'Freemium',
-    tags: ['chat', 'code-generation', 'review', 'decisions'],
-    rating: 4.4,
-    integrations: ['API', 'Plugins', 'Extensions']
-  },
-  {
-    name: 'Claude Code',
-    category: 'Agente/CLI & editor',
-    usage: 'Refactors, navegação de base e execuções guiadas',
-    notes: 'Bom em raciocínio passo a passo',
-    url: 'https://claude.ai/',
-    difficulty: 'Intermediário',
-    pricing: 'Freemium',
-    tags: ['reasoning', 'refactor', 'analysis'],
-    rating: 4.7,
-    integrations: ['API', 'CLI', 'Cline']
-  },
-  {
     name: 'Cline',
     category: 'Agente no editor',
     usage: 'Planejar→editar→testar→commitar dentro do VS Code',
@@ -221,6 +174,18 @@ export const tools: Tool[] = [
     tags: ['vscode', 'automation', 'planning', 'commit'],
     rating: 4.3,
     integrations: ['VS Code', 'Claude', 'GitHub']
+  },
+  {
+    name: 'Continue',
+    category: 'Agente no editor',
+    usage: 'Extensão open-source para VS Code/JetBrains com IA',
+    notes: 'Alternativa gratuita ao GitHub Copilot',
+    url: 'https://continue.dev/',
+    difficulty: 'Intermediário',
+    pricing: 'Gratuito',
+    tags: ['vscode', 'jetbrains', 'open-source', 'completion'],
+    rating: 4.1,
+    integrations: ['VS Code', 'JetBrains', 'OpenAI', 'Anthropic']
   },
   {
     name: 'Cursor',
@@ -247,6 +212,80 @@ export const tools: Tool[] = [
     integrations: ['GitHub', 'VS Code', 'JetBrains']
   },
   {
+    name: 'Tabnine',
+    category: 'Autocompletar IA',
+    usage: 'Autocompletar código com modelos treinados',
+    notes: 'Foco em privacidade e código local',
+    url: 'https://www.tabnine.com/',
+    difficulty: 'Iniciante',
+    pricing: 'Freemium',
+    tags: ['autocompletion', 'privacy', 'local'],
+    rating: 4.2,
+    integrations: ['VS Code', 'IntelliJ', 'Sublime Text']
+  },
+  {
+    name: 'Amazon CodeWhisperer',
+    category: 'Assistente de código',
+    usage: 'Sugestões de código da Amazon, foco em AWS',
+    notes: 'Integrado com ferramentas AWS',
+    url: 'https://aws.amazon.com/codewhisperer/',
+    difficulty: 'Intermediário',
+    pricing: 'Freemium',
+    tags: ['aws', 'code-suggestions', 'cloud'],
+    rating: 4.0,
+    integrations: ['VS Code', 'IntelliJ', 'AWS Tools']
+  },
+  {
+    name: 'Sourcegraph Cody',
+    category: 'Assistente enterprise',
+    usage: 'Assistente de código para projetos grandes',
+    notes: 'Focado em código enterprise e repositórios privados',
+    url: 'https://sourcegraph.com/cody',
+    difficulty: 'Avançado',
+    pricing: 'Freemium',
+    tags: ['enterprise', 'code-search', 'large-repos'],
+    rating: 4.1,
+    integrations: ['VS Code', 'JetBrains', 'Web']
+  },
+  {
+    name: 'Codium AI',
+    category: 'Testes automáticos',
+    usage: 'Gerar e manter testes automatizados com IA',
+    notes: 'Foco em qualidade e cobertura de testes',
+    url: 'https://www.codium.ai/',
+    difficulty: 'Intermediário',
+    pricing: 'Freemium',
+    tags: ['testing', 'automation', 'quality'],
+    rating: 4.3,
+    integrations: ['VS Code', 'JetBrains', 'GitHub']
+  },
+
+  // === PROTOTIPAGEM E UI ===
+  {
+    name: 'v0 (Vercel)',
+    category: 'Gerador de UI',
+    usage: 'Componentes/variantes de UI e colaborações',
+    notes: 'Ótimo para landing e telas iniciais',
+    url: 'https://v0.dev/',
+    difficulty: 'Iniciante',
+    pricing: 'Freemium',
+    tags: ['ui', 'components', 'design', 'collaboration'],
+    rating: 4.6,
+    integrations: ['Vercel', 'React', 'Tailwind']
+  },
+  {
+    name: 'bolt.new',
+    category: 'Builder no navegador',
+    usage: 'Criar app base (Next.js/TS) e editar online',
+    notes: 'Ótimo para MVP rápido; depois traga ao seu repo',
+    url: 'https://bolt.new/',
+    difficulty: 'Iniciante',
+    pricing: 'Freemium',
+    tags: ['nextjs', 'typescript', 'mvp', 'online'],
+    rating: 4.6,
+    integrations: ['GitHub', 'Vercel', 'Netlify']
+  },
+  {
     name: 'Lovable',
     category: 'Builder low-code',
     usage: 'Criar landing/flows simples e publicar rápido',
@@ -257,18 +296,6 @@ export const tools: Tool[] = [
     tags: ['low-code', 'landing', 'marketing'],
     rating: 4.4,
     integrations: ['GitHub', 'Vercel', 'Supabase']
-  },
-  {
-    name: 'v0 (Vercel)',
-    category: 'Gerador de UI',
-    usage: 'Componentes/variantes de UI e colaborações',
-    notes: 'Ótimo para landing e telas iniciais',
-    url: 'https://v0.app/',
-    difficulty: 'Iniciante',
-    pricing: 'Freemium',
-    tags: ['ui', 'components', 'design', 'collaboration'],
-    rating: 4.6,
-    integrations: ['Vercel', 'React', 'Tailwind']
   },
   {
     name: 'Replit AI',
@@ -282,6 +309,156 @@ export const tools: Tool[] = [
     rating: 4.2,
     integrations: ['GitHub', 'NPM', 'Multiple Languages']
   },
+  {
+    name: 'Leap.new',
+    category: 'AI App Builder',
+    usage: 'Criar aplicações completas com prompts',
+    notes: 'Foco em full-stack development',
+    url: 'https://leap.new/',
+    difficulty: 'Iniciante',
+    pricing: 'Freemium',
+    tags: ['full-stack', 'app-builder', 'prompts'],
+    rating: 4.2,
+    integrations: ['GitHub', 'Deployment Platforms']
+  },
+  {
+    name: 'Framer AI',
+    category: 'Design e prototipagem',
+    usage: 'Design e prototipagem avançada com IA',
+    notes: 'Excelente para designs complexos e interativos',
+    url: 'https://www.framer.com/',
+    difficulty: 'Intermediário',
+    pricing: 'Freemium',
+    tags: ['design', 'prototyping', 'interactive', 'ui-ux'],
+    rating: 4.4,
+    integrations: ['Figma', 'React', 'Web']
+  },
+  {
+    name: 'Uizard',
+    category: 'Design automático',
+    usage: 'Transformar sketches e wireframes em UI',
+    notes: 'IA para acelerar processo de design',
+    url: 'https://uizard.io/',
+    difficulty: 'Iniciante',
+    pricing: 'Freemium',
+    tags: ['sketch-to-ui', 'wireframe', 'rapid-design'],
+    rating: 4.1,
+    integrations: ['Figma', 'Sketch', 'Export']
+  },
+  {
+    name: 'Galileo AI',
+    category: 'Design automatizado',
+    usage: 'Gerar designs de UI automaticamente',
+    notes: 'Focado em acelerar o processo criativo',
+    url: 'https://www.usegalileo.ai/',
+    difficulty: 'Iniciante',
+    pricing: 'Beta',
+    tags: ['automated-design', 'ui-generation'],
+    rating: 4.0,
+    integrations: ['Figma', 'Export Tools']
+  },
+
+  // === CHAT E ORÁCULOS ===
+  {
+    name: 'ChatGPT – Code',
+    category: 'Oráculo de código',
+    usage: 'Decisões técnicas, geração de trechos e revisões',
+    notes: 'Mantenha prompts com contexto e limites claros',
+    url: 'https://chatgpt.com/',
+    difficulty: 'Iniciante',
+    pricing: 'Freemium',
+    tags: ['chat', 'code-generation', 'review', 'decisions'],
+    rating: 4.4,
+    integrations: ['API', 'Plugins', 'Extensions']
+  },
+  {
+    name: 'Claude Code',
+    category: 'Agente/CLI & editor',
+    usage: 'Refactors, navegação de base e execuções guiadas',
+    notes: 'Bom em raciocínio passo a passo',
+    url: 'https://claude.ai/',
+    difficulty: 'Intermediário',
+    pricing: 'Freemium',
+    tags: ['reasoning', 'refactor', 'analysis'],
+    rating: 4.7,
+    integrations: ['API', 'CLI', 'Cline']
+  },
+  {
+    name: 'Perplexity',
+    category: 'Pesquisa com IA',
+    usage: 'Pesquisar informações atualizadas com IA',
+    notes: 'Ótimo para pesquisa técnica e documentação',
+    url: 'https://www.perplexity.ai/',
+    difficulty: 'Iniciante',
+    pricing: 'Freemium',
+    tags: ['search', 'research', 'current-info'],
+    rating: 4.5,
+    integrations: ['API', 'Browser Extension']
+  },
+
+  // === FERRAMENTAS LOCAIS ===
+  {
+    name: 'Ollama',
+    category: 'IA Local',
+    usage: 'Rodar modelos de IA localmente',
+    notes: 'Privacidade total, sem limites de uso',
+    url: 'https://ollama.com/',
+    difficulty: 'Intermediário',
+    pricing: 'Gratuito',
+    tags: ['local', 'privacy', 'unlimited'],
+    rating: 4.6,
+    integrations: ['API Local', 'Terminal', 'Docker']
+  },
+  {
+    name: 'LM Studio',
+    category: 'Interface gráfica local',
+    usage: 'Interface amigável para modelos locais',
+    notes: 'Melhor experiência para usuários não-técnicos',
+    url: 'https://lmstudio.ai/',
+    difficulty: 'Iniciante',
+    pricing: 'Gratuito',
+    tags: ['local', 'gui', 'user-friendly'],
+    rating: 4.4,
+    integrations: ['Local Models', 'Chat Interface']
+  },
+  {
+    name: 'Jan',
+    category: 'Cliente desktop IA',
+    usage: 'Cliente desktop para IA local',
+    notes: 'Alternativa open-source ao LM Studio',
+    url: 'https://jan.ai/',
+    difficulty: 'Iniciante',
+    pricing: 'Gratuito',
+    tags: ['desktop', 'open-source', 'local'],
+    rating: 4.2,
+    integrations: ['Local Models', 'Cross-platform']
+  },
+  {
+    name: 'AnythingLLM',
+    category: 'RAG local',
+    usage: 'Plataforma RAG local para documentos',
+    notes: 'Chat com seus documentos localmente',
+    url: 'https://anythingllm.com/',
+    difficulty: 'Intermediário',
+    pricing: 'Gratuito',
+    tags: ['rag', 'documents', 'local', 'privacy'],
+    rating: 4.3,
+    integrations: ['Local Models', 'Document Processing']
+  },
+  {
+    name: 'LocalAI',
+    category: 'API local compatível',
+    usage: 'API local compatível com OpenAI',
+    notes: 'Drop-in replacement para OpenAI API',
+    url: 'https://localai.io/',
+    difficulty: 'Avançado',
+    pricing: 'Gratuito',
+    tags: ['api', 'openai-compatible', 'local'],
+    rating: 4.1,
+    integrations: ['OpenAI API', 'Docker', 'Kubernetes']
+  },
+
+  // === TERMINAL E PRODUTIVIDADE ===
   {
     name: 'Warp',
     category: 'Terminal inteligente',
@@ -298,110 +475,154 @@ export const tools: Tool[] = [
     name: 'Amazon Q Developer',
     category: 'Assistente AWS',
     usage: 'Consultorias sobre AWS e otimizações de código',
-    notes: 'Especializado em ecossistema AWS',
+    notes: 'Integrado com ferramentas AWS',
     url: 'https://aws.amazon.com/q/developer/',
     difficulty: 'Intermediário',
     pricing: 'Freemium',
-    tags: ['aws', 'cloud', 'optimization', 'consulting'],
-    rating: 4.1,
-    integrations: ['AWS', 'VS Code', 'JetBrains']
-  },
-  {
-    name: 'CodeRabbit',
-    category: 'Review automático',
-    usage: 'Bot para revisar PRs com sugestões inteligentes',
-    notes: 'Configura checks de qualidade e padrões',
-    url: 'https://coderabbit.ai/',
-    difficulty: 'Intermediário',
-    pricing: 'Freemium',
-    tags: ['pr-review', 'quality', 'automation'],
-    rating: 4.4,
-    integrations: ['GitHub', 'GitLab', 'Bitbucket']
-  },
-  {
-    name: 'Qodo.ai (ex-CodiumAI)',
-    category: 'Testes e qualidade',
-    usage: 'Geração automática de testes e análise de código',
-    notes: 'Foco em test generation e code analysis',
-    url: 'https://qodo.ai/',
-    difficulty: 'Intermediário',
-    pricing: 'Freemium',
-    tags: ['testing', 'quality', 'analysis'],
+    tags: ['aws', 'cloud', 'optimization'],
     rating: 4.2,
-    integrations: ['VS Code', 'JetBrains', 'GitHub']
+    integrations: ['AWS Console', 'VS Code', 'CLI']
+  },
+
+  // === PLATAFORMAS E INTEGRAÇÕES ===
+  {
+    name: 'GitHub MCP Server',
+    category: 'MCP Integration',
+    usage: 'Conectar IA com repositórios GitHub',
+    notes: 'Gerenciar issues, PRs e código via IA',
+    url: 'https://github.com/modelcontextprotocol/servers',
+    difficulty: 'Avançado',
+    pricing: 'Gratuito',
+    tags: ['mcp', 'github', 'integration', 'git'],
+    rating: 4.0,
+    integrations: ['GitHub', 'Claude', 'MCP Protocol']
   },
   {
-    name: 'Jules (Google)',
-    category: 'Orquestração',
-    usage: 'Gerenciar tarefas e projetos com IA',
-    notes: 'Conecta requisitos com PRs e deploys',
-    url: 'https://jules.ai/',
+    name: 'AWS MCP Server',
+    category: 'MCP Integration',
+    usage: 'Integrar IA com serviços AWS',
+    notes: 'Gerenciar recursos AWS via IA',
+    url: 'https://github.com/modelcontextprotocol/servers',
     difficulty: 'Avançado',
-    pricing: 'Beta',
-    tags: ['project-management', 'orchestration', 'tasks'],
+    pricing: 'Gratuito',
+    tags: ['mcp', 'aws', 'cloud', 'integration'],
+    rating: 4.1,
+    integrations: ['AWS', 'Claude', 'MCP Protocol']
+  },
+  {
+    name: 'Stripe MCP Server',
+    category: 'MCP Integration',
+    usage: 'Gerenciar pagamentos via IA',
+    notes: 'Automação para e-commerce e SaaS',
+    url: 'https://github.com/modelcontextprotocol/servers',
+    difficulty: 'Avançado',
+    pricing: 'Gratuito',
+    tags: ['mcp', 'payments', 'stripe', 'automation'],
+    rating: 4.2,
+    integrations: ['Stripe', 'Claude', 'MCP Protocol']
+  },
+  {
+    name: 'Notion MCP Server',
+    category: 'MCP Integration',
+    usage: 'Integrar IA com Notion para automação',
+    notes: 'Gerenciar páginas e databases automaticamente',
+    url: 'https://github.com/modelcontextprotocol/servers',
+    difficulty: 'Intermediário',
+    pricing: 'Gratuito',
+    tags: ['mcp', 'notion', 'automation', 'documents'],
     rating: 4.0,
-    integrations: ['Google Workspace', 'GitHub']
+    integrations: ['Notion', 'Claude', 'MCP Protocol']
+  },
+  {
+    name: 'Zapier MCP Server',
+    category: 'MCP Integration',
+    usage: 'Conectar IA a 8000+ aplicativos',
+    notes: 'Automação universal via Zapier',
+    url: 'https://github.com/modelcontextprotocol/servers',
+    difficulty: 'Intermediário',
+    pricing: 'Gratuito',
+    tags: ['mcp', 'zapier', 'automation', 'integration'],
+    rating: 4.3,
+    integrations: ['Zapier', 'Claude', '8000+ Apps']
+  },
+
+  // === BANCOS DE DADOS E RAG ===
+  {
+    name: 'Pinecone',
+    category: 'Banco vetorial',
+    usage: 'Banco de dados vetorial para RAG e busca semântica',
+    notes: 'Líder em performance para aplicações RAG',
+    url: 'https://www.pinecone.io/',
+    difficulty: 'Intermediário',
+    pricing: 'Freemium',
+    tags: ['vector-db', 'rag', 'semantic-search', 'embeddings'],
+    rating: 4.5,
+    integrations: ['OpenAI', 'LangChain', 'API']
+  },
+  {
+    name: 'Weaviate',
+    category: 'Banco vetorial open-source',
+    usage: 'Banco vetorial open-source com GraphQL',
+    notes: 'Alternativa open-source ao Pinecone',
+    url: 'https://weaviate.io/',
+    difficulty: 'Avançado',
+    pricing: 'Gratuito',
+    tags: ['vector-db', 'open-source', 'graphql', 'rag'],
+    rating: 4.3,
+    integrations: ['OpenAI', 'Cohere', 'Self-hosted']
+  },
+  {
+    name: 'Chroma',
+    category: 'Banco vetorial simples',
+    usage: 'Banco vetorial para embeddings e RAG',
+    notes: 'Fácil de usar para projetos pequenos',
+    url: 'https://www.trychroma.com/',
+    difficulty: 'Iniciante',
+    pricing: 'Gratuito',
+    tags: ['vector-db', 'simple', 'embeddings', 'local'],
+    rating: 4.2,
+    integrations: ['Python', 'JavaScript', 'Docker']
+  },
+  {
+    name: 'Qdrant',
+    category: 'Motor busca vetorial',
+    usage: 'Motor de busca vetorial de alta performance',
+    notes: 'Focado em performance e escalabilidade',
+    url: 'https://qdrant.tech/',
+    difficulty: 'Avançado',
+    pricing: 'Freemium',
+    tags: ['vector-search', 'performance', 'rust', 'scalable'],
+    rating: 4.4,
+    integrations: ['REST API', 'gRPC', 'Cloud']
+  },
+
+  // === REFACTORING E MUDANÇAS ===
+  {
+    name: 'Amp',
+    category: 'Mudanças em larga escala',
+    usage: 'Refactors amplos, renomes e migrações',
+    notes: 'Use com branch isolada e revisão atenta',
+    url: 'https://ampcode.com',
+    difficulty: 'Avançado',
+    pricing: 'Pago',
+    tags: ['refactor', 'migration', 'large-scale'],
+    rating: 4.2,
+    integrations: ['GitHub', 'GitLab']
   },
   {
     name: 'Augment',
-    category: 'Context-aware assistant',
-    usage: 'Assistente que entende contexto completo do projeto',
-    notes: 'Navega e entende toda a codebase',
+    category: 'Code Intelligence',
+    usage: 'Análise de código e sugestões de melhoria',
+    notes: 'Foco em qualidade e manutenibilidade',
     url: 'https://augmentcode.com/',
     difficulty: 'Intermediário',
     pricing: 'Pago',
-    tags: ['context-aware', 'codebase-analysis'],
-    rating: 4.3,
-    integrations: ['VS Code', 'GitHub']
-  },
-  {
-    name: 'BLACKBOX.AI',
-    category: 'Code search & snippets',
-    usage: 'Buscar código e snippets em repositórios',
-    notes: 'Grande base de código para referência',
-    url: 'https://blackbox.ai/',
-    difficulty: 'Iniciante',
-    pricing: 'Freemium',
-    tags: ['code-search', 'snippets', 'reference'],
-    rating: 4.0,
-    integrations: ['Browser', 'Extensions']
-  },
-  {
-    name: 'KiloCode',
-    category: 'Code execution',
-    usage: 'Execução segura de código em sandbox',
-    notes: 'Ambiente isolado para teste de código',
-    url: 'https://kilocode.com/',
-    difficulty: 'Intermediário',
-    pricing: 'Freemium',
-    tags: ['sandbox', 'execution', 'testing'],
-    rating: 3.9,
-    integrations: ['API', 'Multiple Languages']
-  },
-  {
-    name: 'Kiro',
-    category: 'AI runner',
-    usage: 'Executar scripts e automações com IA',
-    notes: 'Foco em automação de tarefas repetitivas',
-    url: 'https://kiro.ai/',
-    difficulty: 'Intermediário',
-    pricing: 'Beta',
-    tags: ['automation', 'scripts', 'ai-runner'],
-    rating: 3.8,
-    integrations: ['CLI', 'Scripts']
-  },
-  {
-    name: 'Trae',
-    category: 'Testing runner',
-    usage: 'Executar e gerenciar suites de teste',
-    notes: 'Otimizado para CI/CD pipelines',
-    url: 'https://trae.dev/',
-    difficulty: 'Avançado',
-    pricing: 'Freemium',
-    tags: ['testing', 'ci-cd', 'runner'],
+    tags: ['analysis', 'quality', 'maintainability'],
     rating: 4.1,
-    integrations: ['GitHub Actions', 'Jenkins']
+    integrations: ['GitHub', 'VS Code']
   },
+
+  // === PROTOCOL & INTEGRATION ===
   {
     name: 'MCP Servers',
     category: 'Protocol & Integration',
@@ -411,33 +632,42 @@ export const tools: Tool[] = [
     difficulty: 'Avançado',
     pricing: 'Gratuito',
     tags: ['protocol', 'integration', 'interoperability'],
-    rating: 4.0,
+    rating: 4.4,
     integrations: ['Claude', 'Multiple Tools']
-  },
-  {
-    name: 'Leap.new',
-    category: 'AI App Builder',
-    usage: 'Criar aplicações completas com prompts',
-    notes: 'Foco em full-stack development',
-    url: 'https://leap.new/',
-    difficulty: 'Iniciante',
-    pricing: 'Freemium',
-    tags: ['full-stack', 'app-builder', 'prompts'],
-    rating: 4.2,
-    integrations: ['GitHub', 'Deployment Platforms']
   }
 ];
 
 export const apiPlatforms: ApiPlatform[] = [
+  // === PLATAFORMAS PRINCIPAIS ===
+  {
+    name: 'OpenAI',
+    description: 'Plataforma oficial da OpenAI com GPT-4, GPT-3.5 e outros modelos proprietários. Líder em qualidade para aplicações comerciais.',
+    availableModels: 'GPT-4, GPT-4 Turbo, GPT-3.5 Turbo, DALL-E, Whisper',
+    freeLimits: 'Créditos iniciais de $5; depois pay-per-use',
+    apiUrl: 'https://platform.openai.com/',
+    compatibleWithOpenAI: true,
+    isLocal: false
+  },
+  {
+    name: 'Anthropic Claude',
+    description: 'API oficial do Claude com modelos Opus, Sonnet e Haiku. Excelente para análise, coding e raciocínio complexo.',
+    availableModels: 'Claude-3 Opus, Sonnet, Haiku, Claude-2',
+    freeLimits: 'Créditos mensais gratuitos; limites de rate',
+    apiUrl: 'https://www.anthropic.com/api',
+    compatibleWithOpenAI: false,
+    isLocal: false
+  },
   {
     name: 'OpenRouter',
     description: 'Plataforma que roteia para múltiplos provedores de LLMs, incluindo DeepSeek. Oferece acesso gratuito a modelos como DeepSeek-R1 via API compatível com OpenAI.',
-    availableModels: 'DeepSeek-R1, Llama, Mistral e outros open-source',
+    availableModels: 'GPT-4, Claude, DeepSeek-R1, Llama, Mistral e 200+ modelos',
     freeLimits: '1M tokens gratuitos iniciais + créditos de teste; limites de taxa diários',
     apiUrl: 'https://openrouter.ai',
     compatibleWithOpenAI: true,
     isLocal: false
   },
+
+  // === PLATAFORMAS OPEN-SOURCE ===
   {
     name: 'Hugging Face Inference API',
     description: 'Hospeda milhares de modelos open-source, incluindo DeepSeek-V3 e alternativas como Qwen, Mistral e Llama. API gratuita para inferência em modelos hospedados.',
@@ -448,32 +678,101 @@ export const apiPlatforms: ApiPlatform[] = [
     isLocal: false
   },
   {
-    name: 'Google AI Studio (Gemini API)',
+    name: 'Together AI',
+    description: 'Oferece API para mais de 200 modelos open-source, incluindo DeepSeek-R1. Foco em pay-per-token, mas com tier gratuito para testes.',
+    availableModels: 'DeepSeek-R1, Qwen, Llama-Vision, Mistral, Code Llama',
+    freeLimits: 'Tokens gratuitos para novos usuários; limites de throughput',
+    apiUrl: 'https://www.together.ai/models',
+    compatibleWithOpenAI: true,
+    isLocal: false
+  },
+  {
+    name: 'Replicate',
+    description: 'Plataforma para rodar modelos open-source hospedados, incluindo modelos de imagem, áudio e texto.',
+    availableModels: 'Llama, Stable Diffusion, CodeLlama, Whisper',
+    freeLimits: 'Créditos gratuitos mensais; pay-per-prediction',
+    apiUrl: 'https://replicate.com/',
+    compatibleWithOpenAI: false,
+    isLocal: false
+  },
+  {
+    name: 'Groq',
+    description: 'Plataforma de inferência ultra-rápida para modelos open-source, com API gratuita para desenvolvedores. Excelente para codificação e respostas velozes.',
+    availableModels: 'Llama-3, Mixtral, CodeLlama, Gemma (até 70B params)',
+    freeLimits: 'Créditos gratuitos iniciais (ex.: 1M tokens); limites de taxa',
+    apiUrl: 'https://console.groq.com/keys',
+    compatibleWithOpenAI: true,
+    isLocal: false
+  },
+
+  // === GIGANTES DA TECNOLOGIA ===
+  {
+    name: 'Google AI Studio (Gemini)',
     description: 'API gratuita para modelos do Google, com foco em raciocínio, codificação e multimodal (texto + imagem). Semelhante à DeepSeek em eficiência.',
-    availableModels: 'Gemini 1.5 Flash, Gemini Pro (versões gratuitas)',
+    availableModels: 'Gemini 1.5 Pro, Flash, Gemini Pro Vision',
     freeLimits: '60 requisições/minuto; 1.500/dia para testes',
     apiUrl: 'https://aistudio.google.com/app/apikey',
     compatibleWithOpenAI: false,
     isLocal: false
   },
   {
-    name: 'Groq',
-    description: 'Plataforma de inferência rápida para modelos open-source, com API gratuita para desenvolvedores. Excelente para codificação e respostas velozes.',
-    availableModels: 'Llama-3, Mixtral, Gemma (até 70B params)',
-    freeLimits: 'Créditos gratuitos iniciais (ex.: 1M tokens); limites de taxa',
-    apiUrl: 'https://console.groq.com/keys',
+    name: 'Azure OpenAI',
+    description: 'Modelos OpenAI hospedados na plataforma Microsoft Azure com controles enterprise e compliance.',
+    availableModels: 'GPT-4, GPT-3.5, DALL-E, Whisper via Azure',
+    freeLimits: 'Créditos Azure gratuitos; depois pay-per-use',
+    apiUrl: 'https://azure.microsoft.com/en-us/products/ai-services/openai-service',
     compatibleWithOpenAI: true,
     isLocal: false
   },
   {
-    name: 'Together AI',
-    description: 'Oferece API para mais de 200 modelos open-source, incluindo DeepSeek-R1. Foco em pay-per-token, mas com tier gratuito para testes.',
-    availableModels: 'DeepSeek-R1, Qwen, Llama-Vision, Mistral',
-    freeLimits: 'Tokens gratuitos para novos usuários; limites de throughput',
-    apiUrl: 'https://www.together.ai/models',
+    name: 'AWS Bedrock',
+    description: 'Plataforma de IA generativa da Amazon com múltiplos modelos via API unificada.',
+    availableModels: 'Claude, Llama, Titan, Cohere, Stability AI',
+    freeLimits: 'Tier gratuito AWS; depois pay-per-use',
+    apiUrl: 'https://aws.amazon.com/bedrock/',
+    compatibleWithOpenAI: false,
+    isLocal: false
+  },
+
+  // === ESPECIALIZADAS ===
+  {
+    name: 'Cohere',
+    description: 'Plataforma empresarial para modelos de linguagem com foco em retrieval, classificação e geração.',
+    availableModels: 'Command, Command-Light, Embed, Rerank',
+    freeLimits: 'API gratuita com limites mensais',
+    apiUrl: 'https://cohere.ai/',
+    compatibleWithOpenAI: false,
+    isLocal: false
+  },
+  {
+    name: 'Mistral AI',
+    description: 'API oficial dos modelos Mistral com foco em eficiência e performance europeia.',
+    availableModels: 'Mistral Large, Medium, Small, Codestral',
+    freeLimits: 'Créditos gratuitos iniciais',
+    apiUrl: 'https://mistral.ai/',
     compatibleWithOpenAI: true,
     isLocal: false
   },
+  {
+    name: 'Perplexity API',
+    description: 'API da plataforma de busca com IA, conectada à internet para informações atualizadas.',
+    availableModels: 'Sonar models (small, large, huge) com acesso à web',
+    freeLimits: 'Requisições gratuitas limitadas por mês',
+    apiUrl: 'https://www.perplexity.ai/hub',
+    compatibleWithOpenAI: false,
+    isLocal: false
+  },
+  {
+    name: 'Fireworks AI',
+    description: 'Inferência ultra-rápida para modelos open-source com foco em performance e customização.',
+    availableModels: 'Llama, CodeLlama, Mixtral, Stable Diffusion',
+    freeLimits: 'Créditos gratuitos mensais para teste',
+    apiUrl: 'https://fireworks.ai/',
+    compatibleWithOpenAI: true,
+    isLocal: false
+  },
+
+  // === PLATAFORMAS AGREGADORAS ===
   {
     name: 'AI/ML API',
     description: 'Plataforma que unifica APIs para modelos open-source como DeepSeek-V3. Tier gratuito para sandbox e testes, ideal para integração rápida.',
@@ -483,12 +782,32 @@ export const apiPlatforms: ApiPlatform[] = [
     compatibleWithOpenAI: true,
     isLocal: false
   },
+
+  // === SOLUÇÕES LOCAIS ===
   {
     name: 'Ollama',
     description: 'Ferramenta para rodar modelos localmente via API (não hospedada, mas gratuita). Suporta DeepSeek e similares; perfeito se você quiser evitar limites de nuvem.',
-    availableModels: 'DeepSeek-Coder, Llama-3, Mistral (baixe e rode localmente)',
+    availableModels: 'DeepSeek-Coder, Llama-3, Mistral, CodeLlama (baixe e rode localmente)',
     freeLimits: 'Ilimitado (depende do seu hardware); API local',
     apiUrl: 'https://ollama.com',
+    compatibleWithOpenAI: true,
+    isLocal: true
+  },
+  {
+    name: 'LM Studio',
+    description: 'Interface gráfica amigável para rodar modelos localmente com servidor compatível com OpenAI.',
+    availableModels: 'Qualquer modelo GGUF: Llama, Mistral, CodeLlama, etc',
+    freeLimits: 'Ilimitado (local); depende apenas do hardware',
+    apiUrl: 'https://lmstudio.ai/',
+    compatibleWithOpenAI: true,
+    isLocal: true
+  },
+  {
+    name: 'LocalAI',
+    description: 'Drop-in replacement local para OpenAI API, compatível com OpenAI SDK.',
+    availableModels: 'Llama, GPT4All, Alpaca, Vicuna e outros modelos GGML',
+    freeLimits: 'Ilimitado (local); apenas custos de hardware',
+    apiUrl: 'https://localai.io/',
     compatibleWithOpenAI: true,
     isLocal: true
   }
@@ -810,6 +1129,95 @@ export const educationalResources: EducationalResource[] = [
     difficulty: 'Intermediário',
     relatedStages: ['F'],
     relatedTools: ['CodeRabbit', 'Qodo.ai']
+  },
+  // === NOVOS RECURSOS EDUCACIONAIS ===
+  {
+    id: 'local-ai-setup',
+    title: 'Configurando IA Local com Ollama e LM Studio',
+    type: 'tutorial',
+    description: 'Guia completo para rodar modelos de IA localmente com privacidade total',
+    url: 'https://ollama.com/docs',
+    duration: '45 min',
+    difficulty: 'Intermediário',
+    relatedStages: ['F'],
+    relatedTools: ['Ollama', 'LM Studio', 'LocalAI']
+  },
+  {
+    id: 'vector-databases-rag',
+    title: 'RAG com Bancos Vetoriais: Pinecone vs Weaviate',
+    type: 'tutorial',
+    description: 'Comparação prática entre diferentes bancos vetoriais para implementar RAG',
+    url: 'https://www.pinecone.io/learn/rag/',
+    duration: '60 min',
+    difficulty: 'Avançado',
+    relatedStages: ['E'],
+    relatedTools: ['Pinecone', 'Weaviate', 'Chroma']
+  },
+  {
+    id: 'api-platforms-comparison',
+    title: 'Comparativo de APIs: OpenAI vs OpenRouter vs Anthropic',
+    type: 'guide',
+    description: 'Análise detalhada de custos, performance e modelos disponíveis',
+    url: 'https://openrouter.ai/docs',
+    duration: '20 min',
+    difficulty: 'Intermediário',
+    relatedStages: ['A'],
+    relatedTools: ['OpenAI', 'OpenRouter', 'Anthropic Claude']
+  },
+  {
+    id: 'continuous-integration',
+    title: 'Integração Contínua com IA: GitHub Actions + Copilot',
+    type: 'tutorial',
+    description: 'Automatize testes e deployments com ajuda de IA',
+    url: 'https://docs.github.com/en/actions',
+    duration: '40 min',
+    difficulty: 'Avançado',
+    relatedStages: ['F'],
+    relatedTools: ['GitHub Copilot', 'GitHub Actions']
+  },
+  {
+    id: 'prototype-to-production',
+    title: 'Do Protótipo à Produção: v0.dev + bolt.new Workflow',
+    type: 'video',
+    description: 'Fluxo completo desde o protótipo até o deploy em produção',
+    url: 'https://v0.dev/docs',
+    duration: '35 min',
+    difficulty: 'Intermediário',  
+    relatedStages: ['C'],
+    relatedTools: ['v0 (Vercel)', 'bolt.new', 'Vercel']
+  },
+  {
+    id: 'ai-assisted-debugging',
+    title: 'Debug Assistido por IA: Claude + Perplexity',
+    type: 'guide',
+    description: 'Técnicas avançadas de debugging usando múltiplos assistentes de IA',
+    url: 'https://claude.ai/docs',
+    duration: '25 min',
+    difficulty: 'Intermediário',
+    relatedStages: ['D'],
+    relatedTools: ['Claude Code', 'Perplexity', 'ChatGPT – Code']
+  },
+  {
+    id: 'mobile-first-ai-development', 
+    title: 'Desenvolvimento Mobile-First com IA',
+    type: 'tutorial',
+    description: 'Como usar ferramentas de IA para criar apps responsivos e PWAs',
+    url: 'https://web.dev/progressive-web-apps/',
+    duration: '50 min',
+    difficulty: 'Avançado',
+    relatedStages: ['C'],
+    relatedTools: ['Framer AI', 'v0 (Vercel)', 'Lovable']
+  },
+  {
+    id: 'security-best-practices',
+    title: 'Segurança em Projetos com IA: APIs, Tokens e Dados',
+    type: 'guide',
+    description: 'Práticas essenciais de segurança ao integrar múltiplas APIs de IA',
+    url: 'https://owasp.org/www-project-top-ten/',
+    duration: '30 min',
+    difficulty: 'Avançado',
+    relatedStages: ['A'],
+    relatedTools: ['GitHub PATs', 'Environment Variables']
   }
 ];
 
