@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
@@ -9,7 +10,7 @@ import { EnhancedToolCard } from "@/components/EnhancedToolCard";
 import { ApiPlatformCard } from "@/components/ApiPlatformCard";
 import { WorkflowStageCard } from "@/components/WorkflowStageCard";
 import { ProgressTracker } from "@/components/ProgressTracker";
-import { Search, Filter, Star, Code2, Users, Brain, Zap, BarChart3, Menu } from "lucide-react";
+import { Search, Filter, Star, Code2, Users, Brain, Zap, BarChart3, Menu, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
@@ -84,7 +85,15 @@ const Index = () => {
       {/* Mobile-First Header */}
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur safe-area-top mb-4">
         <div className="mobile-padding py-3">
-          <h1 className="text-lg md:text-4xl font-bold text-center">Workflow de Desenvolvimento IA</h1>
+          <div className="flex items-center justify-between mb-2">
+            <h1 className="text-lg md:text-4xl font-bold">Workflow de Desenvolvimento IA</h1>
+            <Link to="/devtools-guide">
+              <Button variant="outline" size="sm" className="gap-2">
+                <BookOpen className="h-4 w-4" />
+                <span className="hidden sm:inline">DevTools Guide</span>
+              </Button>
+            </Link>
+          </div>
           <p className="text-xs md:text-xl text-muted-foreground text-center mt-1 md:mt-2">
             Guia completo para desenvolvimento com IA
           </p>
