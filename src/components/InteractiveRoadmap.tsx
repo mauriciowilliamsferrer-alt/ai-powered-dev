@@ -116,7 +116,11 @@ const roadmapPhases = [
   }
 ];
 
-export const InteractiveRoadmap = () => {
+interface InteractiveRoadmapProps {
+  activeTutorialPhase?: number;
+}
+
+export const InteractiveRoadmap = ({ activeTutorialPhase }: InteractiveRoadmapProps) => {
   return (
     <section className="py-12 px-4">
       <div className="max-w-4xl mx-auto">
@@ -132,8 +136,11 @@ export const InteractiveRoadmap = () => {
 
         <div className="space-y-6">
           {roadmapPhases.map((phase, idx) => (
-            <div key={phase.phase} className="relative">
-              <RoadmapPhase {...phase} />
+            <div key={phase.phase} className="relative" id={`phase-${phase.phase}`}>
+              <RoadmapPhase 
+                {...phase} 
+                isActiveTutorial={activeTutorialPhase === phase.phase - 1}
+              />
               
               {idx < roadmapPhases.length - 1 && (
                 <div className="flex justify-center my-4">

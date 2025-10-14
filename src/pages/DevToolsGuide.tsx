@@ -1,13 +1,36 @@
+import { useState } from "react";
 import { DevToolsHero } from "@/components/DevToolsHero";
 import { LearningPathCard } from "@/components/LearningPathCard";
 import { CategorySection } from "@/components/CategorySection";
 import { InteractiveRoadmap } from "@/components/InteractiveRoadmap";
+import { VoiceTutorial } from "@/components/VoiceTutorial";
 import { devToolsCategories, learningPaths } from "@/data/devToolsData";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Github, Heart } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { ArrowLeft, Github, Heart, Play } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTutorialVoice } from "@/hooks/useTutorialVoice";
+import { useToast } from "@/hooks/use-toast";
 
 const DevToolsGuide = () => {
+  const [showTutorial, setShowTutorial] = useState(false);
+  const { startTutorial, currentPhase, isPlaying } = useTutorialVoice();
+  const { toast } = useToast();
+
+  const handleStartTutorial = async () => {
+    try {
+      setShowTutorial(true);
+      await startTutorial(0);
+    } catch (error) {
+      toast({
+        title: "Erro ao iniciar tutorial",
+        description: "Verifique se a API key do ElevenLabs está configurada corretamente.",
+        variant: "destructive",
+      });
+      setShowTutorial(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -51,9 +74,36 @@ const DevToolsGuide = () => {
         </div>
       </section>
 
+      {/* Tutorial Voice Banner */}
+      <section className="py-8 px-4 bg-gradient-to-b from-primary/5 to-background">
+        <div className="max-w-4xl mx-auto">
+          <Card className="bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
+            <CardContent className="p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+              <div className="text-center md:text-left">
+                <h3 className="text-xl font-semibold mb-2 flex items-center gap-2 justify-center md:justify-start">
+                  🎧 Tutorial Guiado por Voz
+                </h3>
+                <p className="text-muted-foreground">
+                  Aprenda o fluxo completo com narração profissional em português
+                </p>
+              </div>
+              <Button 
+                size="lg" 
+                onClick={handleStartTutorial}
+                disabled={showTutorial}
+                className="gap-2"
+              >
+                <Play className="h-4 w-4" /> 
+                {showTutorial ? "Tutorial Ativo" : "Iniciar Tutorial"}
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
       {/* Interactive Roadmap */}
       <section className="bg-gradient-to-b from-primary/5 to-background">
-        <InteractiveRoadmap />
+        <InteractiveRoadmap activeTutorialPhase={isPlaying ? currentPhase : undefined} />
       </section>
 
       {/* Tools Categories */}
@@ -123,6 +173,14 @@ const DevToolsGuide = () => {
           </div>
         </div>
       </footer>
+
+      {/* Voice Tutorial Player */}
+      {showTutorial && (
+        <VoiceTutorial 
+          onClose={() => setShowTutorial(false)}
+          activeTutorialPhase={currentPhase}
+        />
+      )}
     </div>
   );
 };

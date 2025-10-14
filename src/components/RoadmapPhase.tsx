@@ -11,6 +11,7 @@ interface RoadmapPhaseProps {
   tools: Array<{ name: string; category: string }>;
   completed?: boolean;
   color: string;
+  isActiveTutorial?: boolean;
 }
 
 export const RoadmapPhase = ({ 
@@ -19,15 +20,17 @@ export const RoadmapPhase = ({
   description, 
   tools,
   completed = false,
-  color
+  color,
+  isActiveTutorial = false
 }: RoadmapPhaseProps) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(isActiveTutorial);
 
   return (
     <Card 
       className={cn(
         "transition-all duration-300 hover:shadow-lg border-2",
-        completed ? "border-primary/50 bg-primary/5" : "border-border"
+        completed ? "border-primary/50 bg-primary/5" : "border-border",
+        isActiveTutorial && "border-primary shadow-[0_0_20px_rgba(var(--primary),0.3)] animate-pulse"
       )}
     >
       <CardHeader 
