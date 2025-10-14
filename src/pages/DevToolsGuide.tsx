@@ -1,6 +1,7 @@
 import { DevToolsHero } from "@/components/DevToolsHero";
 import { LearningPathCard } from "@/components/LearningPathCard";
 import { CategorySection } from "@/components/CategorySection";
+import { InteractiveRoadmap } from "@/components/InteractiveRoadmap";
 import { devToolsCategories, learningPaths } from "@/data/devToolsData";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Github, Heart } from "lucide-react";
@@ -48,6 +49,11 @@ const DevToolsGuide = () => {
             ))}
           </div>
         </div>
+      </section>
+
+      {/* Interactive Roadmap */}
+      <section className="bg-gradient-to-b from-primary/5 to-background">
+        <InteractiveRoadmap />
       </section>
 
       {/* Tools Categories */}
