@@ -1,4 +1,4 @@
-import { useTutorialVoice } from '@/hooks/useTutorialVoice';
+import { useTutorialVoice } from '@/contexts/TutorialVoiceContext';
 import { TutorialControls } from './TutorialControls';
 import { TutorialTranscript } from './TutorialTranscript';
 import { Card, CardContent } from '@/components/ui/card';

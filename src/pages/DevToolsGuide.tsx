@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, Github, Heart, Play } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useTutorialVoice } from "@/hooks/useTutorialVoice";
+import { useTutorialVoice } from "@/contexts/TutorialVoiceContext";
 import { useToast } from "@/hooks/use-toast";
 
 const DevToolsGuide = () => {
