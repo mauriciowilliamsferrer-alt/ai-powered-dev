@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react';
 import { tutorialScripts } from '@/data/tutorialScripts';
-import { supabase } from '@/lib/supabase';
 
 interface TutorialState {
   isPlaying: boolean;
@@ -68,34 +67,33 @@ export const TutorialVoiceProvider = ({ children }: { children: ReactNode }) => 
     savePreferences();
   }, [state.volume, state.playbackRate, state.autoPlay, savePreferences]);
 
-  const generateAudio = useCallback(async (phaseIndex: number): Promise<string> => {
+  // Load pre-generated audio files from public/audio directory
+  // To generate audio files, use ElevenLabs API with voice ID: FGY2WhTYpPnrIDTdsKH5
+  // Model: eleven_multilingual_v2, and save as public/audio/phase-{1-8}.mp3
+  const loadAudio = useCallback(async (phaseIndex: number): Promise<string> => {
     const script = tutorialScripts[phaseIndex];
     if (!script) throw new Error('Script não encontrado');
 
     setState(prev => ({ ...prev, isGenerating: true }));
 
     try {
-      const { data, error } = await supabase.functions.invoke('generate-tutorial-audio', {
-        body: {
-          text: script.narrationText,
-          phaseIndex,
-        },
-      });
-
-      if (error) {
-        console.error('Error calling edge function:', error);
-        throw new Error(`Erro ao gerar áudio: ${error.message}`);
+      const audioPath = `/audio/phase-${phaseIndex + 1}.mp3`;
+      
+      // Test if audio file exists
+      const response = await fetch(audioPath, { method: 'HEAD' });
+      
+      if (!response.ok) {
+        throw new Error(
+          `Arquivo de áudio não encontrado: ${audioPath}\n\n` +
+          `Para gerar os áudios:\n` +
+          `1. Use a API do ElevenLabs\n` +
+          `2. Voice ID: FGY2WhTYpPnrIDTdsKH5 (Laura)\n` +
+          `3. Model: eleven_multilingual_v2\n` +
+          `4. Salve como public/audio/phase-1.mp3 até phase-8.mp3`
+        );
       }
 
-      if (data instanceof Blob) {
-        return URL.createObjectURL(data);
-      } else if (data && typeof data === 'object' && data.error) {
-        throw new Error(data.error);
-      }
-
-      // If data is ArrayBuffer or similar, convert to Blob
-      const blob = new Blob([data], { type: 'audio/mpeg' });
-      return URL.createObjectURL(blob);
+      return audioPath;
     } finally {
       setState(prev => ({ ...prev, isGenerating: false }));
     }
@@ -103,7 +101,7 @@ export const TutorialVoiceProvider = ({ children }: { children: ReactNode }) => 
 
   const startTutorial = useCallback(async (phaseIndex: number = 0) => {
     try {
-      const audioUrl = await generateAudio(phaseIndex);
+      const audioUrl = await loadAudio(phaseIndex);
       
       const audio = new Audio(audioUrl);
       audio.volume = state.volume;
@@ -136,7 +134,7 @@ export const TutorialVoiceProvider = ({ children }: { children: ReactNode }) => 
       console.error('Erro ao iniciar tutorial:', error);
       throw error;
     }
-  }, [state.volume, state.playbackRate, state.autoPlay, generateAudio]);
+  }, [state.volume, state.playbackRate, state.autoPlay, loadAudio]);
 
   const pauseTutorial = useCallback(() => {
     if (audioElement) {

@@ -1,0 +1,42 @@
+# Audio Files Directory
+
+Place pre-generated audio files here:
+- phase-1.mp3
+- phase-2.mp3
+- phase-3.mp3
+- phase-4.mp3
+- phase-5.mp3
+- phase-6.mp3
+- phase-7.mp3
+- phase-8.mp3
+
+## How to Generate Audio Files
+
+Use ElevenLabs API to generate the audio files:
+
+1. **Voice ID**: FGY2WhTYpPnrIDTdsKH5 (Laura - female, clear voice)
+2. **Model**: eleven_multilingual_v2
+3. **Settings**:
+   - stability: 0.5
+   - similarity_boost: 0.75
+   - style: 0.5
+
+4. **Scripts**: See `src/data/tutorialScripts.ts` for the narration text
+
+Example using curl:
+
+```bash
+curl -X POST https://api.elevenlabs.io/v1/text-to-speech/FGY2WhTYpPnrIDTdsKH5 \
+  -H "xi-api-key: YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "text": "YOUR_NARRATION_TEXT",
+    "model_id": "eleven_multilingual_v2",
+    "voice_settings": {
+      "stability": 0.5,
+      "similarity_boost": 0.75,
+      "style": 0.5
+    }
+  }' \
+  --output phase-1.mp3
+```
