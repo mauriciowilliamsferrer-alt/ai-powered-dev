@@ -37,12 +37,35 @@ export const EnhancedToolCard = ({ tool, onFavorite, isFavorited = false }: Enha
     }
   };
 
+  const getPhaseColor = (phase?: string) => {
+    if (!phase) return 'hsl(var(--muted))';
+    const colors: Record<string, string> = {
+      'ideacao': 'hsl(0 84.2% 60.2%)',
+      'planejamento': 'hsl(197.4 71.4% 73.3%)',
+      'design': 'hsl(262.1 83.3% 57.8%)',
+      'desenvolvimento': 'hsl(142.1 76.2% 36.3%)',
+      'backend': 'hsl(47.9 95.8% 53.1%)',
+      'qualidade': 'hsl(215.4 16.3% 46.9%)',
+      'deploy': 'hsl(221.2 83.2% 53.3%)',
+      'monitora': 'hsl(280 83.3% 67.8%)',
+    };
+    return colors[phase] || 'hsl(var(--muted))';
+  };
+
   return (
     <Card className="h-full transition-all duration-300 hover:shadow-md group">
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
           <div className="flex-1 min-w-0">
             <div className="flex items-center space-x-2 mb-2">
+              {tool.sequenceNumber && (
+                <div 
+                  className="flex items-center justify-center w-6 h-6 rounded-full font-bold text-white text-xs shrink-0"
+                  style={{ backgroundColor: getPhaseColor(tool.phase) }}
+                >
+                  {tool.sequenceNumber}
+                </div>
+              )}
               <CardTitle className="text-lg truncate">{tool.name}</CardTitle>
               {onFavorite && (
                 <Button

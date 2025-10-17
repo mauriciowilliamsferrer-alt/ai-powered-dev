@@ -17,10 +17,12 @@ import {
   workflowStages, 
   loadTools, 
   loadApiPlatforms, 
+  projectPhases,
   WorkflowStage,
   Tool,
   ApiPlatform 
 } from "@/data/workflowDataOptimized";
+import { WorkflowSequence } from "@/components/WorkflowSequence";
 
 const Index = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -122,10 +124,14 @@ const Index = () => {
 
         {/* Main Tabs */}
         <Tabs defaultValue="workflow" className="w-full">
-          <TabsList className="mobile-grid grid-cols-3 w-full mb-4">
+          <TabsList className="mobile-grid grid-cols-4 w-full mb-4">
             <TabsTrigger value="workflow" className="text-xs md:text-sm touch-target">
               <Code2 className="h-3 w-3 md:h-4 md:w-4 mr-1" />
               Workflow
+            </TabsTrigger>
+            <TabsTrigger value="sequence" className="text-xs md:text-sm touch-target">
+              <Zap className="h-3 w-3 md:h-4 md:w-4 mr-1" />
+              Fluxo
             </TabsTrigger>
             <TabsTrigger value="tools" className="text-xs md:text-sm touch-target">
               <Users className="h-3 w-3 md:h-4 md:w-4 mr-1" />
@@ -150,6 +156,23 @@ const Index = () => {
                   <WorkflowStageCard key={stage.id} stage={stage} />
                 ))}
               </div>
+            )}
+          </TabsContent>
+
+          <TabsContent value="sequence" className="space-y-4">
+            {isLoading ? (
+              <div className="space-y-3">
+                {[...Array(5)].map((_, i) => (
+                  <Skeleton key={i} className="h-48" />
+                ))}
+              </div>
+            ) : (
+              <WorkflowSequence 
+                tools={tools}
+                phases={projectPhases}
+                onFavorite={handleFavoriteToggle}
+                favoriteTools={favoriteTools}
+              />
             )}
           </TabsContent>
 

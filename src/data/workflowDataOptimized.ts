@@ -20,6 +20,14 @@ export interface Tool {
   tags: string[];
   rating: number;
   integrations: string[];
+  sequenceNumber?: number;
+  phase?: string;
+  nextTools?: string[];
+  previousTools?: string[];
+  useCases?: string[];
+  setupTime?: string;
+  monthlyCost?: string;
+  learningCurve?: number;
 }
 
 export interface EducationalResource {
@@ -59,6 +67,73 @@ export interface Action {
   expectedResult: string;
   notes: string;
 }
+
+export interface ProjectPhase {
+  id: string;
+  name: string;
+  description: string;
+  color: string;
+  icon: string;
+}
+
+export const projectPhases: ProjectPhase[] = [
+  {
+    id: 'ideacao',
+    name: '1. Ideação & Brainstorm',
+    description: 'Definir conceito, validar ideia, criar briefing inicial',
+    color: 'hsl(0 84.2% 60.2%)',
+    icon: '💡'
+  },
+  {
+    id: 'planejamento',
+    name: '2. Planejamento & Arquitetura',
+    description: 'Schemas de banco, arquitetura, stack técnico',
+    color: 'hsl(197.4 71.4% 73.3%)',
+    icon: '📋'
+  },
+  {
+    id: 'design',
+    name: '3. Design & Prototipagem',
+    description: 'UI/UX, componentes visuais, design system',
+    color: 'hsl(262.1 83.3% 57.8%)',
+    icon: '🎨'
+  },
+  {
+    id: 'desenvolvimento',
+    name: '4. Desenvolvimento',
+    description: 'Código, implementação, features',
+    color: 'hsl(142.1 76.2% 36.3%)',
+    icon: '💻'
+  },
+  {
+    id: 'backend',
+    name: '5. Backend & Database',
+    description: 'APIs, banco de dados, autenticação',
+    color: 'hsl(47.9 95.8% 53.1%)',
+    icon: '🔧'
+  },
+  {
+    id: 'qualidade',
+    name: '6. Qualidade & Testes',
+    description: 'Testes, revisão de código, CI/CD',
+    color: 'hsl(215.4 16.3% 46.9%)',
+    icon: '✅'
+  },
+  {
+    id: 'deploy',
+    name: '7. Deploy & Infraestrutura',
+    description: 'Hospedagem, domínio, SSL, CDN',
+    color: 'hsl(221.2 83.2% 53.3%)',
+    icon: '🚀'
+  },
+  {
+    id: 'monitora',
+    name: '8. Monitoramento & Manutenção',
+    description: 'Analytics, logs, suporte, updates',
+    color: 'hsl(280 83.3% 67.8%)',
+    icon: '📊'
+  }
+];
 
 // Essential data loaded immediately
 export const workflowStages: WorkflowStage[] = [
