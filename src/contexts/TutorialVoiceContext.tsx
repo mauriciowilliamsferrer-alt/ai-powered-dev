@@ -102,29 +102,84 @@ export const TutorialVoiceProvider = ({ children }: { children: ReactNode }) => 
   useEffect(() => {
     return () => {
       if (progressInterval) clearInterval(progressInterval);
-      window.speechSynthesis.cancel();
+      if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+        window.speechSynthesis.cancel();
+      }
     };
   }, [progressInterval]);
+
+  // Wait for voices to be loaded
+  const waitForVoices = (): Promise<SpeechSynthesisVoice[]> => {
+    return new Promise((resolve) => {
+      let voices = window.speechSynthesis.getVoices();
+      
+      if (voices.length > 0) {
+        resolve(voices);
+        return;
+      }
+      
+      const handler = () => {
+        voices = window.speechSynthesis.getVoices();
+        if (voices.length > 0) {
+          window.speechSynthesis.removeEventListener('voiceschanged', handler);
+          resolve(voices);
+        }
+      };
+      
+      window.speechSynthesis.addEventListener('voiceschanged', handler);
+      
+      // Safety timeout (5 seconds)
+      setTimeout(() => {
+        window.speechSynthesis.removeEventListener('voiceschanged', handler);
+        resolve(window.speechSynthesis.getVoices());
+      }, 5000);
+    });
+  };
 
   const startTutorial = useCallback(async (phaseIndex: number = 0) => {
     try {
       const script = tutorialScripts[phaseIndex];
       if (!script) throw new Error('Script não encontrado');
 
-      // Cancel any ongoing speech
-      window.speechSynthesis.cancel();
+      // Wait for voices to load
+      const voices = await waitForVoices();
+      
+      if (voices.length === 0) {
+        console.error('❌ Nenhuma voz disponível no navegador');
+        throw new Error('Nenhuma voz disponível no navegador');
+      }
+
+      // Select PT-BR voice if not selected
+      let voiceToUse = state.selectedVoice;
+      if (!voiceToUse) {
+        const ptBRVoice = voices.find(v => v.lang === 'pt-BR' || v.lang.startsWith('pt-BR'));
+        const ptVoice = voices.find(v => v.lang.startsWith('pt'));
+        voiceToUse = ptBRVoice || ptVoice || voices[0];
+        
+        setState(prev => ({ ...prev, selectedVoice: voiceToUse }));
+      }
+
       if (progressInterval) clearInterval(progressInterval);
 
       // Create new utterance
       const newUtterance = new SpeechSynthesisUtterance(script.narrationText);
       
-      if (state.selectedVoice) {
-        newUtterance.voice = state.selectedVoice;
+      if (voiceToUse) {
+        newUtterance.voice = voiceToUse;
       }
       
       newUtterance.volume = state.volume;
       newUtterance.rate = state.playbackRate;
       newUtterance.lang = 'pt-BR';
+      newUtterance.pitch = 1;
+
+      console.log('🎤 Iniciando síntese de voz:', {
+        texto: script.narrationText.substring(0, 50) + '...',
+        voz: voiceToUse?.name,
+        idioma: voiceToUse?.lang,
+        volume: state.volume,
+        velocidade: state.playbackRate
+      });
 
       // Progress tracking (estimated based on script duration)
       const estimatedDuration = script.duration * 1000; // Convert to milliseconds
@@ -143,7 +198,12 @@ export const TutorialVoiceProvider = ({ children }: { children: ReactNode }) => 
       setProgressInterval(interval);
 
       // Event handlers
+      newUtterance.onstart = () => {
+        console.log('✅ Reprodução INICIADA com sucesso');
+      };
+
       newUtterance.onend = () => {
+        console.log('✅ Reprodução FINALIZADA');
         if (interval) clearInterval(interval);
         
         if (state.autoPlay && phaseIndex < tutorialScripts.length - 1) {
@@ -159,7 +219,10 @@ export const TutorialVoiceProvider = ({ children }: { children: ReactNode }) => 
       };
 
       newUtterance.onerror = (event) => {
-        console.error('Speech synthesis error:', event);
+        console.error('❌ ERRO na síntese de voz:', {
+          erro: event.error,
+          voz: voiceToUse?.name
+        });
         if (interval) clearInterval(interval);
         setState(prev => ({ 
           ...prev, 
@@ -216,7 +279,9 @@ export const TutorialVoiceProvider = ({ children }: { children: ReactNode }) => 
   }, [state.currentPhase, state.progress]);
 
   const stopTutorial = useCallback(() => {
-    window.speechSynthesis.cancel();
+    if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+      window.speechSynthesis.cancel();
+    }
     if (progressInterval) clearInterval(progressInterval);
     setState(prev => ({
       ...prev,

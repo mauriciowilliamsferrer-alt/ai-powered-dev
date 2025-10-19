@@ -6,7 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { X, Loader2, Mic2 } from 'lucide-react';
+import { X, Loader2, Mic2, Volume2, AlertCircle, Info } from 'lucide-react';
 import { tutorialScripts } from '@/data/tutorialScripts';
 
 interface VoiceTutorialProps {
@@ -33,7 +33,20 @@ export const VoiceTutorial = ({ onClose, activeTutorialPhase }: VoiceTutorialPro
     setSelectedVoice,
   } = useTutorialVoice();
 
-  const { portugueseVoices, allVoices } = useBrowserVoices();
+  const { portugueseVoices, allVoices, isLoading } = useBrowserVoices();
+
+  const testVoice = () => {
+    const test = new SpeechSynthesisUtterance('Teste de voz em português');
+    if (selectedVoice) {
+      test.voice = selectedVoice;
+    }
+    test.lang = 'pt-BR';
+    test.volume = volume;
+    test.rate = playbackRate;
+    test.onstart = () => console.log('✅ Teste de voz iniciado');
+    test.onerror = (e) => console.error('❌ Erro no teste de voz:', e);
+    window.speechSynthesis.speak(test);
+  };
 
   const handlePlayPause = () => {
     if (isPlaying) {
@@ -94,13 +107,43 @@ export const VoiceTutorial = ({ onClose, activeTutorialPhase }: VoiceTutorialPro
           </div>
         </div>
 
+        {/* Voice Loading Status */}
+        {isLoading && (
+          <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-3">
+            <p className="text-xs text-yellow-600 dark:text-yellow-400 flex items-center gap-2">
+              <AlertCircle className="h-4 w-4" />
+              Carregando vozes do navegador... Por favor, aguarde.
+            </p>
+          </div>
+        )}
+
+        {!isLoading && allVoices.length > 0 && portugueseVoices.length === 0 && (
+          <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
+            <p className="text-xs text-blue-600 dark:text-blue-400 flex items-center gap-2">
+              <Info className="h-4 w-4" />
+              Nenhuma voz em português detectada. Usando voz padrão do sistema.
+            </p>
+          </div>
+        )}
+
         {/* Voice Selector */}
-        {(portugueseVoices.length > 0 || allVoices.length > 0) && (
+        {!isLoading && (portugueseVoices.length > 0 || allVoices.length > 0) && (
           <div className="space-y-2">
-            <label className="text-xs text-muted-foreground flex items-center gap-2">
-              <Mic2 className="h-3 w-3" />
-              Voz do Narrador
-            </label>
+            <div className="flex items-center justify-between">
+              <label className="text-xs text-muted-foreground flex items-center gap-2">
+                <Mic2 className="h-3 w-3" />
+                Voz do Narrador
+              </label>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={testVoice}
+                className="h-6 px-2 text-xs"
+              >
+                <Volume2 className="h-3 w-3 mr-1" />
+                Testar
+              </Button>
+            </div>
             <Select
               value={selectedVoice?.name || ''}
               onValueChange={(value) => {

@@ -10,6 +10,7 @@ export interface BrowserVoice {
 export const useBrowserVoices = () => {
   const [voices, setVoices] = useState<BrowserVoice[]>([]);
   const [selectedVoice, setSelectedVoice] = useState<SpeechSynthesisVoice | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const loadVoices = () => {
@@ -23,6 +24,7 @@ export const useBrowserVoices = () => {
       }));
 
       setVoices(mappedVoices);
+      setIsLoading(false);
 
       // Auto-select first Portuguese (Brazil) voice
       const ptBRVoice = availableVoices.find(v => 
@@ -56,5 +58,6 @@ export const useBrowserVoices = () => {
     portugueseVoices,
     selectedVoice,
     setSelectedVoice,
+    isLoading,
   };
 };
