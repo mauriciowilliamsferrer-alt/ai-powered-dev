@@ -10,6 +10,7 @@ interface TutorialState {
   playbackRate: number;
   autoPlay: boolean;
   isGenerating: boolean;
+  selectedVoice: SpeechSynthesisVoice | null;
 }
 
 interface TutorialVoiceContextType extends TutorialState {
@@ -21,6 +22,7 @@ interface TutorialVoiceContextType extends TutorialState {
   setVolume: (volume: number) => void;
   setPlaybackRate: (rate: number) => void;
   toggleAutoPlay: () => void;
+  setSelectedVoice: (voice: SpeechSynthesisVoice) => void;
 }
 
 const TutorialVoiceContext = createContext<TutorialVoiceContextType | undefined>(undefined);
@@ -35,9 +37,38 @@ export const TutorialVoiceProvider = ({ children }: { children: ReactNode }) => 
     playbackRate: 1,
     autoPlay: true,
     isGenerating: false,
+    selectedVoice: null,
   });
 
-  const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
+  const [utterance, setUtterance] = useState<SpeechSynthesisUtterance | null>(null);
+  const [progressInterval, setProgressInterval] = useState<NodeJS.Timeout | null>(null);
+
+  // Load voices when available
+  useEffect(() => {
+    const loadVoices = () => {
+      const voices = window.speechSynthesis.getVoices();
+      const ptBRVoice = voices.find(v => v.lang === 'pt-BR' || v.lang.startsWith('pt-BR'));
+      const ptVoice = voices.find(v => v.lang.startsWith('pt'));
+      
+      if (!state.selectedVoice && (ptBRVoice || ptVoice)) {
+        setState(prev => ({ 
+          ...prev, 
+          selectedVoice: ptBRVoice || ptVoice || voices[0] || null 
+        }));
+      }
+    };
+
+    loadVoices();
+    if (window.speechSynthesis.onvoiceschanged !== undefined) {
+      window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+
+    return () => {
+      if (window.speechSynthesis.onvoiceschanged !== undefined) {
+        window.speechSynthesis.onvoiceschanged = null;
+      }
+    };
+  }, [state.selectedVoice]);
 
   // Load preferences from localStorage
   useEffect(() => {
@@ -67,61 +98,78 @@ export const TutorialVoiceProvider = ({ children }: { children: ReactNode }) => 
     savePreferences();
   }, [state.volume, state.playbackRate, state.autoPlay, savePreferences]);
 
-  // Load pre-generated audio files from public/audio directory
-  // To generate audio files, use ElevenLabs API with voice ID: FGY2WhTYpPnrIDTdsKH5
-  // Model: eleven_multilingual_v2, and save as public/audio/phase-{1-8}.mp3
-  const loadAudio = useCallback(async (phaseIndex: number): Promise<string> => {
-    const script = tutorialScripts[phaseIndex];
-    if (!script) throw new Error('Script não encontrado');
-
-    setState(prev => ({ ...prev, isGenerating: true }));
-
-    try {
-      const audioPath = `/audio/phase-${phaseIndex + 1}.mp3`;
-      
-      // Test if audio file exists
-      const response = await fetch(audioPath, { method: 'HEAD' });
-      
-      if (!response.ok) {
-        throw new Error(
-          `Arquivo de áudio não encontrado: ${audioPath}\n\n` +
-          `Para gerar os áudios:\n` +
-          `1. Use a API do ElevenLabs\n` +
-          `2. Voice ID: FGY2WhTYpPnrIDTdsKH5 (Laura)\n` +
-          `3. Model: eleven_multilingual_v2\n` +
-          `4. Salve como public/audio/phase-1.mp3 até phase-8.mp3`
-        );
-      }
-
-      return audioPath;
-    } finally {
-      setState(prev => ({ ...prev, isGenerating: false }));
-    }
-  }, []);
+  // Clean up on unmount
+  useEffect(() => {
+    return () => {
+      if (progressInterval) clearInterval(progressInterval);
+      window.speechSynthesis.cancel();
+    };
+  }, [progressInterval]);
 
   const startTutorial = useCallback(async (phaseIndex: number = 0) => {
     try {
-      const audioUrl = await loadAudio(phaseIndex);
+      const script = tutorialScripts[phaseIndex];
+      if (!script) throw new Error('Script não encontrado');
+
+      // Cancel any ongoing speech
+      window.speechSynthesis.cancel();
+      if (progressInterval) clearInterval(progressInterval);
+
+      // Create new utterance
+      const newUtterance = new SpeechSynthesisUtterance(script.narrationText);
       
-      const audio = new Audio(audioUrl);
-      audio.volume = state.volume;
-      audio.playbackRate = state.playbackRate;
+      if (state.selectedVoice) {
+        newUtterance.voice = state.selectedVoice;
+      }
+      
+      newUtterance.volume = state.volume;
+      newUtterance.rate = state.playbackRate;
+      newUtterance.lang = 'pt-BR';
 
-      audio.addEventListener('timeupdate', () => {
-        const progress = (audio.currentTime / audio.duration) * 100;
+      // Progress tracking (estimated based on script duration)
+      const estimatedDuration = script.duration * 1000; // Convert to milliseconds
+      let elapsed = 0;
+      
+      const interval = setInterval(() => {
+        elapsed += 100;
+        const progress = Math.min((elapsed / estimatedDuration) * 100, 100);
         setState(prev => ({ ...prev, progress }));
-      });
+        
+        if (elapsed >= estimatedDuration) {
+          clearInterval(interval);
+        }
+      }, 100);
+      
+      setProgressInterval(interval);
 
-      audio.addEventListener('ended', () => {
+      // Event handlers
+      newUtterance.onend = () => {
+        if (interval) clearInterval(interval);
+        
         if (state.autoPlay && phaseIndex < tutorialScripts.length - 1) {
           startTutorial(phaseIndex + 1);
         } else {
-          setState(prev => ({ ...prev, isPlaying: false, isPaused: false }));
+          setState(prev => ({ 
+            ...prev, 
+            isPlaying: false, 
+            isPaused: false,
+            progress: 100 
+          }));
         }
-      });
+      };
 
-      setAudioElement(audio);
-      await audio.play();
+      newUtterance.onerror = (event) => {
+        console.error('Speech synthesis error:', event);
+        if (interval) clearInterval(interval);
+        setState(prev => ({ 
+          ...prev, 
+          isPlaying: false, 
+          isPaused: false 
+        }));
+      };
+
+      setUtterance(newUtterance);
+      window.speechSynthesis.speak(newUtterance);
 
       setState(prev => ({
         ...prev,
@@ -134,58 +182,76 @@ export const TutorialVoiceProvider = ({ children }: { children: ReactNode }) => 
       console.error('Erro ao iniciar tutorial:', error);
       throw error;
     }
-  }, [state.volume, state.playbackRate, state.autoPlay, loadAudio]);
+  }, [state.volume, state.playbackRate, state.autoPlay, state.selectedVoice, progressInterval]);
 
   const pauseTutorial = useCallback(() => {
-    if (audioElement) {
-      audioElement.pause();
-      setState(prev => ({ ...prev, isPaused: true, isPlaying: false }));
-    }
-  }, [audioElement]);
+    window.speechSynthesis.pause();
+    if (progressInterval) clearInterval(progressInterval);
+    setState(prev => ({ ...prev, isPaused: true, isPlaying: false }));
+  }, [progressInterval]);
 
   const resumeTutorial = useCallback(() => {
-    if (audioElement) {
-      audioElement.play();
-      setState(prev => ({ ...prev, isPaused: false, isPlaying: true }));
+    window.speechSynthesis.resume();
+    
+    // Resume progress tracking
+    const script = tutorialScripts[state.currentPhase];
+    if (script) {
+      const estimatedDuration = script.duration * 1000;
+      let elapsed = (state.progress / 100) * estimatedDuration;
+      
+      const interval = setInterval(() => {
+        elapsed += 100;
+        const progress = Math.min((elapsed / estimatedDuration) * 100, 100);
+        setState(prev => ({ ...prev, progress }));
+        
+        if (elapsed >= estimatedDuration) {
+          clearInterval(interval);
+        }
+      }, 100);
+      
+      setProgressInterval(interval);
     }
-  }, [audioElement]);
+    
+    setState(prev => ({ ...prev, isPaused: false, isPlaying: true }));
+  }, [state.currentPhase, state.progress]);
 
   const stopTutorial = useCallback(() => {
-    if (audioElement) {
-      audioElement.pause();
-      audioElement.currentTime = 0;
-      setState(prev => ({
-        ...prev,
-        isPlaying: false,
-        isPaused: false,
-        progress: 0,
-      }));
-    }
-  }, [audioElement]);
+    window.speechSynthesis.cancel();
+    if (progressInterval) clearInterval(progressInterval);
+    setState(prev => ({
+      ...prev,
+      isPlaying: false,
+      isPaused: false,
+      progress: 0,
+    }));
+  }, [progressInterval]);
 
   const skipToPhase = useCallback((phaseIndex: number) => {
-    if (audioElement) {
-      audioElement.pause();
-    }
+    window.speechSynthesis.cancel();
+    if (progressInterval) clearInterval(progressInterval);
     startTutorial(phaseIndex);
-  }, [audioElement, startTutorial]);
+  }, [progressInterval, startTutorial]);
 
   const setVolume = useCallback((volume: number) => {
-    if (audioElement) {
-      audioElement.volume = volume;
+    if (utterance) {
+      utterance.volume = volume;
     }
     setState(prev => ({ ...prev, volume }));
-  }, [audioElement]);
+  }, [utterance]);
 
   const setPlaybackRate = useCallback((rate: number) => {
-    if (audioElement) {
-      audioElement.playbackRate = rate;
+    if (utterance) {
+      utterance.rate = rate;
     }
     setState(prev => ({ ...prev, playbackRate: rate }));
-  }, [audioElement]);
+  }, [utterance]);
 
   const toggleAutoPlay = useCallback(() => {
     setState(prev => ({ ...prev, autoPlay: !prev.autoPlay }));
+  }, []);
+
+  const setSelectedVoice = useCallback((voice: SpeechSynthesisVoice) => {
+    setState(prev => ({ ...prev, selectedVoice: voice }));
   }, []);
 
   return (
@@ -200,6 +266,7 @@ export const TutorialVoiceProvider = ({ children }: { children: ReactNode }) => 
         setVolume,
         setPlaybackRate,
         toggleAutoPlay,
+        setSelectedVoice,
       }}
     >
       {children}

@@ -1,10 +1,12 @@
 import { useTutorialVoice } from '@/contexts/TutorialVoiceContext';
+import { useBrowserVoices } from '@/hooks/useBrowserVoices';
 import { TutorialControls } from './TutorialControls';
 import { TutorialTranscript } from './TutorialTranscript';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
-import { X, Loader2 } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { X, Loader2, Mic2 } from 'lucide-react';
 import { tutorialScripts } from '@/data/tutorialScripts';
 
 interface VoiceTutorialProps {
@@ -21,13 +23,17 @@ export const VoiceTutorial = ({ onClose, activeTutorialPhase }: VoiceTutorialPro
     volume,
     playbackRate,
     isGenerating,
+    selectedVoice,
     pauseTutorial,
     resumeTutorial,
     skipToPhase,
     setVolume,
     setPlaybackRate,
     stopTutorial,
+    setSelectedVoice,
   } = useTutorialVoice();
+
+  const { portugueseVoices, allVoices } = useBrowserVoices();
 
   const handlePlayPause = () => {
     if (isPlaying) {
@@ -87,6 +93,58 @@ export const VoiceTutorial = ({ onClose, activeTutorialPhase }: VoiceTutorialPro
             <span>{Math.round(progress)}%</span>
           </div>
         </div>
+
+        {/* Voice Selector */}
+        {(portugueseVoices.length > 0 || allVoices.length > 0) && (
+          <div className="space-y-2">
+            <label className="text-xs text-muted-foreground flex items-center gap-2">
+              <Mic2 className="h-3 w-3" />
+              Voz do Narrador
+            </label>
+            <Select
+              value={selectedVoice?.name || ''}
+              onValueChange={(value) => {
+                const voice = [...portugueseVoices, ...allVoices].find(
+                  v => v.voice.name === value
+                );
+                if (voice) setSelectedVoice(voice.voice);
+              }}
+            >
+              <SelectTrigger className="h-8 text-xs">
+                <SelectValue placeholder="Selecione uma voz" />
+              </SelectTrigger>
+              <SelectContent>
+                {portugueseVoices.length > 0 && (
+                  <>
+                    <SelectItem value="portuguese-header" disabled className="text-xs font-semibold">
+                      Vozes em Português
+                    </SelectItem>
+                    {portugueseVoices.map((v) => (
+                      <SelectItem key={v.voice.name} value={v.voice.name} className="text-xs">
+                        {v.name} ({v.lang})
+                      </SelectItem>
+                    ))}
+                  </>
+                )}
+                {allVoices.length > 0 && (
+                  <>
+                    <SelectItem value="other-header" disabled className="text-xs font-semibold">
+                      Outras Vozes
+                    </SelectItem>
+                    {allVoices
+                      .filter(v => !v.isPortuguese)
+                      .slice(0, 5)
+                      .map((v) => (
+                        <SelectItem key={v.voice.name} value={v.voice.name} className="text-xs">
+                          {v.name} ({v.lang})
+                        </SelectItem>
+                      ))}
+                  </>
+                )}
+              </SelectContent>
+            </Select>
+          </div>
+        )}
 
         {/* Controls */}
         <TutorialControls
