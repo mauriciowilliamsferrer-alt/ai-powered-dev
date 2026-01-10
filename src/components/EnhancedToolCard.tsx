@@ -3,6 +3,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Star, DollarSign, Users, Zap } from "lucide-react";
 import { Tool } from "@/data/workflowData";
+import { ToolReference } from "./ToolReference";
+import { getToolByName } from "@/data/toolsIndex";
 
 interface EnhancedToolCardProps {
   tool: Tool;
@@ -11,6 +13,8 @@ interface EnhancedToolCardProps {
 }
 
 export const EnhancedToolCard = ({ tool, onFavorite, isFavorited = false }: EnhancedToolCardProps) => {
+  const indexedTool = getToolByName(tool.name);
+  
   const getDifficultyColor = (difficulty: Tool['difficulty']) => {
     switch (difficulty) {
       case 'Iniciante': return 'bg-muted text-muted-foreground border-border';
@@ -66,7 +70,10 @@ export const EnhancedToolCard = ({ tool, onFavorite, isFavorited = false }: Enha
                   {tool.sequenceNumber}
                 </div>
               )}
-              <CardTitle className="text-lg truncate">{tool.name}</CardTitle>
+              <CardTitle className="text-lg truncate inline-flex items-center gap-1">
+                {tool.name}
+                {indexedTool && <ToolReference toolId={indexedTool.id} size="sm" />}
+              </CardTitle>
               {onFavorite && (
                 <Button
                   size="sm"

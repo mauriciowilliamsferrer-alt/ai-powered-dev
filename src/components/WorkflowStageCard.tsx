@@ -3,6 +3,8 @@ import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, Clock, Circle } from "lucide-react";
 import { WorkflowStage } from "@/data/workflowData";
 import { cn } from "@/lib/utils";
+import { ToolReference } from "./ToolReference";
+import { getToolByName } from "@/data/toolsIndex";
 
 interface WorkflowStageCardProps {
   stage: WorkflowStage;
@@ -69,11 +71,15 @@ export const WorkflowStageCard = ({ stage, onClick }: WorkflowStageCardProps) =>
           <div>
             <p className="text-sm font-medium text-foreground mb-2">Ferramentas principais:</p>
             <div className="flex flex-wrap gap-1">
-              {stage.mainTools.slice(0, 3).map((tool, index) => (
-                <Badge key={index} variant="secondary" className="text-xs">
-                  {tool}
-                </Badge>
-              ))}
+              {stage.mainTools.slice(0, 3).map((toolName, index) => {
+                const tool = getToolByName(toolName);
+                return (
+                  <Badge key={index} variant="secondary" className="text-xs inline-flex items-center gap-1">
+                    {toolName}
+                    {tool && <ToolReference toolId={tool.id} size="sm" />}
+                  </Badge>
+                );
+              })}
               {stage.mainTools.length > 3 && (
                 <Badge variant="secondary" className="text-xs">
                   +{stage.mainTools.length - 3} mais
