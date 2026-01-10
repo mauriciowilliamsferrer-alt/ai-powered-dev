@@ -32,7 +32,10 @@ import {
   Terminal,
   Palette,
   Server,
-  Activity
+  Activity,
+  Image,
+  Video,
+  Sparkles
 } from "lucide-react";
 
 // Dados das ferramentas organizados por fase
@@ -107,6 +110,41 @@ const toolsByPhase = {
       { name: "Framer AI", description: "Design e deploy de sites em minutos", url: "https://framer.com" },
       { name: "Uizard", description: "Transformar sketches em UI", url: "https://uizard.io" },
       { name: "Galileo AI", description: "Designs de UI automatizados", url: "https://usegalileo.ai" }
+    ]
+  },
+  design: {
+    title: "Design & Criação Visual",
+    icon: Palette,
+    color: "hsl(330 80% 60%)",
+    description: "Ferramentas profissionais e IA para design gráfico",
+    designTools: [
+      { name: "Figma", description: "Colaboração em tempo real, design systems, prototipagem avançada", url: "https://figma.com", category: "Design Profissional" },
+      { name: "Canva", description: "Design simplificado, templates prontos, ideal para marketing", url: "https://canva.com", category: "Design Rápido" },
+      { name: "Photopea", description: "Editor de imagens online gratuito compatível com Photoshop", url: "https://photopea.com", category: "Edição de Imagens" },
+      { name: "Adobe XD", description: "Prototipagem e design de interfaces da Adobe", url: "https://adobe.com/products/xd", category: "Design Profissional" },
+      { name: "Sketch", description: "Design de interfaces para macOS", url: "https://sketch.com", category: "Design Profissional" }
+    ],
+    aiImageGen: [
+      { name: "Midjourney", description: "Geração de imagens artísticas de alta qualidade via Discord", url: "https://midjourney.com", highlight: true },
+      { name: "DALL-E 3", description: "IA da OpenAI para geração de imagens realistas e artísticas", url: "https://openai.com/dall-e-3", highlight: true },
+      { name: "Leonardo.ai", description: "Geração de assets para jogos e arte digital", url: "https://leonardo.ai", highlight: true },
+      { name: "Stable Diffusion", description: "Modelo open-source rodando local ou via API", url: "https://stability.ai" },
+      { name: "Adobe Firefly", description: "IA generativa integrada ao ecossistema Adobe", url: "https://adobe.com/products/firefly" },
+      { name: "Ideogram", description: "Especializado em gerar texto em imagens", url: "https://ideogram.ai" },
+      { name: "Flux", description: "Modelos avançados de geração de imagem", url: "https://blackforestlabs.ai" }
+    ],
+    videoTools: [
+      { name: "Runway", description: "Edição de vídeo e efeitos com IA", url: "https://runwayml.com" },
+      { name: "Pika Labs", description: "Geração de vídeos a partir de texto/imagem", url: "https://pika.art" },
+      { name: "Sora", description: "Geração de vídeos da OpenAI (acesso limitado)", url: "https://openai.com/sora" },
+      { name: "Kling", description: "Geração de vídeos com alta qualidade", url: "https://klingai.com" }
+    ],
+    iconAssets: [
+      { name: "Lucide Icons", description: "Ícones open-source usados neste projeto", url: "https://lucide.dev" },
+      { name: "Heroicons", description: "Ícones da equipe do Tailwind CSS", url: "https://heroicons.com" },
+      { name: "Phosphor Icons", description: "Biblioteca flexível com múltiplos estilos", url: "https://phosphoricons.com" },
+      { name: "Unsplash", description: "Fotos gratuitas de alta qualidade", url: "https://unsplash.com" },
+      { name: "Pexels", description: "Fotos e vídeos gratuitos", url: "https://pexels.com" }
     ]
   },
   desenvolvimento: {
@@ -644,6 +682,120 @@ export default function LandingPage() {
                       <ArrowRight className="h-4 w-4 text-muted-foreground" />
                     </a>
                   ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+
+            {/* Design & Criação Visual */}
+            <AccordionItem value="design" className="border rounded-lg px-4">
+              <AccordionTrigger className="hover:no-underline">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-secondary">
+                    <Image className="h-5 w-5 text-primary" />
+                  </div>
+                  <div className="text-left">
+                    <h3 className="font-semibold">{toolsByPhase.design.title}</h3>
+                    <p className="text-sm text-muted-foreground">{toolsByPhase.design.description}</p>
+                  </div>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="pt-4 space-y-6">
+                <div>
+                  <h4 className="font-medium mb-3 flex items-center gap-2">
+                    <Palette className="h-4 w-4 text-primary" />
+                    Ferramentas de Design
+                  </h4>
+                  <div className="grid gap-2">
+                    {toolsByPhase.design.designTools.map((tool) => (
+                      <a 
+                        key={tool.name} 
+                        href={tool.url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
+                      >
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2">
+                            <p className="font-medium">{tool.name}</p>
+                            <Badge variant="outline" className="text-xs">{tool.category}</Badge>
+                          </div>
+                          <p className="text-sm text-muted-foreground">{tool.description}</p>
+                        </div>
+                        <ArrowRight className="h-4 w-4 text-muted-foreground" />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="font-medium mb-3 flex items-center gap-2">
+                    <Sparkles className="h-4 w-4 text-primary" />
+                    Geração de Imagens com IA
+                  </h4>
+                  <div className="grid gap-2">
+                    {toolsByPhase.design.aiImageGen.map((tool) => (
+                      <a 
+                        key={tool.name} 
+                        href={tool.url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className={`flex items-center gap-3 p-3 rounded-lg transition-colors ${
+                          tool.highlight ? 'bg-primary/10 border border-primary/20' : 'bg-muted/50 hover:bg-muted'
+                        }`}
+                      >
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2">
+                            <p className="font-medium">{tool.name}</p>
+                            {tool.highlight && <Badge className="text-xs">Popular</Badge>}
+                          </div>
+                          <p className="text-sm text-muted-foreground">{tool.description}</p>
+                        </div>
+                        <ArrowRight className="h-4 w-4 text-muted-foreground" />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="font-medium mb-3 flex items-center gap-2">
+                    <Video className="h-4 w-4 text-primary" />
+                    Geração de Vídeos com IA
+                  </h4>
+                  <div className="grid md:grid-cols-2 gap-2">
+                    {toolsByPhase.design.videoTools.map((tool) => (
+                      <a 
+                        key={tool.name} 
+                        href={tool.url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
+                      >
+                        <p className="font-medium">{tool.name}</p>
+                        <p className="text-sm text-muted-foreground">{tool.description}</p>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="font-medium mb-3 flex items-center gap-2">
+                    <Layers className="h-4 w-4 text-primary" />
+                    Ícones & Assets
+                  </h4>
+                  <div className="grid md:grid-cols-2 gap-2">
+                    {toolsByPhase.design.iconAssets.map((tool) => (
+                      <a 
+                        key={tool.name} 
+                        href={tool.url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
+                      >
+                        <p className="font-medium">{tool.name}</p>
+                        <p className="text-sm text-muted-foreground">{tool.description}</p>
+                      </a>
+                    ))}
+                  </div>
                 </div>
               </AccordionContent>
             </AccordionItem>
