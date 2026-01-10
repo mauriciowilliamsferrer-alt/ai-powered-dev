@@ -8,6 +8,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Skeleton } from "@/components/ui/skeleton";
 
 // Lazy load pages for better performance
+const LandingPage = React.lazy(() => import("./pages/LandingPage"));
 const Index = React.lazy(() => import("./pages/Index"));
 const DevToolsGuide = React.lazy(() => import("./pages/DevToolsGuide"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
@@ -33,7 +34,8 @@ const App = () => (
         <BrowserRouter>
           <Suspense fallback={<LoadingFallback />}>
             <Routes>
-              <Route path="/" element={<Index />} />
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/dashboard" element={<Index />} />
               <Route path="/devtools-guide" element={<DevToolsGuide />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
