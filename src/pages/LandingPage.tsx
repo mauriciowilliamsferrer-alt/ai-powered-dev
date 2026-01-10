@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { ToolReference } from "@/components/ToolReference";
+import { getToolByName } from "@/data/toolsIndex";
 import { 
   Lightbulb, 
   Search, 
@@ -37,6 +39,17 @@ import {
   Video,
   Sparkles
 } from "lucide-react";
+
+// Helper para renderizar nome com referência
+const ToolName = ({ name, showLink = true }: { name: string; showLink?: boolean }) => {
+  const tool = getToolByName(name);
+  return (
+    <span className="inline-flex items-center gap-1">
+      <span>{name}</span>
+      {tool && <ToolReference toolId={tool.id} size="sm" />}
+    </span>
+  );
+};
 
 // Dados das ferramentas organizados por fase
 const toolsByPhase = {
@@ -529,12 +542,16 @@ export default function LandingPage() {
                     <div key={tool.name} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
                       <Globe className="h-4 w-4 text-primary mt-1" />
                       <div>
-                        <p className="font-medium">{tool.name}</p>
+                        <p className="font-medium">
+                          <ToolName name={tool.name} />
+                        </p>
                         <p className="text-sm text-muted-foreground">{tool.description}</p>
                         {tool.examples && (
                           <div className="flex gap-1 mt-1 flex-wrap">
                             {tool.examples.map((ex) => (
-                              <Badge key={ex} variant="outline" className="text-xs">{ex}</Badge>
+                              <Badge key={ex} variant="outline" className="text-xs">
+                                <ToolName name={ex} />
+                              </Badge>
                             ))}
                           </div>
                         )}
@@ -575,7 +592,9 @@ export default function LandingPage() {
                       <Brain className="h-4 w-4 text-primary mt-1" />
                       <div className="flex-1">
                         <div className="flex items-center gap-2">
-                          <p className="font-medium">{tool.name}</p>
+                          <p className="font-medium">
+                            <ToolName name={tool.name} />
+                          </p>
                           <Badge variant="secondary" className="text-xs">{tool.role}</Badge>
                         </div>
                         <p className="text-sm text-muted-foreground">{tool.description}</p>
@@ -604,7 +623,9 @@ export default function LandingPage() {
                 <div className="grid md:grid-cols-2 gap-3">
                   {toolsByPhase.boasPraticas.principles.map((principle) => (
                     <div key={principle.name} className="p-3 rounded-lg bg-muted/50">
-                      <p className="font-medium text-primary">{principle.name}</p>
+                      <p className="font-medium text-primary">
+                        <ToolName name={principle.name} />
+                      </p>
                       <p className="text-sm text-muted-foreground">{principle.description}</p>
                     </div>
                   ))}
@@ -630,7 +651,9 @@ export default function LandingPage() {
                   <div className="grid gap-3">
                     {toolsByPhase.documentacao.documents.map((doc) => (
                       <div key={doc.name} className="p-3 rounded-lg bg-muted/50">
-                        <p className="font-medium">{doc.name}</p>
+                        <p className="font-medium">
+                          <ToolName name={doc.name} />
+                        </p>
                         <p className="text-sm text-muted-foreground">{doc.description}</p>
                       </div>
                     ))}
@@ -641,7 +664,7 @@ export default function LandingPage() {
                       {toolsByPhase.documentacao.tools.map((tool) => (
                         <a key={tool.name} href={tool.url} target="_blank" rel="noopener noreferrer">
                           <Badge variant="outline" className="hover:bg-primary hover:text-primary-foreground transition-colors">
-                            {tool.name}
+                            <ToolName name={tool.name} />
                           </Badge>
                         </a>
                       ))}
@@ -676,7 +699,9 @@ export default function LandingPage() {
                     >
                       <Palette className="h-4 w-4 text-primary mt-1" />
                       <div className="flex-1">
-                        <p className="font-medium">{tool.name}</p>
+                        <p className="font-medium">
+                          <ToolName name={tool.name} />
+                        </p>
                         <p className="text-sm text-muted-foreground">{tool.description}</p>
                       </div>
                       <ArrowRight className="h-4 w-4 text-muted-foreground" />
@@ -716,7 +741,9 @@ export default function LandingPage() {
                       >
                         <div className="flex-1">
                           <div className="flex items-center gap-2">
-                            <p className="font-medium">{tool.name}</p>
+                            <p className="font-medium">
+                              <ToolName name={tool.name} />
+                            </p>
                             <Badge variant="outline" className="text-xs">{tool.category}</Badge>
                           </div>
                           <p className="text-sm text-muted-foreground">{tool.description}</p>
@@ -745,7 +772,9 @@ export default function LandingPage() {
                       >
                         <div className="flex-1">
                           <div className="flex items-center gap-2">
-                            <p className="font-medium">{tool.name}</p>
+                            <p className="font-medium">
+                              <ToolName name={tool.name} />
+                            </p>
                             {tool.highlight && <Badge className="text-xs">Popular</Badge>}
                           </div>
                           <p className="text-sm text-muted-foreground">{tool.description}</p>
@@ -770,7 +799,9 @@ export default function LandingPage() {
                         rel="noopener noreferrer"
                         className="p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
                       >
-                        <p className="font-medium">{tool.name}</p>
+                        <p className="font-medium">
+                          <ToolName name={tool.name} />
+                        </p>
                         <p className="text-sm text-muted-foreground">{tool.description}</p>
                       </a>
                     ))}
@@ -791,7 +822,9 @@ export default function LandingPage() {
                         rel="noopener noreferrer"
                         className="p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
                       >
-                        <p className="font-medium">{tool.name}</p>
+                        <p className="font-medium">
+                          <ToolName name={tool.name} />
+                        </p>
                         <p className="text-sm text-muted-foreground">{tool.description}</p>
                       </a>
                     ))}
@@ -832,7 +865,9 @@ export default function LandingPage() {
                       >
                         <div className="flex-1">
                           <div className="flex items-center gap-2">
-                            <p className="font-medium">{tool.name}</p>
+                            <p className="font-medium">
+                              <ToolName name={tool.name} />
+                            </p>
                             {tool.highlight && <Badge className="text-xs">Recomendado</Badge>}
                           </div>
                           <p className="text-sm text-muted-foreground">{tool.description}</p>
@@ -851,7 +886,9 @@ export default function LandingPage() {
                   <div className="grid md:grid-cols-2 gap-2">
                     {toolsByPhase.desenvolvimento.ides.map((tool) => (
                       <div key={tool.name} className="p-3 rounded-lg bg-muted/50">
-                        <p className="font-medium">{tool.name}</p>
+                        <p className="font-medium">
+                          <ToolName name={tool.name} />
+                        </p>
                         <p className="text-sm text-muted-foreground">{tool.description}</p>
                       </div>
                     ))}
@@ -873,7 +910,9 @@ export default function LandingPage() {
                         className="flex items-center gap-3 p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
                       >
                         <div className="flex-1">
-                          <p className="font-medium">{tool.name}</p>
+                          <p className="font-medium">
+                            <ToolName name={tool.name} />
+                          </p>
                           <p className="text-sm text-muted-foreground">{tool.description}</p>
                         </div>
                         <ArrowRight className="h-4 w-4 text-muted-foreground" />
@@ -911,7 +950,9 @@ export default function LandingPage() {
                     >
                       <div className="flex-1">
                         <div className="flex items-center gap-2">
-                          <p className="font-medium">{tool.name}</p>
+                          <p className="font-medium">
+                            <ToolName name={tool.name} />
+                          </p>
                           {tool.highlight && <Badge className="text-xs">Recomendado</Badge>}
                         </div>
                         <p className="text-sm text-muted-foreground">{tool.description}</p>
@@ -931,7 +972,9 @@ export default function LandingPage() {
                         rel="noopener noreferrer"
                         className="p-2 rounded-lg bg-muted/50 hover:bg-muted transition-colors text-center"
                       >
-                        <p className="font-medium text-sm">{tool.name}</p>
+                        <p className="font-medium text-sm">
+                          <ToolName name={tool.name} />
+                        </p>
                         <p className="text-xs text-muted-foreground">{tool.description}</p>
                       </a>
                     ))}
@@ -967,7 +1010,9 @@ export default function LandingPage() {
                     >
                       <div className="flex-1">
                         <div className="flex items-center gap-2">
-                          <p className="font-medium">{tool.name}</p>
+                          <p className="font-medium">
+                            <ToolName name={tool.name} />
+                          </p>
                           {tool.highlight && <Badge className="text-xs">Recomendado</Badge>}
                         </div>
                         <p className="text-sm text-muted-foreground">{tool.description}</p>
@@ -980,7 +1025,9 @@ export default function LandingPage() {
                   <p className="text-sm font-medium mb-2">Infraestrutura:</p>
                   <div className="flex gap-2 flex-wrap">
                     {toolsByPhase.deploy.infra.map((tool) => (
-                      <Badge key={tool.name} variant="outline">{tool.name}</Badge>
+                      <Badge key={tool.name} variant="outline">
+                        <ToolName name={tool.name} />
+                      </Badge>
                     ))}
                   </div>
                 </div>
@@ -1010,7 +1057,9 @@ export default function LandingPage() {
                       rel="noopener noreferrer"
                       className="p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
                     >
-                      <p className="font-medium">{platform.name}</p>
+                      <p className="font-medium">
+                        <ToolName name={platform.name} />
+                      </p>
                       <p className="text-sm text-muted-foreground">{platform.description}</p>
                     </a>
                   ))}
@@ -1042,7 +1091,9 @@ export default function LandingPage() {
                       className="flex items-center gap-3 p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
                     >
                       <div className="flex-1">
-                        <p className="font-medium">{tool.name}</p>
+                        <p className="font-medium">
+                          <ToolName name={tool.name} />
+                        </p>
                         <p className="text-sm text-muted-foreground">{tool.description}</p>
                       </div>
                       <ArrowRight className="h-4 w-4 text-muted-foreground" />
@@ -1114,7 +1165,9 @@ export default function LandingPage() {
               </h3>
               <div className="flex flex-wrap gap-2">
                 {["Cline", "Continue", "CodeRabbit", "GitHub Copilot", "Gemini Code Assist", "Codeium", "TabNine", "AWS Toolkit"].map((ext) => (
-                  <Badge key={ext} variant="secondary">{ext}</Badge>
+                  <Badge key={ext} variant="secondary">
+                    <ToolName name={ext} />
+                  </Badge>
                 ))}
               </div>
             </Card>

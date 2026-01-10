@@ -300,9 +300,55 @@ export const getToolById = (id: number): IndexedTool | undefined => {
   return allTools.find(t => t.id === id);
 };
 
-// Função para buscar ferramenta por nome
+// Função para buscar ferramenta por nome (com fuzzy matching)
 export const getToolByName = (name: string): IndexedTool | undefined => {
-  return allTools.find(t => t.name.toLowerCase() === name.toLowerCase());
+  const normalizedName = name.toLowerCase().trim();
+  
+  // Busca exata primeiro
+  const exactMatch = allTools.find(t => t.name.toLowerCase() === normalizedName);
+  if (exactMatch) return exactMatch;
+  
+  // Busca parcial (contém o nome)
+  const partialMatch = allTools.find(t => 
+    t.name.toLowerCase().includes(normalizedName) || 
+    normalizedName.includes(t.name.toLowerCase())
+  );
+  if (partialMatch) return partialMatch;
+  
+  // Mapeamento de aliases comuns
+  const aliases: Record<string, string> = {
+    'gpt': 'ChatGPT',
+    'chatgpt': 'ChatGPT',
+    'gpt-4': 'ChatGPT',
+    'claude': 'Claude AI',
+    'gemini': 'Gemini',
+    'dall-e': 'DALL-E 3',
+    'dalle': 'DALL-E 3',
+    'midjourney': 'Midjourney',
+    'figma': 'Figma',
+    'vs code': 'VS Code',
+    'vscode': 'VS Code',
+    'github copilot': 'GitHub Copilot',
+    'copilot': 'GitHub Copilot',
+    'supabase': 'Supabase',
+    'vercel': 'Vercel',
+    'lovable': 'Lovable',
+    'cursor': 'Cursor',
+    'notion': 'Notion',
+    'linear': 'Linear',
+    'ollama': 'Ollama',
+    'openai': 'OpenAI API',
+    'openrouter': 'OpenRouter',
+    'huggingface': 'Hugging Face',
+    'hugging face': 'Hugging Face',
+  };
+  
+  const aliasMatch = aliases[normalizedName];
+  if (aliasMatch) {
+    return allTools.find(t => t.name.toLowerCase() === aliasMatch.toLowerCase());
+  }
+  
+  return undefined;
 };
 
 // Ferramentas ordenadas alfabeticamente
