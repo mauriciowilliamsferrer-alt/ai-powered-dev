@@ -11,6 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 const LandingPage = React.lazy(() => import("./pages/LandingPage"));
 const Index = React.lazy(() => import("./pages/Index"));
 const DevToolsGuide = React.lazy(() => import("./pages/DevToolsGuide"));
+const ToolIndexPage = React.lazy(() => import("./pages/ToolIndexPage"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -35,6 +36,7 @@ const App = () => (
           <Suspense fallback={<LoadingFallback />}>
             <Routes>
               <Route path="/" element={<LandingPage />} />
+              <Route path="/indice" element={<ToolIndexPage />} />
               <Route path="/dashboard" element={<Index />} />
               <Route path="/devtools-guide" element={<DevToolsGuide />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
