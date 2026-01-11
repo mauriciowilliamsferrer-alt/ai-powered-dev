@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Star } from "lucide-react";
 import { Tool } from "@/data/workflowData";
+import { ToolReference } from "./ToolReference";
 
 interface MobileToolCardProps {
   tool: Tool;
@@ -39,8 +40,9 @@ export const MobileToolCard = ({ tool, onFavorite, isFavorited }: MobileToolCard
       <CardHeader className="pb-3 space-y-3">
         <div className="flex items-start justify-between gap-2">
           <div className="flex-1 min-w-0">
-            <CardTitle className="text-base sm:text-lg line-clamp-2 mb-2">
+            <CardTitle className="text-base sm:text-lg line-clamp-2 mb-2 flex items-center gap-1.5">
               {tool.name}
+              <ToolReference toolName={tool.name} size="sm" />
             </CardTitle>
             <div className="flex flex-wrap gap-1.5">
               <Badge variant="outline" className="text-xs px-2 py-1">
