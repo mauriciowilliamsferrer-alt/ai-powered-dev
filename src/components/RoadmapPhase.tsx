@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { ChevronDown, ChevronRight, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { ToolReference } from "./ToolReference";
 
 interface RoadmapPhaseProps {
   phase: number;
@@ -69,9 +70,10 @@ export const RoadmapPhase = ({
                 <Badge 
                   key={idx}
                   variant="secondary"
-                  className="text-xs"
+                  className="text-xs flex items-center gap-1"
                 >
                   {tool.name}
+                  <ToolReference toolName={tool.name} size="sm" />
                 </Badge>
               ))}
             </div>
