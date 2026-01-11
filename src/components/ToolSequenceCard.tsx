@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Star, ArrowRight, Clock, DollarSign, TrendingUp } from "lucide-react";
 import { Tool } from "@/data/workflowData";
+import { ToolReference } from "./ToolReference";
 
 interface ToolSequenceCardProps {
   tool: Tool;
@@ -62,7 +63,10 @@ export const ToolSequenceCard = ({
                   {tool.sequenceNumber}
                 </div>
               )}
-              <CardTitle className="text-base truncate">{tool.name}</CardTitle>
+              <CardTitle className="text-base truncate flex items-center gap-1.5">
+                {tool.name}
+                <ToolReference toolName={tool.name} size="sm" />
+              </CardTitle>
               {onFavorite && (
                 <Button
                   size="sm"
@@ -159,10 +163,11 @@ export const ToolSequenceCard = ({
                 <Badge 
                   key={nextTool} 
                   variant="outline" 
-                  className="text-xs cursor-pointer hover:bg-accent"
+                  className="text-xs cursor-pointer hover:bg-accent flex items-center gap-1"
                   onClick={() => onToolClick?.(nextTool)}
                 >
                   {nextTool}
+                  <ToolReference toolName={nextTool} size="sm" />
                 </Badge>
               ))}
               {tool.nextTools.length > 3 && (

@@ -3,9 +3,10 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Skeleton } from "@/components/ui/skeleton";
+import { FloatingIndexButton } from "@/components/FloatingIndexButton";
 
 // Lazy load pages for better performance
 const LandingPage = React.lazy(() => import("./pages/LandingPage"));
@@ -26,6 +27,29 @@ const LoadingFallback = () => (
   </div>
 );
 
+// Component to conditionally show the floating button (not on /indice page)
+const FloatingButton = () => {
+  const location = useLocation();
+  if (location.pathname === '/indice') return null;
+  return <FloatingIndexButton />;
+};
+
+const AppRoutes = () => (
+  <>
+    <Suspense fallback={<LoadingFallback />}>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/indice" element={<ToolIndexPage />} />
+        <Route path="/dashboard" element={<Index />} />
+        <Route path="/devtools-guide" element={<DevToolsGuide />} />
+        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Suspense>
+    <FloatingButton />
+  </>
+);
+
 const App = () => (
   <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
@@ -33,16 +57,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <Suspense fallback={<LoadingFallback />}>
-            <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/indice" element={<ToolIndexPage />} />
-              <Route path="/dashboard" element={<Index />} />
-              <Route path="/devtools-guide" element={<DevToolsGuide />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
+          <AppRoutes />
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>

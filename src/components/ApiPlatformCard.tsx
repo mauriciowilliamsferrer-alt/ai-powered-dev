@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Zap, Monitor, CloudUpload } from "lucide-react";
 import { ApiPlatform } from "@/data/workflowData";
+import { ToolReference } from "./ToolReference";
 
 interface ApiPlatformCardProps {
   platform: ApiPlatform;
@@ -14,8 +15,9 @@ export const ApiPlatformCard = ({ platform }: ApiPlatformCardProps) => {
       <CardHeader className="pb-4">
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1">
-            <CardTitle className="text-lg font-bold text-foreground mb-2">
+            <CardTitle className="text-lg font-bold text-foreground mb-2 flex items-center gap-1.5">
               {platform.name}
+              <ToolReference toolName={platform.name} size="sm" />
             </CardTitle>
             <div className="flex flex-wrap gap-1 mb-3">
               {platform.compatibleWithOpenAI && (
