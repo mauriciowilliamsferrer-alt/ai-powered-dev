@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, BookOpen } from "lucide-react";
 import { DevTool } from "@/data/devToolsData";
+import { ToolReference } from "./ToolReference";
 
 interface DevToolCardProps {
   tool: DevTool;
@@ -14,8 +15,9 @@ export const DevToolCard = ({ tool }: DevToolCardProps) => {
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between gap-2">
           <div className="flex-1">
-            <CardTitle className="text-lg bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+            <CardTitle className="text-lg bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent flex items-center gap-1.5">
               {tool.name}
+              <ToolReference toolName={tool.name} size="sm" />
             </CardTitle>
             <Badge variant="outline" className="mt-1.5 text-xs border-primary/30">
               {tool.category}
