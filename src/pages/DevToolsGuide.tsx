@@ -11,6 +11,7 @@ import { ArrowLeft, Github, Heart, Play } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTutorialVoice } from "@/contexts/TutorialVoiceContext";
 import { useToast } from "@/hooks/use-toast";
+import { WorkflowBreadcrumbs, WorkflowProgressBar } from "@/components/WorkflowBreadcrumbs";
 
 const DevToolsGuide = () => {
   const [showTutorial, setShowTutorial] = useState(false);
@@ -33,15 +34,25 @@ const DevToolsGuide = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Workflow Progress Bar - Sticky */}
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b py-3">
+        <div className="container mx-auto px-4">
+          <WorkflowProgressBar currentPhase={4} />
+        </div>
+      </div>
+
       {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <Link to="/">
-            <Button variant="ghost" size="sm" className="gap-2">
-              <ArrowLeft className="h-4 w-4" />
-              Back to AI Workflow
-            </Button>
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link to="/">
+              <Button variant="ghost" size="sm" className="gap-2">
+                <ArrowLeft className="h-4 w-4" />
+                Voltar
+              </Button>
+            </Link>
+            <WorkflowBreadcrumbs />
+          </div>
           <h2 className="text-lg font-semibold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
             DevTools Guide
           </h2>

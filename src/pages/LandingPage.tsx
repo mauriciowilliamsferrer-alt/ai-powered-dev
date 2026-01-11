@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ToolReference } from "@/components/ToolReference";
 import { getToolByName } from "@/data/toolsIndex";
+import { WorkflowProgressBar } from "@/components/WorkflowBreadcrumbs";
 import { 
   Lightbulb, 
   Search, 
@@ -377,9 +378,31 @@ const workflowSteps = [
 
 export default function LandingPage() {
   const [activePhase, setActivePhase] = useState<string | null>(null);
+  const [currentWorkflowPhase, setCurrentWorkflowPhase] = useState(1);
+
+  const handlePhaseClick = (phase: number) => {
+    setCurrentWorkflowPhase(phase);
+    // Scroll to the corresponding section
+    const sections = ['pesquisa', 'ideacao', 'boas-praticas', 'documentacao', 'prototipagem', 'desenvolvimento', 'backend', 'deploy'];
+    const sectionId = sections[phase - 1];
+    if (sectionId) {
+      const element = document.getElementById(sectionId);
+      element?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Workflow Progress Bar - Sticky */}
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b py-4 px-4">
+        <div className="container mx-auto">
+          <WorkflowProgressBar 
+            currentPhase={currentWorkflowPhase} 
+            onPhaseClick={handlePhaseClick}
+          />
+        </div>
+      </div>
+
       {/* Hero Section */}
       <section className="relative overflow-hidden py-16 md:py-24">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/10 -z-10" />
