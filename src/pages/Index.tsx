@@ -10,6 +10,7 @@ import { EnhancedToolCard } from "@/components/EnhancedToolCard";
 import { ApiPlatformCard } from "@/components/ApiPlatformCard";
 import { WorkflowStageCard } from "@/components/WorkflowStageCard";
 import { ProgressTracker } from "@/components/ProgressTracker";
+import { WorkflowBreadcrumbs, WorkflowProgressBar } from "@/components/WorkflowBreadcrumbs";
 import { Search, Filter, Star, Code2, Users, Brain, Zap, BarChart3, Menu, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -84,11 +85,20 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background mobile-padding pb-safe-bottom">
+      {/* Workflow Progress Bar - Sticky */}
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b py-3 mb-4">
+        <div className="container mx-auto px-4">
+          <WorkflowProgressBar currentPhase={3} />
+        </div>
+      </div>
+
       {/* Mobile-First Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur safe-area-top mb-4">
+      <header className="w-full border-b bg-background/95 backdrop-blur safe-area-top mb-4">
         <div className="mobile-padding py-3">
           <div className="flex items-center justify-between mb-2">
-            <h1 className="text-lg md:text-4xl font-bold">Workflow de Desenvolvimento IA</h1>
+            <div className="flex items-center gap-4">
+              <WorkflowBreadcrumbs />
+            </div>
             <Link to="/devtools-guide">
               <Button variant="outline" size="sm" className="gap-2">
                 <BookOpen className="h-4 w-4" />
@@ -96,6 +106,7 @@ const Index = () => {
               </Button>
             </Link>
           </div>
+          <h1 className="text-lg md:text-4xl font-bold">Workflow de Desenvolvimento IA</h1>
           <p className="text-xs md:text-xl text-muted-foreground text-center mt-1 md:mt-2">
             Guia completo para desenvolvimento com IA
           </p>
