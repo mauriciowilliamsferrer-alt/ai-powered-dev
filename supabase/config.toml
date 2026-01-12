@@ -1,1 +1,4 @@
 project_id = "erpqavscarqlwuirzbyy"
+
+[functions.suggest-projects]
+verify_jwt = false
