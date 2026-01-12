@@ -430,14 +430,20 @@ export default function LandingPage() {
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-4 animate-fade-in" style={{ animationDelay: "0.2s" }}>
+            <Link to="/projetos">
+              <Button size="lg" className="gap-2 shadow-lg hover:shadow-xl transition-shadow bg-gradient-to-r from-primary to-purple-500">
+                <Sparkles className="h-4 w-4" />
+                🎯 Sugestões de Projetos com IA
+              </Button>
+            </Link>
             <Link to="/indice">
-              <Button size="lg" className="gap-2 shadow-lg hover:shadow-xl transition-shadow">
+              <Button size="lg" variant="outline" className="gap-2 border-primary/30 hover:border-primary/50">
                 <BookOpen className="h-4 w-4" />
                 📚 Índice de Ferramentas
               </Button>
             </Link>
             <Link to="/dashboard">
-              <Button size="lg" variant="outline" className="gap-2 border-primary/30 hover:border-primary/50">
+              <Button size="lg" variant="ghost" className="gap-2">
                 <Play className="h-4 w-4" />
                 Explorar Workflow
               </Button>
