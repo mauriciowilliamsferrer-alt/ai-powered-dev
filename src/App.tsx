@@ -14,6 +14,7 @@ const Index = React.lazy(() => import("./pages/Index"));
 const DevToolsGuide = React.lazy(() => import("./pages/DevToolsGuide"));
 const ToolIndexPage = React.lazy(() => import("./pages/ToolIndexPage"));
 const ProjectSuggestionsPage = React.lazy(() => import("./pages/ProjectSuggestionsPage"));
+const MarketingGuidePage = React.lazy(() => import("./pages/MarketingGuidePage"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -42,6 +43,7 @@ const AppRoutes = () => (
         <Route path="/" element={<LandingPage />} />
         <Route path="/indice" element={<ToolIndexPage />} />
         <Route path="/projetos" element={<ProjectSuggestionsPage />} />
+        <Route path="/divulgacao" element={<MarketingGuidePage />} />
         <Route path="/dashboard" element={<Index />} />
         <Route path="/devtools-guide" element={<DevToolsGuide />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

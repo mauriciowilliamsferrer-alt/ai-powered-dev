@@ -442,6 +442,11 @@ export default function LandingPage() {
                 📚 Índice de Ferramentas
               </Button>
             </Link>
+            <Link to="/divulgacao">
+              <Button size="lg" variant="secondary" className="gap-2 bg-amber-100 hover:bg-amber-200 text-amber-900 border-amber-300">
+                📣 Marketing & Divulgação
+              </Button>
+            </Link>
             <Link to="/dashboard">
               <Button size="lg" variant="ghost" className="gap-2">
                 <Play className="h-4 w-4" />
