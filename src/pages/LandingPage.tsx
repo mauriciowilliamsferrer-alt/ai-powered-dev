@@ -597,7 +597,7 @@ export default function LandingPage() {
             </AccordionItem>
 
             {/* Ideação com IA */}
-            <AccordionItem value="ideacao" className="border rounded-lg px-4">
+            <AccordionItem id="ideacao" value="ideacao" className="border rounded-lg px-4 scroll-mt-20">
               <AccordionTrigger className="hover:no-underline">
                 <div className="flex items-center gap-3">
                   <div className="p-2 rounded-lg bg-secondary">
@@ -668,7 +668,7 @@ export default function LandingPage() {
             </AccordionItem>
 
             {/* Documentação */}
-            <AccordionItem value="docs" className="border rounded-lg px-4">
+            <AccordionItem id="documentacao" value="docs" className="border rounded-lg px-4 scroll-mt-20">
               <AccordionTrigger className="hover:no-underline">
                 <div className="flex items-center gap-3">
                   <div className="p-2 rounded-lg bg-secondary">
@@ -746,7 +746,7 @@ export default function LandingPage() {
             </AccordionItem>
 
             {/* Design & Criação Visual */}
-            <AccordionItem value="design" className="border rounded-lg px-4">
+            <AccordionItem id="design" value="design" className="border rounded-lg px-4 scroll-mt-20">
               <AccordionTrigger className="hover:no-underline">
                 <div className="flex items-center gap-3">
                   <div className="p-2 rounded-lg bg-secondary">
@@ -868,7 +868,7 @@ export default function LandingPage() {
             </AccordionItem>
 
             {/* Desenvolvimento */}
-            <AccordionItem value="dev" className="border rounded-lg px-4">
+            <AccordionItem id="desenvolvimento" value="dev" className="border rounded-lg px-4 scroll-mt-20">
               <AccordionTrigger className="hover:no-underline">
                 <div className="flex items-center gap-3">
                   <div className="p-2 rounded-lg bg-secondary">
@@ -958,7 +958,7 @@ export default function LandingPage() {
             </AccordionItem>
 
             {/* Backend */}
-            <AccordionItem value="backend" className="border rounded-lg px-4">
+            <AccordionItem id="backend" value="backend" className="border rounded-lg px-4 scroll-mt-20">
               <AccordionTrigger className="hover:no-underline">
                 <div className="flex items-center gap-3">
                   <div className="p-2 rounded-lg bg-secondary">
@@ -1018,7 +1018,7 @@ export default function LandingPage() {
             </AccordionItem>
 
             {/* Deploy */}
-            <AccordionItem value="deploy" className="border rounded-lg px-4">
+            <AccordionItem id="deploy" value="deploy" className="border rounded-lg px-4 scroll-mt-20">
               <AccordionTrigger className="hover:no-underline">
                 <div className="flex items-center gap-3">
                   <div className="p-2 rounded-lg bg-secondary">
@@ -1064,6 +1064,80 @@ export default function LandingPage() {
                       </Badge>
                     ))}
                   </div>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+
+            {/* Qualidade & Testes */}
+            <AccordionItem id="qualidade" value="qualidade" className="border rounded-lg px-4 scroll-mt-20">
+              <AccordionTrigger className="hover:no-underline">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-secondary">
+                    <TestTube className="h-5 w-5 text-primary" />
+                  </div>
+                  <div className="text-left">
+                    <h3 className="font-semibold">{toolsByPhase.qualidade.title}</h3>
+                    <p className="text-sm text-muted-foreground">{toolsByPhase.qualidade.description}</p>
+                  </div>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="pt-4">
+                <div className="grid gap-3">
+                  {toolsByPhase.qualidade.tools.map((tool) => (
+                    <a 
+                      key={tool.name} 
+                      href={tool.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-start gap-3 p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
+                    >
+                      <TestTube className="h-4 w-4 text-primary mt-1" />
+                      <div className="flex-1">
+                        <p className="font-medium">
+                          <ToolName name={tool.name} />
+                        </p>
+                        <p className="text-sm text-muted-foreground">{tool.description}</p>
+                      </div>
+                      <ArrowRight className="h-4 w-4 text-muted-foreground" />
+                    </a>
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+
+            {/* Monitoramento & Analytics */}
+            <AccordionItem id="monitoramento" value="monitoramento" className="border rounded-lg px-4 scroll-mt-20">
+              <AccordionTrigger className="hover:no-underline">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-secondary">
+                    <BarChart3 className="h-5 w-5 text-primary" />
+                  </div>
+                  <div className="text-left">
+                    <h3 className="font-semibold">{toolsByPhase.monitoramento.title}</h3>
+                    <p className="text-sm text-muted-foreground">{toolsByPhase.monitoramento.description}</p>
+                  </div>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="pt-4">
+                <div className="grid gap-3">
+                  {toolsByPhase.monitoramento.tools.map((tool) => (
+                    <a 
+                      key={tool.name} 
+                      href={tool.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-start gap-3 p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
+                    >
+                      <Activity className="h-4 w-4 text-primary mt-1" />
+                      <div className="flex-1">
+                        <p className="font-medium">
+                          <ToolName name={tool.name} />
+                        </p>
+                        <p className="text-sm text-muted-foreground">{tool.description}</p>
+                      </div>
+                      <ArrowRight className="h-4 w-4 text-muted-foreground" />
+                    </a>
+                  ))}
                 </div>
               </AccordionContent>
             </AccordionItem>
