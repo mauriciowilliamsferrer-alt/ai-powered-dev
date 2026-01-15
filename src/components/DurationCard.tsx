@@ -22,6 +22,7 @@ export type ProjectDuration =
   | "1-ano" 
   | "2-anos" 
   | "3-anos" 
+  | "4-anos"
   | "5-anos" 
   | "10-anos" 
   | "20-anos";
@@ -107,6 +108,14 @@ const durationData: Record<ProjectDuration, DurationInfo> = {
     bgColor: "bg-purple-500/10",
     borderColor: "border-purple-500/30"
   },
+  "4-anos": {
+    name: "4 Anos",
+    description: "Produtos maduros",
+    icon: Building,
+    color: "text-pink-500",
+    bgColor: "bg-pink-500/10",
+    borderColor: "border-pink-500/30"
+  },
   "5-anos": {
     name: "5 Anos",
     description: "Empresas estabelecidas",
@@ -188,7 +197,7 @@ export const DurationGrid = ({
 }) => {
   const durations: ProjectDuration[] = [
     "1-dia", "1-semana", "1-mes", "3-meses", "6-meses", "1-ano",
-    "2-anos", "3-anos", "5-anos", "10-anos", "20-anos"
+    "2-anos", "3-anos", "4-anos", "5-anos", "10-anos", "20-anos"
   ];
 
   return (
