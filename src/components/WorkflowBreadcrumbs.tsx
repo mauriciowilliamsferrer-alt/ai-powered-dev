@@ -15,16 +15,16 @@ interface WorkflowBreadcrumbsProps {
   className?: string;
 }
 
-// Fases do workflow de desenvolvimento
+// Fases do workflow de desenvolvimento com anchors para scroll
 const workflowPhases = [
-  { id: 1, label: "Ideação", icon: "💡", path: "ideacao" },
-  { id: 2, label: "Planejamento", icon: "📋", path: "planejamento" },
-  { id: 3, label: "Design", icon: "🎨", path: "design" },
-  { id: 4, label: "Desenvolvimento", icon: "💻", path: "desenvolvimento" },
-  { id: 5, label: "Backend", icon: "🔧", path: "backend" },
-  { id: 6, label: "Qualidade", icon: "✅", path: "qualidade" },
-  { id: 7, label: "Deploy", icon: "🚀", path: "deploy" },
-  { id: 8, label: "Monitoramento", icon: "📊", path: "monitora" },
+  { id: 1, label: "Ideação", icon: "💡", path: "ideacao", anchor: "ideacao" },
+  { id: 2, label: "Planejamento", icon: "📋", path: "planejamento", anchor: "documentacao" },
+  { id: 3, label: "Design", icon: "🎨", path: "design", anchor: "design" },
+  { id: 4, label: "Desenvolvimento", icon: "💻", path: "desenvolvimento", anchor: "desenvolvimento" },
+  { id: 5, label: "Backend", icon: "🔧", path: "backend", anchor: "backend" },
+  { id: 6, label: "Qualidade", icon: "✅", path: "qualidade", anchor: "qualidade" },
+  { id: 7, label: "Deploy", icon: "🚀", path: "deploy", anchor: "deploy" },
+  { id: 8, label: "Monitoramento", icon: "📊", path: "monitora", anchor: "monitoramento" },
 ];
 
 // Mapeamento de rotas para breadcrumbs
@@ -134,6 +134,16 @@ export const WorkflowProgressBar = ({
   onPhaseClick?: (phase: number) => void;
   className?: string;
 }) => {
+  const handlePhaseClick = (phase: typeof workflowPhases[0]) => {
+    // Scroll para a seção correspondente
+    const element = document.getElementById(phase.anchor);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    // Também chama o callback se existir
+    onPhaseClick?.(phase.id);
+  };
+
   return (
     <div className={cn("w-full", className)}>
       {/* Progress bar */}
@@ -147,16 +157,17 @@ export const WorkflowProgressBar = ({
           style={{ width: `${((currentPhase - 1) / (workflowPhases.length - 1)) * 100}%` }}
         />
         
-        {/* Pontos das fases */}
+        {/* Pontos das fases - agora são links clicáveis */}
         <div className="relative flex justify-between">
           {workflowPhases.map((phase) => (
             <button
               key={phase.id}
-              onClick={() => onPhaseClick?.(phase.id)}
+              onClick={() => handlePhaseClick(phase)}
               className={cn(
-                "flex flex-col items-center gap-1 group transition-all",
-                onPhaseClick && "cursor-pointer"
+                "flex flex-col items-center gap-1 group transition-all cursor-pointer",
+                "hover:scale-105"
               )}
+              title={`Ir para ${phase.label}`}
             >
               <div
                 className={cn(
@@ -166,13 +177,14 @@ export const WorkflowProgressBar = ({
                     ? "border-primary bg-primary text-primary-foreground scale-110 shadow-lg"
                     : phase.id < currentPhase
                     ? "border-primary bg-primary/20 text-primary"
-                    : "border-muted text-muted-foreground group-hover:border-primary/50"
+                    : "border-muted text-muted-foreground group-hover:border-primary/50 group-hover:bg-primary/10"
                 )}
               >
                 {phase.icon}
               </div>
               <span className={cn(
                 "text-[10px] font-medium transition-colors hidden sm:block",
+                "group-hover:text-primary",
                 phase.id === currentPhase
                   ? "text-primary"
                   : phase.id < currentPhase
