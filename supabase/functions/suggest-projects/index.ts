@@ -36,6 +36,7 @@ const durationDescriptions: Record<string, string> = {
   "1-ano": "produto maduro com analytics, otimizações e base de usuários",
   "2-anos": "startup com equipe pequena, product-market fit",
   "3-anos": "empresa consolidada com processos e crescimento",
+  "4-anos": "empresa madura com produto estabelecido e expansão de mercado",
   "5-anos": "empresa estabelecida com múltiplos produtos ou mercados",
   "10-anos": "grande empresa com impacto significativo no mercado",
   "20-anos": "legado duradouro, empresa referência na indústria"
