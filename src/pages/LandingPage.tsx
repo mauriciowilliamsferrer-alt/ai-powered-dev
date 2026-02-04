@@ -7,6 +7,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { ToolReference } from "@/components/ToolReference";
 import { getToolByName } from "@/data/toolsIndex";
 import { WorkflowProgressBar } from "@/components/WorkflowBreadcrumbs";
+import { WorkflowSidebar } from "@/components/WorkflowSidebar";
 import { 
   Lightbulb, 
   Search, 
@@ -393,6 +394,9 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Workflow Sidebar - Fixed on large screens */}
+      <WorkflowSidebar />
+
       {/* Workflow Progress Bar - Sticky */}
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b py-4 px-4">
         <div className="container mx-auto">
