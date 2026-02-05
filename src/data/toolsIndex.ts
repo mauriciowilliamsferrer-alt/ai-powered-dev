@@ -314,6 +314,69 @@ export const allTools: IndexedTool[] = [
   { id: 207, name: "Mintlify", description: "Documentação moderna e bonita a partir de código e markdown.", category: "Documentação", url: "https://mintlify.com", isNew: true, pricing: "freemium" },
   { id: 208, name: "GitBook", description: "Documentação colaborativa com controle de versão.", category: "Documentação", url: "https://gitbook.com", pricing: "freemium" },
   { id: 209, name: "ReadMe", description: "Hubs de documentação de API interativos e elegantes.", category: "Documentação", url: "https://readme.com", pricing: "freemium" },
+
+  // ==========================================
+  // === SERVIÇOS & APIs (210-240) ===
+  // ==========================================
+
+  // === WEB SCRAPING & CRAWLING (210-216) ===
+  { id: 210, name: "Firecrawl", description: "API de scraping inteligente com IA. Converte páginas em markdown limpo para LLMs.", category: "Serviços & APIs", subcategory: "Scraping", url: "https://firecrawl.dev", highlight: true, isNew: true, pricing: "freemium" },
+  { id: 211, name: "Crawlee", description: "Framework open-source para web scraping e automação de browser.", category: "Serviços & APIs", subcategory: "Scraping", url: "https://crawlee.dev", isNew: true, pricing: "free" },
+  { id: 212, name: "Apify", description: "Plataforma de web scraping e automação com milhares de scrapers prontos.", category: "Serviços & APIs", subcategory: "Scraping", url: "https://apify.com", pricing: "freemium" },
+  { id: 213, name: "Bright Data", description: "Líder em coleta de dados web. Proxies residenciais e datasets prontos.", category: "Serviços & APIs", subcategory: "Scraping", url: "https://brightdata.com", pricing: "paid" },
+  { id: 214, name: "ScrapingBee", description: "API simples para scraping com rotação de proxies e headless browser.", category: "Serviços & APIs", subcategory: "Scraping", url: "https://scrapingbee.com", pricing: "freemium" },
+  { id: 215, name: "Playwright", description: "Automação de browsers moderna da Microsoft. Testes e scraping.", category: "Serviços & APIs", subcategory: "Scraping", url: "https://playwright.dev", pricing: "free" },
+  { id: 216, name: "Puppeteer", description: "Controle do Chrome via Node.js. Base de muitas ferramentas de scraping.", category: "Serviços & APIs", subcategory: "Scraping", url: "https://pptr.dev", pricing: "free" },
+
+  // === PROCESSAMENTO DE DADOS (217-222) ===
+  { id: 217, name: "Jina AI Reader", description: "Converte qualquer URL em texto limpo otimizado para LLMs.", category: "Serviços & APIs", subcategory: "Processamento", url: "https://jina.ai/reader", isNew: true, pricing: "freemium" },
+  { id: 218, name: "Unstructured", description: "Extração e parsing de dados de PDFs, imagens e documentos.", category: "Serviços & APIs", subcategory: "Processamento", url: "https://unstructured.io", isNew: true, pricing: "freemium" },
+  { id: 219, name: "LlamaParse", description: "Parser de documentos da LlamaIndex para RAG e aplicações de IA.", category: "Serviços & APIs", subcategory: "Processamento", url: "https://llamaindex.ai/llamaparse", isNew: true, pricing: "freemium" },
+  { id: 220, name: "Docling", description: "Conversão de documentos para markdown e JSON estruturado.", category: "Serviços & APIs", subcategory: "Processamento", url: "https://github.com/DS4SD/docling", isNew: true, pricing: "free" },
+  { id: 221, name: "Marker", description: "Converte PDFs em markdown de alta qualidade. Open-source.", category: "Serviços & APIs", subcategory: "Processamento", url: "https://github.com/VikParuchuri/marker", isNew: true, pricing: "free" },
+  { id: 222, name: "pdf.js", description: "Renderização de PDFs no browser. Biblioteca da Mozilla.", category: "Serviços & APIs", subcategory: "Processamento", url: "https://mozilla.github.io/pdf.js", pricing: "free" },
+
+  // === BUSCA & PESQUISA (223-228) ===
+  { id: 223, name: "Tavily", description: "API de busca otimizada para agentes de IA. Resultados limpos e relevantes.", category: "Serviços & APIs", subcategory: "Busca", url: "https://tavily.com", isNew: true, pricing: "freemium" },
+  { id: 224, name: "Exa.ai", description: "Motor de busca semântico para IA. Encontra conteúdo com embeddings.", category: "Serviços & APIs", subcategory: "Busca", url: "https://exa.ai", isNew: true, pricing: "freemium" },
+  { id: 225, name: "SerpApi", description: "API para resultados de Google, Bing, YouTube e outros buscadores.", category: "Serviços & APIs", subcategory: "Busca", url: "https://serpapi.com", pricing: "freemium" },
+  { id: 226, name: "Algolia", description: "Busca instantânea e poderosa para aplicações. Líder de mercado.", category: "Serviços & APIs", subcategory: "Busca", url: "https://algolia.com", pricing: "freemium" },
+  { id: 227, name: "Meilisearch", description: "Motor de busca open-source, rápido e fácil de configurar.", category: "Serviços & APIs", subcategory: "Busca", url: "https://meilisearch.com", pricing: "freemium" },
+  { id: 228, name: "Typesense", description: "Alternativa open-source ao Algolia. Busca tolerante a erros.", category: "Serviços & APIs", subcategory: "Busca", url: "https://typesense.org", pricing: "freemium" },
+
+  // === EMAIL & COMUNICAÇÃO (229-234) ===
+  { id: 229, name: "Resend", description: "API de email moderna para desenvolvedores. Simples e confiável.", category: "Serviços & APIs", subcategory: "Email", url: "https://resend.com", highlight: true, isNew: true, pricing: "freemium" },
+  { id: 230, name: "SendGrid", description: "Plataforma de email da Twilio. Transacional e marketing.", category: "Serviços & APIs", subcategory: "Email", url: "https://sendgrid.com", pricing: "freemium" },
+  { id: 231, name: "Mailgun", description: "API de email focada em deliverability. Logs detalhados.", category: "Serviços & APIs", subcategory: "Email", url: "https://mailgun.com", pricing: "freemium" },
+  { id: 232, name: "Postmark", description: "Email transacional com alta taxa de entrega. Fast and reliable.", category: "Serviços & APIs", subcategory: "Email", url: "https://postmarkapp.com", pricing: "freemium" },
+  { id: 233, name: "Twilio", description: "APIs de comunicação: SMS, voz, WhatsApp e vídeo.", category: "Serviços & APIs", subcategory: "Comunicação", url: "https://twilio.com", pricing: "paid" },
+  { id: 234, name: "Vonage", description: "APIs de mensagens, voz e vídeo. Antigo Nexmo.", category: "Serviços & APIs", subcategory: "Comunicação", url: "https://vonage.com", pricing: "paid" },
+
+  // === PAGAMENTOS (235-239) ===
+  { id: 235, name: "Stripe", description: "Pagamentos online completos. Padrão da indústria tech.", category: "Serviços & APIs", subcategory: "Pagamentos", url: "https://stripe.com", highlight: true, pricing: "paid" },
+  { id: 236, name: "Paddle", description: "Merchant of Record. Cuida de impostos e compliance global.", category: "Serviços & APIs", subcategory: "Pagamentos", url: "https://paddle.com", pricing: "paid" },
+  { id: 237, name: "LemonSqueezy", description: "Venda de produtos digitais com gestão completa de impostos.", category: "Serviços & APIs", subcategory: "Pagamentos", url: "https://lemonsqueezy.com", isNew: true, pricing: "paid" },
+  { id: 238, name: "Gumroad", description: "Venda produtos digitais de forma simples. Ideal para creators.", category: "Serviços & APIs", subcategory: "Pagamentos", url: "https://gumroad.com", pricing: "paid" },
+  { id: 239, name: "PayPal", description: "Pagamentos globais. Ampla aceitação e checkout conhecido.", category: "Serviços & APIs", subcategory: "Pagamentos", url: "https://paypal.com", pricing: "paid" },
+
+  // === STORAGE & CDN (240-244) ===
+  { id: 240, name: "Cloudflare R2", description: "Object storage sem egress fees. Compatível com S3.", category: "Serviços & APIs", subcategory: "Storage", url: "https://cloudflare.com/r2", highlight: true, isNew: true, pricing: "freemium" },
+  { id: 241, name: "AWS S3", description: "Object storage padrão da indústria. Infinitamente escalável.", category: "Serviços & APIs", subcategory: "Storage", url: "https://aws.amazon.com/s3", pricing: "paid" },
+  { id: 242, name: "UploadThing", description: "Upload de arquivos moderno para Next.js e React.", category: "Serviços & APIs", subcategory: "Storage", url: "https://uploadthing.com", isNew: true, pricing: "freemium" },
+  { id: 243, name: "Imagekit", description: "CDN de imagens com transformações e otimização automática.", category: "Serviços & APIs", subcategory: "Storage", url: "https://imagekit.io", pricing: "freemium" },
+  { id: 244, name: "Cloudinary", description: "Gestão completa de mídia com transformações e CDN.", category: "Serviços & APIs", subcategory: "Storage", url: "https://cloudinary.com", pricing: "freemium" },
+
+  // === AUTENTICAÇÃO (245-249) ===
+  { id: 245, name: "Clerk", description: "Autenticação moderna com UI pronta e gestão de usuários.", category: "Serviços & APIs", subcategory: "Auth", url: "https://clerk.com", highlight: true, isNew: true, pricing: "freemium" },
+  { id: 246, name: "Auth0", description: "Identity as a Service. Enterprise-ready e extensível.", category: "Serviços & APIs", subcategory: "Auth", url: "https://auth0.com", pricing: "freemium" },
+  { id: 247, name: "Kinde", description: "Autenticação e gestão de usuários moderna. Alternativa ao Auth0.", category: "Serviços & APIs", subcategory: "Auth", url: "https://kinde.com", isNew: true, pricing: "freemium" },
+  { id: 248, name: "Lucia Auth", description: "Biblioteca de auth open-source. Flexível e type-safe.", category: "Serviços & APIs", subcategory: "Auth", url: "https://lucia-auth.com", isNew: true, pricing: "free" },
+  { id: 249, name: "NextAuth.js", description: "Auth para Next.js. Open-source e fácil de configurar.", category: "Serviços & APIs", subcategory: "Auth", url: "https://next-auth.js.org", pricing: "free" },
+
+  // === FEATURE FLAGS & CONFIG (250-252) ===
+  { id: 250, name: "LaunchDarkly", description: "Feature flags enterprise. A/B testing e rollouts graduais.", category: "Serviços & APIs", subcategory: "Config", url: "https://launchdarkly.com", pricing: "paid" },
+  { id: 251, name: "Flagsmith", description: "Feature flags open-source. Self-hosted ou cloud.", category: "Serviços & APIs", subcategory: "Config", url: "https://flagsmith.com", pricing: "freemium" },
+  { id: 252, name: "PostHog", description: "Product analytics com feature flags, session replay e mais.", category: "Serviços & APIs", subcategory: "Config", url: "https://posthog.com", highlight: true, pricing: "freemium" },
 ];
 
 // Categorias organizadas
@@ -470,6 +533,14 @@ export const toolCategories: ToolCategory[] = [
     color: "hsl(262 83% 58%)",
     tools: allTools.filter(t => t.category === "APIs de LLM")
   },
+  {
+    id: "servicos-apis",
+    name: "Serviços & APIs",
+    description: "Scraping, email, pagamentos e mais",
+    icon: "Plug",
+    color: "hsl(170 70% 45%)",
+    tools: allTools.filter(t => t.category === "Serviços & APIs")
+  },
   // === CATEGORIAS DE MARKETING ===
   {
     id: "redes-sociais",
@@ -624,6 +695,16 @@ export const getToolByName = (name: string): IndexedTool | undefined => {
     'snyk': 'Snyk',
     'suno': 'Suno',
     'udio': 'Udio',
+    'firecrawl': 'Firecrawl',
+    'scraping': 'Firecrawl',
+    'scrape': 'Firecrawl',
+    'resend': 'Resend',
+    'stripe': 'Stripe',
+    'clerk': 'Clerk',
+    'tavily': 'Tavily',
+    'algolia': 'Algolia',
+    'r2': 'Cloudflare R2',
+    'posthog': 'PostHog',
   };
   
   const aliasMatch = aliases[normalizedName];
