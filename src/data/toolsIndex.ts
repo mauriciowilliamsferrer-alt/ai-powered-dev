@@ -320,56 +320,235 @@ export const allTools: IndexedTool[] = [
   // ==========================================
 
   // === WEB SCRAPING & CRAWLING (210-216) ===
-  { id: 210, name: "Firecrawl", description: "API de scraping inteligente com IA. Converte páginas em markdown limpo para LLMs.", category: "Serviços & APIs", subcategory: "Scraping", url: "https://firecrawl.dev", highlight: true, isNew: true, pricing: "freemium" },
-  { id: 211, name: "Crawlee", description: "Framework open-source para web scraping e automação de browser.", category: "Serviços & APIs", subcategory: "Scraping", url: "https://crawlee.dev", isNew: true, pricing: "free" },
-  { id: 212, name: "Apify", description: "Plataforma de web scraping e automação com milhares de scrapers prontos.", category: "Serviços & APIs", subcategory: "Scraping", url: "https://apify.com", pricing: "freemium" },
-  { id: 213, name: "Bright Data", description: "Líder em coleta de dados web. Proxies residenciais e datasets prontos.", category: "Serviços & APIs", subcategory: "Scraping", url: "https://brightdata.com", pricing: "paid" },
+  { 
+    id: 210, 
+    name: "Firecrawl", 
+    description: "API de scraping inteligente com IA. Converte páginas em markdown limpo para LLMs. Suporta scrape (página única), crawl (site inteiro), map (descobrir URLs) e search (busca web).", 
+    category: "Serviços & APIs", 
+    subcategory: "Scraping", 
+    url: "https://firecrawl.dev", 
+    highlight: true, 
+    isNew: true, 
+    pricing: "freemium",
+    examples: [
+      "Extrair conteúdo de artigos para treinar modelos de IA",
+      "Converter documentação técnica em formato markdown para RAG",
+      "Mapear todas as URLs de um site para análise SEO",
+      "Capturar screenshots de páginas para testes visuais",
+      "Buscar informações atualizadas na web para agentes de IA"
+    ]
+  },
+  { id: 211, name: "Crawlee", description: "Framework open-source para web scraping e automação de browser. Suporta Puppeteer, Playwright e HTTP requests. Ideal para projetos complexos de scraping.", category: "Serviços & APIs", subcategory: "Scraping", url: "https://crawlee.dev", isNew: true, pricing: "free", examples: ["Scraping de e-commerce para monitorar preços", "Extração de dados de redes sociais", "Automação de coleta de leads"] },
+  { id: 212, name: "Apify", description: "Plataforma de web scraping e automação com milhares de scrapers prontos (Actors). Hospeda e executa seus scrapers na cloud.", category: "Serviços & APIs", subcategory: "Scraping", url: "https://apify.com", pricing: "freemium", examples: ["Usar Actors prontos para Instagram, Amazon, LinkedIn", "Hospedar Crawlee na cloud", "Integrar scraping com Zapier e Make"] },
+  { id: 213, name: "Bright Data", description: "Líder em coleta de dados web. Proxies residenciais e datasets prontos. Contorna bloqueios de anti-bot.", category: "Serviços & APIs", subcategory: "Scraping", url: "https://brightdata.com", pricing: "paid" },
   { id: 214, name: "ScrapingBee", description: "API simples para scraping com rotação de proxies e headless browser.", category: "Serviços & APIs", subcategory: "Scraping", url: "https://scrapingbee.com", pricing: "freemium" },
   { id: 215, name: "Playwright", description: "Automação de browsers moderna da Microsoft. Testes e scraping.", category: "Serviços & APIs", subcategory: "Scraping", url: "https://playwright.dev", pricing: "free" },
   { id: 216, name: "Puppeteer", description: "Controle do Chrome via Node.js. Base de muitas ferramentas de scraping.", category: "Serviços & APIs", subcategory: "Scraping", url: "https://pptr.dev", pricing: "free" },
 
   // === PROCESSAMENTO DE DADOS (217-222) ===
-  { id: 217, name: "Jina AI Reader", description: "Converte qualquer URL em texto limpo otimizado para LLMs.", category: "Serviços & APIs", subcategory: "Processamento", url: "https://jina.ai/reader", isNew: true, pricing: "freemium" },
-  { id: 218, name: "Unstructured", description: "Extração e parsing de dados de PDFs, imagens e documentos.", category: "Serviços & APIs", subcategory: "Processamento", url: "https://unstructured.io", isNew: true, pricing: "freemium" },
-  { id: 219, name: "LlamaParse", description: "Parser de documentos da LlamaIndex para RAG e aplicações de IA.", category: "Serviços & APIs", subcategory: "Processamento", url: "https://llamaindex.ai/llamaparse", isNew: true, pricing: "freemium" },
+  { id: 217, name: "Jina AI Reader", description: "Converte qualquer URL em texto limpo otimizado para LLMs. Basta adicionar r.jina.ai/ antes da URL.", category: "Serviços & APIs", subcategory: "Processamento", url: "https://jina.ai/reader", isNew: true, pricing: "freemium", examples: ["r.jina.ai/https://example.com retorna markdown limpo", "Preparar conteúdo web para RAG", "Limpar páginas para embeddings"] },
+  { id: 218, name: "Unstructured", description: "Extração e parsing de dados de PDFs, imagens e documentos. Identifica tabelas, imagens e estrutura.", category: "Serviços & APIs", subcategory: "Processamento", url: "https://unstructured.io", isNew: true, pricing: "freemium", examples: ["Extrair texto de contratos PDF", "Processar faturas e notas fiscais", "Converter documentos escaneados"] },
+  { id: 219, name: "LlamaParse", description: "Parser de documentos da LlamaIndex para RAG e aplicações de IA. Excelente com PDFs complexos.", category: "Serviços & APIs", subcategory: "Processamento", url: "https://llamaindex.ai/llamaparse", isNew: true, pricing: "freemium" },
   { id: 220, name: "Docling", description: "Conversão de documentos para markdown e JSON estruturado.", category: "Serviços & APIs", subcategory: "Processamento", url: "https://github.com/DS4SD/docling", isNew: true, pricing: "free" },
   { id: 221, name: "Marker", description: "Converte PDFs em markdown de alta qualidade. Open-source.", category: "Serviços & APIs", subcategory: "Processamento", url: "https://github.com/VikParuchuri/marker", isNew: true, pricing: "free" },
   { id: 222, name: "pdf.js", description: "Renderização de PDFs no browser. Biblioteca da Mozilla.", category: "Serviços & APIs", subcategory: "Processamento", url: "https://mozilla.github.io/pdf.js", pricing: "free" },
 
   // === BUSCA & PESQUISA (223-228) ===
-  { id: 223, name: "Tavily", description: "API de busca otimizada para agentes de IA. Resultados limpos e relevantes.", category: "Serviços & APIs", subcategory: "Busca", url: "https://tavily.com", isNew: true, pricing: "freemium" },
+  { 
+    id: 223, 
+    name: "Tavily", 
+    description: "API de busca otimizada para agentes de IA. Resultados limpos e relevantes, projetada para LangChain e workflows de IA.", 
+    category: "Serviços & APIs", 
+    subcategory: "Busca", 
+    url: "https://tavily.com", 
+    isNew: true, 
+    pricing: "freemium",
+    examples: [
+      "Busca em tempo real para agentes de IA",
+      "Pesquisar antes de responder perguntas sobre atualidades",
+      "Integração nativa com LangChain e AutoGPT"
+    ]
+  },
   { id: 224, name: "Exa.ai", description: "Motor de busca semântico para IA. Encontra conteúdo com embeddings.", category: "Serviços & APIs", subcategory: "Busca", url: "https://exa.ai", isNew: true, pricing: "freemium" },
   { id: 225, name: "SerpApi", description: "API para resultados de Google, Bing, YouTube e outros buscadores.", category: "Serviços & APIs", subcategory: "Busca", url: "https://serpapi.com", pricing: "freemium" },
-  { id: 226, name: "Algolia", description: "Busca instantânea e poderosa para aplicações. Líder de mercado.", category: "Serviços & APIs", subcategory: "Busca", url: "https://algolia.com", pricing: "freemium" },
-  { id: 227, name: "Meilisearch", description: "Motor de busca open-source, rápido e fácil de configurar.", category: "Serviços & APIs", subcategory: "Busca", url: "https://meilisearch.com", pricing: "freemium" },
+  { 
+    id: 226, 
+    name: "Algolia", 
+    description: "Busca instantânea e poderosa para aplicações. Líder de mercado com autocomplete, faceting e analytics.", 
+    category: "Serviços & APIs", 
+    subcategory: "Busca", 
+    url: "https://algolia.com", 
+    pricing: "freemium",
+    examples: [
+      "Implementar busca instantânea em e-commerce",
+      "Autocomplete de produtos com relevância por vendas",
+      "Filtros dinâmicos (facets) por categoria, preço, rating"
+    ]
+  },
+  { id: 227, name: "Meilisearch", description: "Motor de busca open-source, rápido e fácil de configurar. Alternativa self-hosted ao Algolia.", category: "Serviços & APIs", subcategory: "Busca", url: "https://meilisearch.com", pricing: "freemium" },
   { id: 228, name: "Typesense", description: "Alternativa open-source ao Algolia. Busca tolerante a erros.", category: "Serviços & APIs", subcategory: "Busca", url: "https://typesense.org", pricing: "freemium" },
 
   // === EMAIL & COMUNICAÇÃO (229-234) ===
-  { id: 229, name: "Resend", description: "API de email moderna para desenvolvedores. Simples e confiável.", category: "Serviços & APIs", subcategory: "Email", url: "https://resend.com", highlight: true, isNew: true, pricing: "freemium" },
-  { id: 230, name: "SendGrid", description: "Plataforma de email da Twilio. Transacional e marketing.", category: "Serviços & APIs", subcategory: "Email", url: "https://sendgrid.com", pricing: "freemium" },
-  { id: 231, name: "Mailgun", description: "API de email focada em deliverability. Logs detalhados.", category: "Serviços & APIs", subcategory: "Email", url: "https://mailgun.com", pricing: "freemium" },
+  { 
+    id: 229, 
+    name: "Resend", 
+    description: "API de email moderna para desenvolvedores. Criada pelo time do React Email. Simples, rápida e com excelente DX.", 
+    category: "Serviços & APIs", 
+    subcategory: "Email", 
+    url: "https://resend.com", 
+    highlight: true, 
+    isNew: true, 
+    pricing: "freemium",
+    examples: [
+      "Enviar emails transacionais (confirmação, senha, notificações)",
+      "Usar templates React Email para emails bonitos",
+      "Integrar com Next.js e Edge Functions",
+      "Monitorar taxa de abertura e cliques"
+    ]
+  },
+  { id: 230, name: "SendGrid", description: "Plataforma de email da Twilio. Transacional e marketing. Robusta para alto volume.", category: "Serviços & APIs", subcategory: "Email", url: "https://sendgrid.com", pricing: "freemium" },
+  { id: 231, name: "Mailgun", description: "API de email focada em deliverability. Logs detalhados e validação de emails.", category: "Serviços & APIs", subcategory: "Email", url: "https://mailgun.com", pricing: "freemium" },
   { id: 232, name: "Postmark", description: "Email transacional com alta taxa de entrega. Fast and reliable.", category: "Serviços & APIs", subcategory: "Email", url: "https://postmarkapp.com", pricing: "freemium" },
-  { id: 233, name: "Twilio", description: "APIs de comunicação: SMS, voz, WhatsApp e vídeo.", category: "Serviços & APIs", subcategory: "Comunicação", url: "https://twilio.com", pricing: "paid" },
+  { 
+    id: 233, 
+    name: "Twilio", 
+    description: "APIs de comunicação: SMS, voz, WhatsApp e vídeo. Padrão para comunicação programática.", 
+    category: "Serviços & APIs", 
+    subcategory: "Comunicação", 
+    url: "https://twilio.com", 
+    pricing: "paid",
+    examples: [
+      "Enviar SMS de verificação 2FA",
+      "Criar chatbots para WhatsApp",
+      "Implementar ligações VoIP no app",
+      "Notificações por voz automatizadas"
+    ]
+  },
   { id: 234, name: "Vonage", description: "APIs de mensagens, voz e vídeo. Antigo Nexmo.", category: "Serviços & APIs", subcategory: "Comunicação", url: "https://vonage.com", pricing: "paid" },
 
   // === PAGAMENTOS (235-239) ===
-  { id: 235, name: "Stripe", description: "Pagamentos online completos. Padrão da indústria tech.", category: "Serviços & APIs", subcategory: "Pagamentos", url: "https://stripe.com", highlight: true, pricing: "paid" },
-  { id: 236, name: "Paddle", description: "Merchant of Record. Cuida de impostos e compliance global.", category: "Serviços & APIs", subcategory: "Pagamentos", url: "https://paddle.com", pricing: "paid" },
-  { id: 237, name: "LemonSqueezy", description: "Venda de produtos digitais com gestão completa de impostos.", category: "Serviços & APIs", subcategory: "Pagamentos", url: "https://lemonsqueezy.com", isNew: true, pricing: "paid" },
+  { 
+    id: 235, 
+    name: "Stripe", 
+    description: "Pagamentos online completos. Padrão da indústria tech. Suporta one-time, subscriptions, invoices, e muito mais. API elegante e documentação exemplar.", 
+    category: "Serviços & APIs", 
+    subcategory: "Pagamentos", 
+    url: "https://stripe.com", 
+    highlight: true, 
+    pricing: "paid",
+    examples: [
+      "Checkout hospedado: redirecione para Stripe e receba pagamento",
+      "Criar planos de assinatura com cobrança recorrente",
+      "Stripe Connect para marketplace (split de pagamentos)",
+      "Customer Portal para usuários gerenciarem assinaturas",
+      "Webhooks para atualizar banco ao receber pagamentos",
+      "Stripe Billing para faturas e invoices"
+    ]
+  },
+  { 
+    id: 236, 
+    name: "Paddle", 
+    description: "Merchant of Record (MoR). Cuida de impostos, compliance global e reembolsos. Você recebe líquido.", 
+    category: "Serviços & APIs", 
+    subcategory: "Pagamentos", 
+    url: "https://paddle.com", 
+    pricing: "paid",
+    examples: [
+      "Vender SaaS globalmente sem se preocupar com VAT/GST",
+      "Paddle cuida de disputas e chargebacks",
+      "Ideal para indie hackers e startups early-stage"
+    ]
+  },
+  { 
+    id: 237, 
+    name: "LemonSqueezy", 
+    description: "Venda de produtos digitais com gestão completa de impostos. Interface moderna e setup em minutos.", 
+    category: "Serviços & APIs", 
+    subcategory: "Pagamentos", 
+    url: "https://lemonsqueezy.com", 
+    isNew: true, 
+    pricing: "paid",
+    examples: [
+      "Vender templates, cursos, ebooks sem setup complexo",
+      "Merchant of Record: eles lidam com impostos",
+      "Integração simples com webhooks"
+    ]
+  },
   { id: 238, name: "Gumroad", description: "Venda produtos digitais de forma simples. Ideal para creators.", category: "Serviços & APIs", subcategory: "Pagamentos", url: "https://gumroad.com", pricing: "paid" },
   { id: 239, name: "PayPal", description: "Pagamentos globais. Ampla aceitação e checkout conhecido.", category: "Serviços & APIs", subcategory: "Pagamentos", url: "https://paypal.com", pricing: "paid" },
 
   // === STORAGE & CDN (240-244) ===
-  { id: 240, name: "Cloudflare R2", description: "Object storage sem egress fees. Compatível com S3.", category: "Serviços & APIs", subcategory: "Storage", url: "https://cloudflare.com/r2", highlight: true, isNew: true, pricing: "freemium" },
+  { 
+    id: 240, 
+    name: "Cloudflare R2", 
+    description: "Object storage sem egress fees. Compatível com S3 API. Ideal para hospedar arquivos estáticos, backups e mídia.", 
+    category: "Serviços & APIs", 
+    subcategory: "Storage", 
+    url: "https://cloudflare.com/r2", 
+    highlight: true, 
+    isNew: true, 
+    pricing: "freemium",
+    examples: [
+      "Hospedar imagens e vídeos sem pagar por download",
+      "Backup de bancos de dados",
+      "Servir assets estáticos globalmente via CDN",
+      "Substituir S3 e economizar em egress"
+    ]
+  },
   { id: 241, name: "AWS S3", description: "Object storage padrão da indústria. Infinitamente escalável.", category: "Serviços & APIs", subcategory: "Storage", url: "https://aws.amazon.com/s3", pricing: "paid" },
-  { id: 242, name: "UploadThing", description: "Upload de arquivos moderno para Next.js e React.", category: "Serviços & APIs", subcategory: "Storage", url: "https://uploadthing.com", isNew: true, pricing: "freemium" },
+  { id: 242, name: "UploadThing", description: "Upload de arquivos moderno para Next.js e React. API simples e type-safe.", category: "Serviços & APIs", subcategory: "Storage", url: "https://uploadthing.com", isNew: true, pricing: "freemium", examples: ["Upload de imagens de perfil", "Anexos em formulários", "Gestão de arquivos com React"] },
   { id: 243, name: "Imagekit", description: "CDN de imagens com transformações e otimização automática.", category: "Serviços & APIs", subcategory: "Storage", url: "https://imagekit.io", pricing: "freemium" },
-  { id: 244, name: "Cloudinary", description: "Gestão completa de mídia com transformações e CDN.", category: "Serviços & APIs", subcategory: "Storage", url: "https://cloudinary.com", pricing: "freemium" },
+  { id: 244, name: "Cloudinary", description: "Gestão completa de mídia com transformações, otimização e CDN.", category: "Serviços & APIs", subcategory: "Storage", url: "https://cloudinary.com", pricing: "freemium", examples: ["Redimensionar imagens on-the-fly via URL", "Aplicar filtros e watermarks", "Otimizar vídeos automaticamente"] },
 
   // === AUTENTICAÇÃO (245-249) ===
-  { id: 245, name: "Clerk", description: "Autenticação moderna com UI pronta e gestão de usuários.", category: "Serviços & APIs", subcategory: "Auth", url: "https://clerk.com", highlight: true, isNew: true, pricing: "freemium" },
-  { id: 246, name: "Auth0", description: "Identity as a Service. Enterprise-ready e extensível.", category: "Serviços & APIs", subcategory: "Auth", url: "https://auth0.com", pricing: "freemium" },
-  { id: 247, name: "Kinde", description: "Autenticação e gestão de usuários moderna. Alternativa ao Auth0.", category: "Serviços & APIs", subcategory: "Auth", url: "https://kinde.com", isNew: true, pricing: "freemium" },
+  { 
+    id: 245, 
+    name: "Clerk", 
+    description: "Autenticação moderna com UI pronta e gestão de usuários. Componentes React bonitos out-of-the-box. Suporta social login, 2FA, organizações e muito mais.", 
+    category: "Serviços & APIs", 
+    subcategory: "Auth", 
+    url: "https://clerk.com", 
+    highlight: true, 
+    isNew: true, 
+    pricing: "freemium",
+    examples: [
+      "<SignIn /> e <SignUp /> prontos para usar em React",
+      "Social login com Google, GitHub, Apple em 5 minutos",
+      "Gestão de organizações e times (multi-tenant)",
+      "Webhooks para sincronizar usuários com seu banco",
+      "User management dashboard completo",
+      "2FA, magic links, passkeys suportados"
+    ]
+  },
+  { 
+    id: 246, 
+    name: "Auth0", 
+    description: "Identity as a Service. Enterprise-ready e extensível. Suporta qualquer caso de uso de autenticação.", 
+    category: "Serviços & APIs", 
+    subcategory: "Auth", 
+    url: "https://auth0.com", 
+    pricing: "freemium",
+    examples: [
+      "SSO enterprise para grandes empresas",
+      "Rules e Actions para lógica customizada",
+      "Machine-to-machine authentication para APIs"
+    ]
+  },
+  { 
+    id: 247, 
+    name: "Kinde", 
+    description: "Autenticação e gestão de usuários moderna. Alternativa ao Auth0 com pricing mais simples. Foco em startups.", 
+    category: "Serviços & APIs", 
+    subcategory: "Auth", 
+    url: "https://kinde.com", 
+    isNew: true, 
+    pricing: "freemium",
+    examples: [
+      "Feature flags integrados com auth",
+      "Gestão de permissões granular",
+      "SDKs para Next.js, React, Node"
+    ]
+  },
   { id: 248, name: "Lucia Auth", description: "Biblioteca de auth open-source. Flexível e type-safe.", category: "Serviços & APIs", subcategory: "Auth", url: "https://lucia-auth.com", isNew: true, pricing: "free" },
   { id: 249, name: "NextAuth.js", description: "Auth para Next.js. Open-source e fácil de configurar.", category: "Serviços & APIs", subcategory: "Auth", url: "https://next-auth.js.org", pricing: "free" },
 
