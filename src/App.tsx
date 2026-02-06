@@ -12,7 +12,8 @@ import { FloatingIndexButton } from "@/components/FloatingIndexButton";
 const LandingPage = React.lazy(() => import("./pages/LandingPage"));
 const Index = React.lazy(() => import("./pages/Index"));
 const DevToolsGuide = React.lazy(() => import("./pages/DevToolsGuide"));
-const ToolIndexPage = React.lazy(() => import("./pages/ToolIndexPage"));
+const ToolIndexHub = React.lazy(() => import("./pages/ToolIndexHub"));
+const ToolCategoryPage = React.lazy(() => import("./pages/ToolCategoryPage"));
 const ProjectSuggestionsPage = React.lazy(() => import("./pages/ProjectSuggestionsPage"));
 const MarketingGuidePage = React.lazy(() => import("./pages/MarketingGuidePage"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
@@ -29,10 +30,10 @@ const LoadingFallback = () => (
   </div>
 );
 
-// Component to conditionally show the floating button (not on /indice page)
+// Component to conditionally show the floating button (not on /indice pages)
 const FloatingButton = () => {
   const location = useLocation();
-  if (location.pathname === '/indice') return null;
+  if (location.pathname.startsWith('/indice')) return null;
   return <FloatingIndexButton />;
 };
 
@@ -41,7 +42,8 @@ const AppRoutes = () => (
     <Suspense fallback={<LoadingFallback />}>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/indice" element={<ToolIndexPage />} />
+        <Route path="/indice" element={<ToolIndexHub />} />
+        <Route path="/indice/:groupId" element={<ToolCategoryPage />} />
         <Route path="/projetos" element={<ProjectSuggestionsPage />} />
         <Route path="/divulgacao" element={<MarketingGuidePage />} />
         <Route path="/dashboard" element={<Index />} />
