@@ -104,11 +104,27 @@ export const allTools: IndexedTool[] = [
   { id: 57, name: "Replit AI", description: "IDE online com execução de código e assistente IA integrado.", category: "Desenvolvimento", subcategory: "Builders", url: "https://replit.com", pricing: "freemium" },
   { id: 58, name: "Leap.new", description: "Crie apps completas com prompts de linguagem natural.", category: "Desenvolvimento", subcategory: "Builders", url: "https://leap.new", pricing: "freemium" },
 
-  // === IDEs COM IA (101-110) ===
-  { id: 59, name: "Cursor", description: "IDE AI-native com Composer para edição de código com contexto.", category: "Desenvolvimento", subcategory: "IDEs", url: "https://cursor.com", highlight: true, pricing: "freemium" },
-  { id: 60, name: "VS Code", description: "Editor leve e extensível. Suporte a milhares de extensões.", category: "Desenvolvimento", subcategory: "IDEs", url: "https://code.visualstudio.com", pricing: "free" },
-  { id: 61, name: "JetBrains IDEs", description: "IDEs profissionais (IntelliJ, WebStorm, PyCharm) com AI Assistant.", category: "Desenvolvimento", subcategory: "IDEs", url: "https://jetbrains.com", pricing: "paid" },
-  { id: 62, name: "Windsurf", description: "IDE focada em desenvolvimento com IA. Experiência fluida.", category: "Desenvolvimento", subcategory: "IDEs", url: "https://windsurf.ai", pricing: "freemium" },
+  // === IDEs COM IA (101-120) ===
+  { id: 59, name: "Cursor", description: "IDE AI-native com Composer para edição de código com contexto. Fork do VS Code.", category: "Desenvolvimento", subcategory: "IDEs", url: "https://cursor.com", highlight: true, pricing: "freemium" },
+  { id: 60, name: "VS Code", description: "Editor leve e extensível. Suporte a milhares de extensões. Padrão da indústria.", category: "Desenvolvimento", subcategory: "IDEs", url: "https://code.visualstudio.com", pricing: "free" },
+  { id: 61, name: "JetBrains IDEs", description: "IDEs profissionais (IntelliJ, WebStorm, PyCharm, GoLand) com AI Assistant integrado.", category: "Desenvolvimento", subcategory: "IDEs", url: "https://jetbrains.com", pricing: "paid" },
+  { id: 62, name: "Windsurf", description: "IDE AI-first da Codeium. Flows para automação de código em larga escala.", category: "Desenvolvimento", subcategory: "IDEs", url: "https://windsurf.ai", pricing: "freemium", isNew: true },
+  { id: 253, name: "Zed", description: "Editor de código ultrarrápido em Rust. Multiplayer nativo e IA integrada.", category: "Desenvolvimento", subcategory: "IDEs", url: "https://zed.dev", pricing: "free", isNew: true },
+  { id: 254, name: "Neovim", description: "Editor modal extensível. Configurável com Lua. Popular entre power users.", category: "Desenvolvimento", subcategory: "IDEs", url: "https://neovim.io", pricing: "free" },
+  { id: 255, name: "Fleet", description: "IDE leve da JetBrains com suporte remoto e colaboração em tempo real.", category: "Desenvolvimento", subcategory: "IDEs", url: "https://jetbrains.com/fleet", pricing: "free", isNew: true },
+  { id: 256, name: "Lapce", description: "Editor moderno em Rust. Rápido, extensível via plugins WASM.", category: "Desenvolvimento", subcategory: "IDEs", url: "https://lapce.dev", pricing: "free" },
+  { id: 257, name: "Helix", description: "Editor modal pós-moderno. Seleção múltipla nativa, LSP integrado.", category: "Desenvolvimento", subcategory: "IDEs", url: "https://helix-editor.com", pricing: "free" },
+  { id: 258, name: "Sublime Text", description: "Editor clássico ultrarrápido. Goto Anything e múltiplas seleções.", category: "Desenvolvimento", subcategory: "IDEs", url: "https://sublimetext.com", pricing: "paid" },
+  { id: 259, name: "Nova", description: "IDE nativo para macOS. Design elegante e extensões em JavaScript.", category: "Desenvolvimento", subcategory: "IDEs", url: "https://nova.app", pricing: "paid" },
+  { id: 260, name: "Atom (Pulsar)", description: "Fork comunitário do Atom. Hackable, baseado em Electron.", category: "Desenvolvimento", subcategory: "IDEs", url: "https://pulsar-edit.dev", pricing: "free" },
+  { id: 261, name: "Eclipse", description: "IDE open-source para Java e outras linguagens. Extensível via plugins.", category: "Desenvolvimento", subcategory: "IDEs", url: "https://eclipse.org", pricing: "free" },
+  { id: 262, name: "Android Studio", description: "IDE oficial do Google para desenvolvimento Android. Baseado no IntelliJ.", category: "Desenvolvimento", subcategory: "IDEs", url: "https://developer.android.com/studio", pricing: "free" },
+  { id: 263, name: "Xcode", description: "IDE da Apple para iOS/macOS. SwiftUI, Interface Builder, Instruments.", category: "Desenvolvimento", subcategory: "IDEs", url: "https://developer.apple.com/xcode", pricing: "free" },
+  { id: 264, name: "RustRover", description: "IDE dedicada para Rust da JetBrains. Debug, refactoring avançado.", category: "Desenvolvimento", subcategory: "IDEs", url: "https://jetbrains.com/rust", pricing: "freemium", isNew: true },
+  { id: 265, name: "Trae", description: "IDE AI-native da ByteDance. Chat, geração de código e debugging com IA.", category: "Desenvolvimento", subcategory: "IDEs", url: "https://trae.ai", pricing: "free", isNew: true },
+  { id: 266, name: "Void", description: "Fork open-source do Cursor. 100% local-first e privacy-focused.", category: "Desenvolvimento", subcategory: "IDEs", url: "https://voideditor.com", pricing: "free", isNew: true },
+  { id: 267, name: "PearAI", description: "IDE AI open-source. Fork do VS Code com Copilot alternativo.", category: "Desenvolvimento", subcategory: "IDEs", url: "https://trypear.ai", pricing: "free", isNew: true },
+  { id: 268, name: "Continue", description: "Extensão open-source para VS Code/JetBrains. Chat e autocomplete com IA.", category: "Desenvolvimento", subcategory: "IDEs", url: "https://continue.dev", pricing: "free" },
 
   // === AGENTES DE CÓDIGO (111-120) ===
   { id: 63, name: "GitHub Copilot", description: "Sugestões de código em tempo real baseadas em contexto.", category: "Desenvolvimento", subcategory: "Agentes", url: "https://github.com/features/copilot", highlight: true, pricing: "paid" },
