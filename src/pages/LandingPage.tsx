@@ -5,9 +5,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ToolReference } from "@/components/ToolReference";
-import { getToolByName } from "@/data/toolsIndex";
+import { getToolByName, allTools, newTools } from "@/data/toolsIndex";
+import { categoryGroups } from "@/data/categoryGroups";
 import { WorkflowProgressBar } from "@/components/WorkflowBreadcrumbs";
 import { WorkflowSidebar } from "@/components/WorkflowSidebar";
+import { QuickStartGuide } from "@/components/QuickStartGuide";
 import { 
   Lightbulb, 
   Search, 
@@ -39,7 +41,8 @@ import {
   Activity,
   Image,
   Video,
-  Sparkles
+  Sparkles,
+  Star
 } from "lucide-react";
 
 // Helper para renderizar nome com referência
@@ -408,7 +411,7 @@ export default function LandingPage() {
       </div>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-16 md:py-24">
+      <section className="relative overflow-hidden py-12 md:py-20">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/10 -z-10" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent -z-10" />
         
@@ -433,51 +436,35 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 animate-fade-in" style={{ animationDelay: "0.2s" }}>
-            <Link to="/projetos">
-              <Button size="lg" className="gap-2 shadow-lg hover:shadow-xl transition-shadow bg-gradient-to-r from-primary to-purple-500">
-                <Sparkles className="h-4 w-4" />
-                🎯 Sugestões de Projetos com IA
-              </Button>
-            </Link>
-            <Link to="/indice">
-              <Button size="lg" variant="outline" className="gap-2 border-primary/30 hover:border-primary/50">
-                <BookOpen className="h-4 w-4" />
-                📚 Índice de Ferramentas
-              </Button>
-            </Link>
-            <Link to="/divulgacao">
-              <Button size="lg" variant="secondary" className="gap-2 bg-amber-100 hover:bg-amber-200 text-amber-900 border-amber-300">
-                📣 Marketing & Divulgação
-              </Button>
-            </Link>
-            <Link to="/dashboard">
-              <Button size="lg" variant="ghost" className="gap-2">
-                <Play className="h-4 w-4" />
-                Explorar Workflow
-              </Button>
-            </Link>
-          </div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto pt-8 animate-fade-in" style={{ animationDelay: "0.4s" }}>
-            <Card className="p-4 text-center bg-card/50 border-primary/10">
-              <div className="text-2xl md:text-3xl font-bold text-primary">70+</div>
+          {/* Stats - DINÂMICOS */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto pt-4 animate-fade-in" style={{ animationDelay: "0.2s" }}>
+            <Card className="p-4 text-center bg-card/50 border-primary/10 hover:border-primary/30 transition-colors">
+              <div className="text-2xl md:text-3xl font-bold text-primary">{allTools.length}</div>
               <p className="text-xs md:text-sm text-muted-foreground">Ferramentas</p>
             </Card>
-            <Card className="p-4 text-center bg-card/50 border-primary/10">
-              <div className="text-2xl md:text-3xl font-bold text-primary">8</div>
+            <Card className="p-4 text-center bg-card/50 border-primary/10 hover:border-primary/30 transition-colors">
+              <div className="text-2xl md:text-3xl font-bold text-primary">{workflowSteps.length}</div>
               <p className="text-xs md:text-sm text-muted-foreground">Fases do Workflow</p>
             </Card>
-            <Card className="p-4 text-center bg-card/50 border-primary/10">
-              <div className="text-2xl md:text-3xl font-bold text-primary">15+</div>
-              <p className="text-xs md:text-sm text-muted-foreground">APIs de LLM</p>
+            <Card className="p-4 text-center bg-card/50 border-primary/10 hover:border-primary/30 transition-colors">
+              <div className="text-2xl md:text-3xl font-bold text-primary">{categoryGroups.length}</div>
+              <p className="text-xs md:text-sm text-muted-foreground">Categorias</p>
             </Card>
-            <Card className="p-4 text-center bg-card/50 border-primary/10">
-              <div className="text-2xl md:text-3xl font-bold text-primary">∞</div>
-              <p className="text-xs md:text-sm text-muted-foreground">Possibilidades</p>
+            <Card className="p-4 text-center bg-card/50 border-primary/10 hover:border-primary/30 transition-colors relative">
+              <div className="text-2xl md:text-3xl font-bold text-primary flex items-center justify-center gap-1">
+                {newTools.length}
+                <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
+              </div>
+              <p className="text-xs md:text-sm text-muted-foreground">Novidades 2025</p>
             </Card>
           </div>
+        </div>
+      </section>
+
+      {/* Quick Start Guide - NOVO */}
+      <section className="py-12 bg-muted/30 border-y">
+        <div className="container mx-auto px-4">
+          <QuickStartGuide />
         </div>
       </section>
 
