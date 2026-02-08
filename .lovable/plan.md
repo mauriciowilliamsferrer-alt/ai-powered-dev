@@ -1,274 +1,351 @@
 
-# Melhorias de Fluxo e Logica - ai-powered-dev.lovable.app
+# Mecanismo de Alerta para Novidades
 
-## Analise do Estado Atual
+## Contexto Atual
 
-Apos explorar o codigo, identifiquei varios problemas de fluxo e logica que afetam a experiencia do usuario.
+O projeto ja possui:
+- **139 ferramentas** marcadas com `isNew: true` no `toolsIndex.ts`
+- Export `newTools` que filtra todas as ferramentas novas
+- Indicador visual no `FloatingIndexButton` (bolinha verde pulsante)
+- Badge "Novo" exibido nos cards de ferramentas
 
-## Problemas Identificados
+O que falta:
+- Persistencia de quais novidades o usuario ja visualizou
+- Notificacao/alerta ao entrar no site com novidades nao vistas
+- Historico de quando as ferramentas foram adicionadas
+- Componente de destaque para novidades
 
-### 1. Navegacao Confusa e Fragmentada
-
-**Problema**: O site tem multiplas paginas relacionadas mas sem conexao clara:
-- `/` (LandingPage) - Guia completo com 1330 linhas
-- `/dashboard` (Index) - Workflow interativo duplicado
-- `/devtools-guide` (DevToolsGuide) - Outro guia de ferramentas
-- `/indice` (ToolIndexHub) - Hub do indice de ferramentas
-- `/divulgacao` (MarketingGuidePage) - Guia de marketing
-- `/projetos` (ProjectSuggestionsPage) - Sugestoes IA
-
-**Impacto**: Usuario nao sabe por onde comecar, conteudo duplicado, CTAs competem entre si.
-
-### 2. Hero Section com Excesso de CTAs
-
-**Problema**: A LandingPage tem 4 botoes principais no hero:
-- Sugestoes de Projetos com IA
-- Indice de Ferramentas  
-- Marketing e Divulgacao
-- Explorar Workflow
-
-**Impacto**: Paralisia de escolha, nenhum caminho principal claro.
-
-### 3. Estatisticas Desatualizadas
-
-**Problema**: O hero mostra "70+" ferramentas, mas o indice real tem 268+ ferramentas.
-
-### 4. Pagina /dashboard Redundante
-
-**Problema**: A pagina `/dashboard` duplica muito conteudo da LandingPage mas com menos detalhes.
-
-### 5. Sidebar Workflow Desconectada
-
-**Problema**: WorkflowSidebar busca por IDs que nem sempre existem na pagina:
-```typescript
-const sections = workflowPhases.map(phase => ({
-  id: phase.id,
-  element: document.getElementById(phase.id)
-})).filter(s => s.element);
-```
-
-### 6. Falta de Onboarding Guiado
-
-**Problema**: Nenhum caminho sugerido para diferentes perfis de usuario (iniciante, intermediario, avancado).
-
-### 7. Botao Flutuante Sem Contexto
-
-**Problema**: O FloatingIndexButton aparece em todas as paginas sem indicar o que e ou quantas ferramentas tem.
-
-## Plano de Melhorias
-
-### Fase 1: Simplificar Hero e CTAs Principais
-
-**Objetivo**: Criar um caminho principal claro com CTAs secundarios.
+## Arquitetura Proposta
 
 ```text
-ANTES (4 botoes iguais):
-[Projetos IA] [Indice] [Marketing] [Workflow]
-
-DEPOIS (hierarquia clara):
-[COMECAR AGORA - primario grande]
-    |
-    +-- Opcao: "Novo aqui? Gere um projeto com IA"
-    +-- Opcao: "Ja sabe o que quer? Explore as ferramentas"
-    
-[Botoes secundarios menores abaixo]
++----------------------------------+
+|  USUARIO ENTRA NO SITE           |
++----------------------------------+
+           |
+           v
++----------------------------------+
+|  VERIFICA localStorage           |
+|  (seen-tools: [id1, id2, ...])  |
++----------------------------------+
+           |
+           v
++----------------------------------+
+|  COMPARA COM newTools            |
+|  unseenCount = newTools - seen   |
++----------------------------------+
+           |
+           v
++----------------------------------+
+|  SE unseenCount > 0:             |
+|  - Mostrar alerta/banner         |
+|  - Atualizar FloatingButton      |
+|  - Destacar na navegacao         |
++----------------------------------+
 ```
 
-**Arquivos a modificar**: `src/pages/LandingPage.tsx`
+## Componentes a Criar
 
-### Fase 2: Atualizar Estatisticas Dinamicas
+### 1. Hook useNewToolsAlert
 
-**Objetivo**: Usar contadores reais do indice.
+Gerencia o estado de novidades vistas/nao vistas:
 
 ```typescript
-// Importar do indice real
-import { allTools, newTools } from "@/data/toolsIndex";
+interface NewToolsState {
+  seenToolIds: number[];       // IDs de ferramentas ja visualizadas
+  lastSeenDate: string;        // Data da ultima visita
+  unseenCount: number;         // Quantas novidades nao vistas
+  unseenTools: IndexedTool[];  // Lista de ferramentas nao vistas
+}
 
-// No hero:
-<div>{allTools.length}+</div> // 268+
-<p>Ferramentas</p>
-```
-
-**Arquivos a modificar**: `src/pages/LandingPage.tsx`
-
-### Fase 3: Criar Fluxo de Onboarding por Perfil
-
-**Objetivo**: Direcionar usuarios baseado em seu nivel/objetivo.
-
-**Novo componente**: `src/components/QuickStartGuide.tsx`
-
-```text
-+----------------------------------------+
-|  Como voce quer comecar?               |
-+----------------------------------------+
-|                                        |
-|  [Sou Iniciante]                       |
-|   -> Sugestoes de projetos com IA      |
-|   -> Guia passo-a-passo                |
-|                                        |
-|  [Tenho Experiencia]                   |
-|   -> Indice completo de ferramentas    |
-|   -> Pular para desenvolvimento        |
-|                                        |
-|  [Quero Divulgar]                      |
-|   -> Guia de marketing                 |
-|   -> Estrategias de monetizacao        |
-|                                        |
-+----------------------------------------+
-```
-
-**Arquivos a criar**: `src/components/QuickStartGuide.tsx`
-**Arquivos a modificar**: `src/pages/LandingPage.tsx`
-
-### Fase 4: Melhorar Botao Flutuante
-
-**Objetivo**: Adicionar contexto e badge de contagem.
-
-```text
-ANTES:
-[Icone livro]
-
-DEPOIS:
-[Icone livro + "268"]
-Tooltip: "268 ferramentas catalogadas"
-```
-
-**Arquivos a modificar**: `src/components/FloatingIndexButton.tsx`
-
-### Fase 5: Consolidar /dashboard
-
-**Objetivo**: Redirecionar /dashboard para a LandingPage ou transformar em uma visao simplificada.
-
-**Opcoes**:
-1. Manter como visao "compacta" para usuarios que ja conhecem
-2. Redirecionar para `/` com scroll automatico para a secao de ferramentas
-
-**Arquivos a modificar**: `src/App.tsx`, possivelmente `src/pages/Index.tsx`
-
-### Fase 6: Corrigir Scroll da Sidebar
-
-**Objetivo**: Garantir que os IDs de ancora existam na pagina.
-
-**Problema atual**:
-```typescript
-// WorkflowSidebar usa:
-{ id: 'ideacao', label: 'Ideacao' }
-// Mas LandingPage tem:
-id="ideacao" // OK - este existe
-id="documentacao" // Este tambem
-```
-
-**Verificacao necessaria**: Confirmar que todos os IDs da sidebar existem na LandingPage.
-
-**Arquivos a verificar/modificar**: 
-- `src/components/WorkflowSidebar.tsx`
-- `src/pages/LandingPage.tsx`
-
-### Fase 7: Adicionar Navegacao Contextual
-
-**Objetivo**: Mostrar onde o usuario esta no fluxo e sugerir proximos passos.
-
-**Novo componente**: `src/components/NextStepSuggestion.tsx`
-
-Aparece no final de cada secao:
-```text
-+----------------------------------------+
-|  Proximo passo recomendado:            |
-|  [Ir para Prototipagem ->]             |
-|  ou [Voltar ao inicio]                 |
-+----------------------------------------+
-```
-
-## Resumo de Arquivos
-
-### Arquivos a Criar
-- `src/components/QuickStartGuide.tsx` - Componente de escolha de perfil
-- `src/components/NextStepSuggestion.tsx` - Sugestao de proximo passo
-
-### Arquivos a Modificar
-- `src/pages/LandingPage.tsx` - Hero, CTAs, estatisticas dinamicas
-- `src/components/FloatingIndexButton.tsx` - Adicionar badge de contagem
-- `src/components/WorkflowSidebar.tsx` - Verificar/corrigir IDs de ancora
-- `src/App.tsx` - Considerar consolidacao de rotas
-
-## Prioridades de Implementacao
-
-1. **Alta**: Atualizar estatisticas (rapido, alto impacto)
-2. **Alta**: Simplificar hero com hierarquia clara de CTAs
-3. **Media**: Adicionar QuickStartGuide
-4. **Media**: Melhorar FloatingIndexButton
-5. **Baixa**: Consolidar /dashboard
-6. **Baixa**: Adicionar NextStepSuggestion
-
-## Secao Tecnica
-
-### Importacao de Dados Dinamicos
-
-```typescript
-// Em LandingPage.tsx
-import { allTools, newTools, toolCategories } from "@/data/toolsIndex";
-import { categoryGroups } from "@/data/categoryGroups";
-
-// Estatisticas dinamicas
-const stats = {
-  totalTools: allTools.length,
-  newTools2025: newTools.length,
-  categories: categoryGroups.length,
-  phases: workflowSteps.length
+const useNewToolsAlert = () => {
+  // Carregar do localStorage
+  // Comparar com newTools atual
+  // Retornar estado e funcoes para marcar como visto
 };
 ```
 
-### Estrutura do QuickStartGuide
+### 2. Componente NewToolsBanner
 
-```typescript
-interface QuickStartOption {
-  id: string;
-  title: string;
-  description: string;
-  icon: LucideIcon;
-  action: () => void; // navigate ou scroll
-  highlight?: boolean;
-}
+Banner de alerta que aparece na pagina inicial:
 
-const options: QuickStartOption[] = [
-  {
-    id: 'beginner',
-    title: 'Sou Iniciante',
-    description: 'Comece com sugestoes personalizadas de projetos',
-    icon: Sparkles,
-    action: () => navigate('/projetos'),
-    highlight: true
-  },
-  // ...
-];
+```text
++--------------------------------------------------+
+| NOVIDADES! 12 novas ferramentas desde sua        |
+| ultima visita                                     |
+|                                                   |
+| [Ver Novidades]          [Dispensar]              |
++--------------------------------------------------+
 ```
 
-### Melhorias no FloatingIndexButton
+### 3. Componente NewToolsDrawer/Modal
+
+Lista detalhada das novidades nao vistas:
+
+```text
++----------------------------------+
+|  Novidades em 2025               |
+|  12 ferramentas novas            |
++----------------------------------+
+|                                  |
+|  [x] Cursor IDE                  |
+|      Editor AI-first...          |
+|                                  |
+|  [ ] Windsurf                    |
+|      IDE da Codeium...           |
+|                                  |
+|  [ ] Zed                         |
+|      Editor em Rust...           |
+|                                  |
++----------------------------------+
+|  [Marcar todas como vistas]      |
++----------------------------------+
+```
+
+### 4. FloatingIndexButton Atualizado
+
+Adicionar badge com contagem de nao vistos:
+
+```text
+ANTES:
+[268] (bolinha verde)
+
+DEPOIS:
+[268] (badge vermelho "12 novas")
+```
+
+## Arquivos a Criar
+
+```text
+src/hooks/useNewToolsAlert.tsx    # Hook de gerenciamento de estado
+src/components/NewToolsBanner.tsx  # Banner de alerta no topo
+src/components/NewToolsDrawer.tsx  # Drawer/modal com lista de novidades
+```
+
+## Arquivos a Modificar
+
+```text
+src/data/toolsIndex.ts            # Adicionar campo addedDate (opcional)
+src/components/FloatingIndexButton.tsx  # Integrar com hook de alertas
+src/pages/LandingPage.tsx         # Adicionar NewToolsBanner
+src/App.tsx                       # Context provider (opcional)
+```
+
+## Fluxo de Usuario
+
+### Primeira Visita
+1. Usuario entra no site
+2. Nenhum dado no localStorage
+3. Todas as `newTools` sao consideradas "nao vistas"
+4. Banner aparece: "12 novas ferramentas para explorar!"
+5. Usuario clica em "Ver Novidades"
+6. Drawer abre com lista das novidades
+7. Usuario pode marcar individualmente ou "marcar todas"
+8. IDs sao salvos no localStorage
+
+### Visitas Subsequentes
+1. Usuario volta ao site
+2. Sistema compara `newTools` com `seenToolIds`
+3. Se novas ferramentas foram adicionadas: mostrar banner
+4. Se todas ja foram vistas: nao mostrar nada
+
+### Adicionar Nova Ferramenta (Dev)
+1. Dev adiciona ferramenta com `isNew: true`
+2. Na proxima visita do usuario, ela aparece como "nao vista"
+3. Sistema detecta automaticamente
+
+## Estrutura de Dados no localStorage
+
+```json
+{
+  "new-tools-seen": {
+    "seenIds": [62, 253, 255, 264, 265, 266, 267, 271, ...],
+    "lastVisit": "2025-02-08T10:30:00.000Z",
+    "dismissedBanner": false
+  }
+}
+```
+
+## Interface do Hook
 
 ```typescript
-import { allTools } from "@/data/toolsIndex";
+interface UseNewToolsAlertReturn {
+  // Estado
+  unseenTools: IndexedTool[];
+  unseenCount: number;
+  hasUnseenTools: boolean;
+  
+  // Acoes
+  markToolAsSeen: (toolId: number) => void;
+  markAllAsSeen: () => void;
+  dismissBanner: () => void;
+  resetSeenTools: () => void;
+  
+  // UI
+  showBanner: boolean;
+}
+```
 
-export const FloatingIndexButton = () => {
-  const toolCount = allTools.length;
+## Componente NewToolsBanner
+
+```typescript
+interface NewToolsBannerProps {
+  onViewClick: () => void;
+  onDismiss: () => void;
+}
+
+const NewToolsBanner = ({ onViewClick, onDismiss }: NewToolsBannerProps) => {
+  const { unseenCount, showBanner } = useNewToolsAlert();
+  
+  if (!showBanner) return null;
   
   return (
-    <Link to="/indice">
-      <Button className="relative">
-        <BookOpen />
-        <span className="absolute -top-2 -right-2 bg-primary text-xs 
-                         rounded-full w-6 h-6 flex items-center justify-center">
-          {toolCount}
-        </span>
-      </Button>
-    </Link>
+    <Alert className="fixed top-0 left-0 right-0 z-50">
+      <Sparkles className="h-4 w-4" />
+      <AlertTitle>Novidades!</AlertTitle>
+      <AlertDescription>
+        {unseenCount} novas ferramentas desde sua ultima visita
+      </AlertDescription>
+      <Button onClick={onViewClick}>Ver Novidades</Button>
+      <Button variant="ghost" onClick={onDismiss}>Dispensar</Button>
+    </Alert>
   );
 };
 ```
 
-## Resultado Esperado
+## Integracao com FloatingIndexButton
 
-- **Navegacao clara**: Usuario sabe exatamente por onde comecar
-- **Estatisticas precisas**: Numeros reais do catalogo (268+ ferramentas)
-- **Fluxo guiado**: Cada perfil tem um caminho otimizado
-- **Menos redundancia**: Conteudo consolidado sem duplicacao
-- **Feedback visual**: Usuario sempre sabe onde esta e para onde ir
+```typescript
+export const FloatingIndexButton = () => {
+  const { unseenCount, hasUnseenTools } = useNewToolsAlert();
+  
+  return (
+    <Button className="relative">
+      <BookOpen />
+      <span className="badge">{allTools.length}</span>
+      
+      {/* Badge de novidades nao vistas */}
+      {hasUnseenTools && (
+        <span className="absolute -top-2 -left-2 bg-red-500 text-white 
+                         text-[10px] rounded-full px-1.5 animate-bounce">
+          {unseenCount}
+        </span>
+      )}
+    </Button>
+  );
+};
+```
+
+## Secao Tecnica
+
+### Hook useNewToolsAlert Completo
+
+```typescript
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import { newTools, IndexedTool } from '@/data/toolsIndex';
+
+const STORAGE_KEY = 'new-tools-seen';
+
+interface StoredData {
+  seenIds: number[];
+  lastVisit: string;
+  dismissedBanner: boolean;
+}
+
+export const useNewToolsAlert = () => {
+  const [data, setData] = useState<StoredData>({
+    seenIds: [],
+    lastVisit: new Date().toISOString(),
+    dismissedBanner: false
+  });
+  
+  // Carregar do localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      try {
+        setData(JSON.parse(saved));
+      } catch {
+        // Ignorar erro de parse
+      }
+    }
+  }, []);
+  
+  // Salvar no localStorage
+  const saveData = useCallback((newData: StoredData) => {
+    setData(newData);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
+  }, []);
+  
+  // Ferramentas nao vistas
+  const unseenTools = useMemo(() => 
+    newTools.filter(tool => !data.seenIds.includes(tool.id)),
+    [data.seenIds]
+  );
+  
+  // Marcar como vista
+  const markToolAsSeen = useCallback((toolId: number) => {
+    if (!data.seenIds.includes(toolId)) {
+      saveData({
+        ...data,
+        seenIds: [...data.seenIds, toolId],
+        lastVisit: new Date().toISOString()
+      });
+    }
+  }, [data, saveData]);
+  
+  // Marcar todas como vistas
+  const markAllAsSeen = useCallback(() => {
+    saveData({
+      ...data,
+      seenIds: newTools.map(t => t.id),
+      lastVisit: new Date().toISOString(),
+      dismissedBanner: true
+    });
+  }, [data, saveData]);
+  
+  return {
+    unseenTools,
+    unseenCount: unseenTools.length,
+    hasUnseenTools: unseenTools.length > 0,
+    showBanner: unseenTools.length > 0 && !data.dismissedBanner,
+    markToolAsSeen,
+    markAllAsSeen,
+    dismissBanner: () => saveData({ ...data, dismissedBanner: true }),
+    resetSeenTools: () => saveData({ 
+      seenIds: [], 
+      lastVisit: new Date().toISOString(),
+      dismissedBanner: false 
+    })
+  };
+};
+```
+
+## Fases de Implementacao
+
+### Fase 1: Hook e Persistencia
+- Criar `useNewToolsAlert.tsx`
+- Implementar logica de localStorage
+- Testes unitarios
+
+### Fase 2: Componentes Visuais
+- Criar `NewToolsBanner.tsx`
+- Criar `NewToolsDrawer.tsx`
+- Estilizacao com Tailwind
+
+### Fase 3: Integracao
+- Atualizar `FloatingIndexButton.tsx`
+- Adicionar banner na `LandingPage.tsx`
+- Testar fluxo completo
+
+### Fase 4: UX Polish
+- Animacoes de entrada/saida
+- Transicoes suaves
+- Acessibilidade (a11y)
+
+## Beneficios
+
+1. **Engajamento**: Usuarios voltam para ver novidades
+2. **Descoberta**: Ferramentas novas ganham destaque
+3. **Retencao**: Motivo para revisitar o site
+4. **Personalizacao**: Experiencia adaptada ao usuario
+5. **Metricas**: Possivel rastrear quais ferramentas geram interesse
