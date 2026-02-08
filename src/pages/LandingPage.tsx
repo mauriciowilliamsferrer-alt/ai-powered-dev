@@ -10,6 +10,7 @@ import { categoryGroups } from "@/data/categoryGroups";
 import { WorkflowProgressBar } from "@/components/WorkflowBreadcrumbs";
 import { WorkflowSidebar } from "@/components/WorkflowSidebar";
 import { QuickStartGuide } from "@/components/QuickStartGuide";
+import { NewToolsBanner } from "@/components/NewToolsBanner";
 import { 
   Lightbulb, 
   Search, 
@@ -397,6 +398,9 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* New Tools Banner - Fixed no topo */}
+      <NewToolsBanner />
+
       {/* Workflow Sidebar - Fixed on large screens */}
       <WorkflowSidebar />
 
@@ -453,7 +457,7 @@ export default function LandingPage() {
             <Card className="p-4 text-center bg-card/50 border-primary/10 hover:border-primary/30 transition-colors relative">
               <div className="text-2xl md:text-3xl font-bold text-primary flex items-center justify-center gap-1">
                 {newTools.length}
-                <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
+                <Star className="w-4 h-4 text-accent fill-accent" />
               </div>
               <p className="text-xs md:text-sm text-muted-foreground">Novidades 2025</p>
             </Card>
