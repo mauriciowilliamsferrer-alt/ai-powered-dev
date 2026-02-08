@@ -126,6 +126,77 @@ export const allTools: IndexedTool[] = [
   { id: 267, name: "PearAI", description: "IDE AI open-source. Fork do VS Code com Copilot alternativo.", category: "Desenvolvimento", subcategory: "IDEs", url: "https://trypear.ai", pricing: "free", isNew: true },
   { id: 268, name: "Continue", description: "Extensão open-source para VS Code/JetBrains. Chat e autocomplete com IA.", category: "Desenvolvimento", subcategory: "IDEs", url: "https://continue.dev", pricing: "free" },
 
+  // === EXTENSÕES VS CODE (269-300) ===
+  // --- IA & Autocomplete ---
+  { id: 269, name: "GitHub Copilot", description: "Autocomplete de código com IA. Sugestões em tempo real baseadas em contexto.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=GitHub.copilot", highlight: true, pricing: "paid" },
+  { id: 270, name: "Tabnine", description: "Autocomplete de código com IA. Opção local para privacidade.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=TabNine.tabnine-vscode", pricing: "freemium" },
+  { id: 271, name: "Codeium", description: "Autocomplete gratuito com IA. Alternativa ao Copilot.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=Codeium.codeium", pricing: "free", isNew: true },
+  { id: 272, name: "AWS Toolkit", description: "Integração completa com AWS. Lambda, S3, CloudWatch e mais.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=AmazonWebServices.aws-toolkit-vscode", pricing: "free" },
+  
+  // --- Linguagens & Frameworks ---
+  { id: 273, name: "ESLint", description: "Linting de JavaScript/TypeScript. Encontre e corrija problemas de código.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint", highlight: true, pricing: "free" },
+  { id: 274, name: "Prettier", description: "Formatação automática de código. Consistência garantida.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode", highlight: true, pricing: "free" },
+  { id: 275, name: "TypeScript Hero", description: "Imports automáticos e organização de TypeScript.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=rbbit.typescript-hero", pricing: "free" },
+  { id: 276, name: "ES7+ React/Redux/React-Native", description: "Snippets para React, Redux e React Native.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=dsznajder.es7-react-js-snippets", pricing: "free" },
+  { id: 277, name: "Tailwind CSS IntelliSense", description: "Autocomplete para classes Tailwind. Essencial para projetos Tailwind.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss", highlight: true, pricing: "free" },
+  { id: 278, name: "Python", description: "Suporte completo para Python. IntelliSense, linting, debugging.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=ms-python.python", pricing: "free" },
+  { id: 279, name: "Pylance", description: "Language server rápido para Python com type checking.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance", pricing: "free" },
+  { id: 280, name: "Go", description: "Suporte oficial para Go. IntelliSense, debugging, testing.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=golang.Go", pricing: "free" },
+  { id: 281, name: "rust-analyzer", description: "Language server para Rust. Autocomplete e análise de código.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer", pricing: "free" },
+  { id: 282, name: "C/C++", description: "IntelliSense, debugging e code browsing para C/C++.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools", pricing: "free" },
+  { id: 283, name: "Java Extension Pack", description: "Pacote completo para desenvolvimento Java.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack", pricing: "free" },
+  { id: 284, name: "Vue - Official", description: "Suporte oficial para Vue.js. Volar recomendado.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=Vue.volar", pricing: "free" },
+  { id: 285, name: "Svelte for VS Code", description: "Suporte para Svelte com syntax highlighting e IntelliSense.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode", pricing: "free" },
+  { id: 286, name: "Angular Language Service", description: "IntelliSense e navegação para templates Angular.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=Angular.ng-template", pricing: "free" },
+  
+  // --- Git & Colaboração ---
+  { id: 287, name: "GitLens", description: "Git supercharged. Blame, history, comparações e muito mais.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens", highlight: true, pricing: "freemium" },
+  { id: 288, name: "Git Graph", description: "Visualize seu histórico Git como um grafo interativo.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph", pricing: "free" },
+  { id: 289, name: "GitHub Pull Requests", description: "Gerencie PRs e issues do GitHub diretamente no VS Code.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-pull-request-github", pricing: "free" },
+  { id: 290, name: "Live Share", description: "Colaboração em tempo real. Pair programming remoto.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare", highlight: true, pricing: "free" },
+  
+  // --- Produtividade ---
+  { id: 291, name: "Auto Rename Tag", description: "Renomeie tags HTML/XML automaticamente ao editar.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag", pricing: "free" },
+  { id: 292, name: "Path Intellisense", description: "Autocomplete de caminhos de arquivos.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=christian-kohler.path-intellisense", pricing: "free" },
+  { id: 293, name: "Auto Import", description: "Imports automáticos para TypeScript e TSX.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=steoates.autoimport", pricing: "free" },
+  { id: 294, name: "Bracket Pair Colorizer 2", description: "Cores diferentes para pares de brackets aninhados.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2", pricing: "free" },
+  { id: 295, name: "Error Lens", description: "Destaque inline de erros e warnings no código.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens", highlight: true, pricing: "free" },
+  { id: 296, name: "Todo Tree", description: "Encontre e liste todos os TODOs e FIXMEs do projeto.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.todo-tree", pricing: "free" },
+  { id: 297, name: "Better Comments", description: "Comentários coloridos por categoria (TODO, !, ?, etc.).", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments", pricing: "free" },
+  { id: 298, name: "Code Spell Checker", description: "Verificador de ortografia para código e comentários.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker", pricing: "free" },
+  { id: 299, name: "Import Cost", description: "Mostra o tamanho de imports inline no código.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=wix.vscode-import-cost", pricing: "free" },
+  
+  // --- Docker & DevOps ---
+  { id: 300, name: "Docker", description: "Gerenciamento de containers, images e compose diretamente no VS Code.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker", pricing: "free" },
+  { id: 301, name: "Remote - SSH", description: "Desenvolvimento remoto via SSH. Edite arquivos em servidores.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh", pricing: "free" },
+  { id: 302, name: "Remote - Containers", description: "Desenvolva dentro de containers Docker.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers", pricing: "free" },
+  { id: 303, name: "Kubernetes", description: "Gerenciamento de clusters Kubernetes no VS Code.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools", pricing: "free" },
+  
+  // --- Database ---
+  { id: 304, name: "Database Client", description: "Cliente SQL para MySQL, PostgreSQL, SQLite e mais.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=cweijan.vscode-database-client2", pricing: "freemium" },
+  { id: 305, name: "SQLTools", description: "Gerenciador de conexões SQL com autocomplete.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools", pricing: "free" },
+  { id: 306, name: "Prisma", description: "Syntax highlighting e formatação para schema Prisma.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=Prisma.prisma", pricing: "free" },
+  
+  // --- Testing ---
+  { id: 307, name: "Jest", description: "Executar e debugar testes Jest diretamente no editor.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=Orta.vscode-jest", pricing: "free" },
+  { id: 308, name: "Vitest", description: "Suporte para Vitest com execução inline de testes.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=vitest.explorer", pricing: "free", isNew: true },
+  { id: 309, name: "Playwright Test", description: "Execute e grave testes Playwright no VS Code.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=ms-playwright.playwright", pricing: "free" },
+  
+  // --- Temas & Visual ---
+  { id: 310, name: "One Dark Pro", description: "Tema escuro popular inspirado no Atom.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=zhuangtongfa.Material-theme", pricing: "free" },
+  { id: 311, name: "Dracula Official", description: "Tema escuro clássico com cores vibrantes.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=dracula-theme.theme-dracula", pricing: "free" },
+  { id: 312, name: "Material Icon Theme", description: "Ícones de arquivos baseados no Material Design.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=PKief.material-icon-theme", pricing: "free" },
+  { id: 313, name: "vscode-icons", description: "Pacote de ícones para arquivos e pastas.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=vscode-icons-team.vscode-icons", pricing: "free" },
+  { id: 314, name: "Peacock", description: "Mude a cor do workspace para identificar projetos.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=johnpapa.vscode-peacock", pricing: "free" },
+  
+  // --- APIs & REST ---
+  { id: 315, name: "Thunder Client", description: "Cliente REST leve. Alternativa ao Postman no VS Code.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client", highlight: true, pricing: "freemium" },
+  { id: 316, name: "REST Client", description: "Faça requests HTTP diretamente de arquivos .http.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=humao.rest-client", pricing: "free" },
+  
+  // --- Markdown & Docs ---
+  { id: 317, name: "Markdown All in One", description: "Atalhos, preview e TOC para Markdown.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one", pricing: "free" },
+  { id: 318, name: "Markdown Preview Enhanced", description: "Preview avançado de Markdown com diagramas.", category: "Desenvolvimento", subcategory: "Extensões VS Code", url: "https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced", pricing: "free" },
+
   // === AGENTES DE CÓDIGO (111-120) ===
   { id: 63, name: "GitHub Copilot", description: "Sugestões de código em tempo real baseadas em contexto.", category: "Desenvolvimento", subcategory: "Agentes", url: "https://github.com/features/copilot", highlight: true, pricing: "paid" },
   { id: 64, name: "Claude Code", description: "Agente CLI para refactors, análise e geração de código.", category: "Desenvolvimento", subcategory: "Agentes", url: "https://claude.ai", pricing: "paid" },
@@ -651,7 +722,7 @@ export const toolCategories: ToolCategory[] = [
   {
     id: "desenvolvimento",
     name: "Desenvolvimento",
-    description: "Builders, IDEs e agentes de código",
+    description: "Builders, IDEs, agentes de código e 50+ extensões VS Code",
     icon: "Code2",
     color: "hsl(221 83% 53%)",
     tools: allTools.filter(t => t.category === "Desenvolvimento")
