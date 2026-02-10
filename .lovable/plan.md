@@ -1,351 +1,128 @@
 
-# Mecanismo de Alerta para Novidades
+# Navegacao Global — Tornar Todas as Rotas Acessiveis
 
-## Contexto Atual
+## Problema
 
-O projeto ja possui:
-- **139 ferramentas** marcadas com `isNew: true` no `toolsIndex.ts`
-- Export `newTools` que filtra todas as ferramentas novas
-- Indicador visual no `FloatingIndexButton` (bolinha verde pulsante)
-- Badge "Novo" exibido nos cards de ferramentas
+Nenhuma pagina do site tem um menu de navegacao global com links reais para as rotas. Os componentes `MobileNavigation`, `MobileBottomNav` e `MobileHeader` apenas disparam callbacks de scroll em secoes — nao navegam entre paginas. As unicas formas de chegar a `/indice`, `/projetos`, `/divulgacao` ou `/devtools-guide` sao links espalhados dentro do conteudo das paginas.
 
-O que falta:
-- Persistencia de quais novidades o usuario ja visualizou
-- Notificacao/alerta ao entrar no site com novidades nao vistas
-- Historico de quando as ferramentas foram adicionadas
-- Componente de destaque para novidades
+## Solucao
 
-## Arquitetura Proposta
+Criar um **header de navegacao global** que apareca em todas as paginas com links diretos para as rotas principais, e atualizar o `MobileBottomNav` para navegar entre rotas usando `react-router-dom`.
 
-```text
-+----------------------------------+
-|  USUARIO ENTRA NO SITE           |
-+----------------------------------+
-           |
-           v
-+----------------------------------+
-|  VERIFICA localStorage           |
-|  (seen-tools: [id1, id2, ...])  |
-+----------------------------------+
-           |
-           v
-+----------------------------------+
-|  COMPARA COM newTools            |
-|  unseenCount = newTools - seen   |
-+----------------------------------+
-           |
-           v
-+----------------------------------+
-|  SE unseenCount > 0:             |
-|  - Mostrar alerta/banner         |
-|  - Atualizar FloatingButton      |
-|  - Destacar na navegacao         |
-+----------------------------------+
-```
+## Componentes
 
-## Componentes a Criar
+### 1. Novo: `src/components/GlobalHeader.tsx`
 
-### 1. Hook useNewToolsAlert
-
-Gerencia o estado de novidades vistas/nao vistas:
-
-```typescript
-interface NewToolsState {
-  seenToolIds: number[];       // IDs de ferramentas ja visualizadas
-  lastSeenDate: string;        // Data da ultima visita
-  unseenCount: number;         // Quantas novidades nao vistas
-  unseenTools: IndexedTool[];  // Lista de ferramentas nao vistas
-}
-
-const useNewToolsAlert = () => {
-  // Carregar do localStorage
-  // Comparar com newTools atual
-  // Retornar estado e funcoes para marcar como visto
-};
-```
-
-### 2. Componente NewToolsBanner
-
-Banner de alerta que aparece na pagina inicial:
+Header fixo no topo com:
+- Logo/titulo "AI-Powered Dev" com link para `/`
+- Links de navegacao desktop (visivel em `md+`):
+  - Inicio (`/`)
+  - Indice de Ferramentas (`/indice`)
+  - Projetos IA (`/projetos`)
+  - Marketing (`/divulgacao`)
+- Menu hamburger mobile (Sheet) com os mesmos links
+- Badge de novidades no link do Indice (usando `useNewToolsAlert`)
 
 ```text
-+--------------------------------------------------+
-| NOVIDADES! 12 novas ferramentas desde sua        |
-| ultima visita                                     |
-|                                                   |
-| [Ver Novidades]          [Dispensar]              |
-+--------------------------------------------------+
+Desktop:
++---------------------------------------------------------------+
+| AI-Powered Dev   | Inicio | Indice | Projetos | Marketing     |
++---------------------------------------------------------------+
+
+Mobile:
++---------------------------------------------------------------+
+| [Menu]   AI-Powered Dev                                       |
++---------------------------------------------------------------+
 ```
 
-### 3. Componente NewToolsDrawer/Modal
+### 2. Modificar: `src/components/MobileBottomNav.tsx`
 
-Lista detalhada das novidades nao vistas:
+Trocar callbacks `onTabChange` por navegacao real com `useNavigate`:
+- Inicio → `/`
+- Ferramentas → `/indice`
+- Projetos → `/projetos`
+- Marketing → `/divulgacao`
 
-```text
-+----------------------------------+
-|  Novidades em 2025               |
-|  12 ferramentas novas            |
-+----------------------------------+
-|                                  |
-|  [x] Cursor IDE                  |
-|      Editor AI-first...          |
-|                                  |
-|  [ ] Windsurf                    |
-|      IDE da Codeium...           |
-|                                  |
-|  [ ] Zed                         |
-|      Editor em Rust...           |
-|                                  |
-+----------------------------------+
-|  [Marcar todas como vistas]      |
-+----------------------------------+
-```
+Usar `useLocation` para destacar o tab ativo baseado na rota atual.
 
-### 4. FloatingIndexButton Atualizado
+### 3. Modificar: `src/pages/LandingPage.tsx`
 
-Adicionar badge com contagem de nao vistos:
+- Adicionar `GlobalHeader` no topo
+- Adicionar `MobileBottomNav` no final (com navegacao por rotas)
 
-```text
-ANTES:
-[268] (bolinha verde)
+### 4. Modificar: Todas as sub-paginas
 
-DEPOIS:
-[268] (badge vermelho "12 novas")
-```
+Adicionar `GlobalHeader` nas paginas que ainda nao tem header consistente:
+- `src/pages/LandingPage.tsx`
+- `src/pages/DevToolsGuide.tsx` (substituir header local)
+- `src/pages/MarketingGuidePage.tsx` (substituir header local)
+- `src/pages/ProjectSuggestionsPage.tsx` (substituir header local)
+- `src/pages/ToolIndexHub.tsx`
 
-## Arquivos a Criar
+Alternativa mais limpa: adicionar o `GlobalHeader` diretamente no `App.tsx` (acima do `<Routes>`) para que apareca em todas as paginas automaticamente, sem precisar editar cada pagina individualmente.
 
-```text
-src/hooks/useNewToolsAlert.tsx    # Hook de gerenciamento de estado
-src/components/NewToolsBanner.tsx  # Banner de alerta no topo
-src/components/NewToolsDrawer.tsx  # Drawer/modal com lista de novidades
-```
+## Arquivos
 
-## Arquivos a Modificar
+### Criar
+- `src/components/GlobalHeader.tsx`
 
-```text
-src/data/toolsIndex.ts            # Adicionar campo addedDate (opcional)
-src/components/FloatingIndexButton.tsx  # Integrar com hook de alertas
-src/pages/LandingPage.tsx         # Adicionar NewToolsBanner
-src/App.tsx                       # Context provider (opcional)
-```
+### Modificar
+- `src/App.tsx` — adicionar `GlobalHeader` e `MobileBottomNav` no layout global
+- `src/components/MobileBottomNav.tsx` — usar `Link`/`useNavigate` em vez de callbacks
 
-## Fluxo de Usuario
-
-### Primeira Visita
-1. Usuario entra no site
-2. Nenhum dado no localStorage
-3. Todas as `newTools` sao consideradas "nao vistas"
-4. Banner aparece: "12 novas ferramentas para explorar!"
-5. Usuario clica em "Ver Novidades"
-6. Drawer abre com lista das novidades
-7. Usuario pode marcar individualmente ou "marcar todas"
-8. IDs sao salvos no localStorage
-
-### Visitas Subsequentes
-1. Usuario volta ao site
-2. Sistema compara `newTools` com `seenToolIds`
-3. Se novas ferramentas foram adicionadas: mostrar banner
-4. Se todas ja foram vistas: nao mostrar nada
-
-### Adicionar Nova Ferramenta (Dev)
-1. Dev adiciona ferramenta com `isNew: true`
-2. Na proxima visita do usuario, ela aparece como "nao vista"
-3. Sistema detecta automaticamente
-
-## Estrutura de Dados no localStorage
-
-```json
-{
-  "new-tools-seen": {
-    "seenIds": [62, 253, 255, 264, 265, 266, 267, 271, ...],
-    "lastVisit": "2025-02-08T10:30:00.000Z",
-    "dismissedBanner": false
-  }
-}
-```
-
-## Interface do Hook
-
-```typescript
-interface UseNewToolsAlertReturn {
-  // Estado
-  unseenTools: IndexedTool[];
-  unseenCount: number;
-  hasUnseenTools: boolean;
-  
-  // Acoes
-  markToolAsSeen: (toolId: number) => void;
-  markAllAsSeen: () => void;
-  dismissBanner: () => void;
-  resetSeenTools: () => void;
-  
-  // UI
-  showBanner: boolean;
-}
-```
-
-## Componente NewToolsBanner
-
-```typescript
-interface NewToolsBannerProps {
-  onViewClick: () => void;
-  onDismiss: () => void;
-}
-
-const NewToolsBanner = ({ onViewClick, onDismiss }: NewToolsBannerProps) => {
-  const { unseenCount, showBanner } = useNewToolsAlert();
-  
-  if (!showBanner) return null;
-  
-  return (
-    <Alert className="fixed top-0 left-0 right-0 z-50">
-      <Sparkles className="h-4 w-4" />
-      <AlertTitle>Novidades!</AlertTitle>
-      <AlertDescription>
-        {unseenCount} novas ferramentas desde sua ultima visita
-      </AlertDescription>
-      <Button onClick={onViewClick}>Ver Novidades</Button>
-      <Button variant="ghost" onClick={onDismiss}>Dispensar</Button>
-    </Alert>
-  );
-};
-```
-
-## Integracao com FloatingIndexButton
-
-```typescript
-export const FloatingIndexButton = () => {
-  const { unseenCount, hasUnseenTools } = useNewToolsAlert();
-  
-  return (
-    <Button className="relative">
-      <BookOpen />
-      <span className="badge">{allTools.length}</span>
-      
-      {/* Badge de novidades nao vistas */}
-      {hasUnseenTools && (
-        <span className="absolute -top-2 -left-2 bg-red-500 text-white 
-                         text-[10px] rounded-full px-1.5 animate-bounce">
-          {unseenCount}
-        </span>
-      )}
-    </Button>
-  );
-};
-```
+### Remover dependencia
+- Headers locais duplicados em sub-paginas podem ser simplificados (manter apenas botao "Voltar" onde necessario)
 
 ## Secao Tecnica
 
-### Hook useNewToolsAlert Completo
+### GlobalHeader
 
 ```typescript
-import { useState, useEffect, useCallback, useMemo } from 'react';
-import { newTools, IndexedTool } from '@/data/toolsIndex';
-
-const STORAGE_KEY = 'new-tools-seen';
-
-interface StoredData {
-  seenIds: number[];
-  lastVisit: string;
-  dismissedBanner: boolean;
-}
-
-export const useNewToolsAlert = () => {
-  const [data, setData] = useState<StoredData>({
-    seenIds: [],
-    lastVisit: new Date().toISOString(),
-    dismissedBanner: false
-  });
-  
-  // Carregar do localStorage
-  useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      try {
-        setData(JSON.parse(saved));
-      } catch {
-        // Ignorar erro de parse
-      }
-    }
-  }, []);
-  
-  // Salvar no localStorage
-  const saveData = useCallback((newData: StoredData) => {
-    setData(newData);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
-  }, []);
-  
-  // Ferramentas nao vistas
-  const unseenTools = useMemo(() => 
-    newTools.filter(tool => !data.seenIds.includes(tool.id)),
-    [data.seenIds]
-  );
-  
-  // Marcar como vista
-  const markToolAsSeen = useCallback((toolId: number) => {
-    if (!data.seenIds.includes(toolId)) {
-      saveData({
-        ...data,
-        seenIds: [...data.seenIds, toolId],
-        lastVisit: new Date().toISOString()
-      });
-    }
-  }, [data, saveData]);
-  
-  // Marcar todas como vistas
-  const markAllAsSeen = useCallback(() => {
-    saveData({
-      ...data,
-      seenIds: newTools.map(t => t.id),
-      lastVisit: new Date().toISOString(),
-      dismissedBanner: true
-    });
-  }, [data, saveData]);
-  
-  return {
-    unseenTools,
-    unseenCount: unseenTools.length,
-    hasUnseenTools: unseenTools.length > 0,
-    showBanner: unseenTools.length > 0 && !data.dismissedBanner,
-    markToolAsSeen,
-    markAllAsSeen,
-    dismissBanner: () => saveData({ ...data, dismissedBanner: true }),
-    resetSeenTools: () => saveData({ 
-      seenIds: [], 
-      lastVisit: new Date().toISOString(),
-      dismissedBanner: false 
-    })
-  };
-};
+// Rotas do menu
+const navItems = [
+  { path: "/", label: "Inicio", icon: Home },
+  { path: "/indice", label: "Ferramentas", icon: BookOpen },
+  { path: "/projetos", label: "Projetos IA", icon: Sparkles },
+  { path: "/divulgacao", label: "Marketing", icon: Megaphone },
+];
 ```
 
-## Fases de Implementacao
+Usa `useLocation()` para destacar a rota ativa e `Link` do `react-router-dom` para navegacao.
 
-### Fase 1: Hook e Persistencia
-- Criar `useNewToolsAlert.tsx`
-- Implementar logica de localStorage
-- Testes unitarios
+### MobileBottomNav Atualizado
 
-### Fase 2: Componentes Visuais
-- Criar `NewToolsBanner.tsx`
-- Criar `NewToolsDrawer.tsx`
-- Estilizacao com Tailwind
+```typescript
+import { Link, useLocation } from "react-router-dom";
 
-### Fase 3: Integracao
-- Atualizar `FloatingIndexButton.tsx`
-- Adicionar banner na `LandingPage.tsx`
-- Testar fluxo completo
+const tabs = [
+  { path: "/", label: "Inicio", icon: Home },
+  { path: "/indice", label: "Ferramentas", icon: Search },
+  { path: "/projetos", label: "Projetos", icon: Sparkles },
+  { path: "/divulgacao", label: "Marketing", icon: Megaphone },
+];
 
-### Fase 4: UX Polish
-- Animacoes de entrada/saida
-- Transicoes suaves
-- Acessibilidade (a11y)
+// Cada tab sera um <Link to={tab.path}>
+// useLocation().pathname determina qual esta ativo
+```
 
-## Beneficios
+### Integracao no App.tsx
 
-1. **Engajamento**: Usuarios voltam para ver novidades
-2. **Descoberta**: Ferramentas novas ganham destaque
-3. **Retencao**: Motivo para revisitar o site
-4. **Personalizacao**: Experiencia adaptada ao usuario
-5. **Metricas**: Possivel rastrear quais ferramentas geram interesse
+```typescript
+const AppRoutes = () => (
+  <>
+    <GlobalHeader />
+    <Suspense fallback={<LoadingFallback />}>
+      <Routes>...</Routes>
+    </Suspense>
+    <MobileBottomNav />
+    <FloatingButton />
+  </>
+);
+```
+
+## Resultado
+
+- Todas as rotas acessiveis de qualquer pagina
+- Navegacao consistente em desktop e mobile
+- Header global com destaque de rota ativa
+- Bottom nav mobile funcional com rotas reais
