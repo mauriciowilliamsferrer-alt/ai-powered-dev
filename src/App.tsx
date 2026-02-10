@@ -7,6 +7,8 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Skeleton } from "@/components/ui/skeleton";
 import { FloatingIndexButton } from "@/components/FloatingIndexButton";
+import { GlobalHeader } from "@/components/GlobalHeader";
+import { MobileBottomNav } from "@/components/MobileBottomNav";
 
 // Lazy load pages for better performance
 const LandingPage = React.lazy(() => import("./pages/LandingPage"));
@@ -39,6 +41,7 @@ const FloatingButton = () => {
 
 const AppRoutes = () => (
   <>
+    <GlobalHeader />
     <Suspense fallback={<LoadingFallback />}>
       <Routes>
         <Route path="/" element={<LandingPage />} />
@@ -52,6 +55,7 @@ const AppRoutes = () => (
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
+    <MobileBottomNav />
     <FloatingButton />
   </>
 );
