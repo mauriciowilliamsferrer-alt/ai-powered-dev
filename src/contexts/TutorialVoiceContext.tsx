@@ -41,7 +41,7 @@ export const TutorialVoiceProvider = ({ children }: { children: ReactNode }) => 
   });
 
   const [utterance, setUtterance] = useState<SpeechSynthesisUtterance | null>(null);
-  const [progressInterval, setProgressInterval] = useState<NodeJS.Timeout | null>(null);
+  const [progressInterval, setProgressInterval] = useState<ReturnType<typeof setInterval> | null>(null);
 
   // Load voices when available
   useEffect(() => {
