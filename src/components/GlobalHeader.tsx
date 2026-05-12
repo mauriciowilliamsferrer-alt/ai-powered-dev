@@ -5,6 +5,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { Badge } from "@/components/ui/badge";
 import { Menu, Home, BookOpen, Sparkles, Megaphone, LayoutDashboard, Wrench } from "lucide-react";
 import { useNewToolsAlert } from "@/hooks/useNewToolsAlert";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const navItems = [
   { path: "/", label: "Início", icon: Home },
@@ -76,7 +77,7 @@ export const GlobalHeader = () => {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-1">
+        <nav className="hidden md:flex items-center gap-1 flex-1">
           {navItems.map((item) => {
             const Icon = item.icon;
             const active = isActive(item.path);
@@ -101,6 +102,9 @@ export const GlobalHeader = () => {
             );
           })}
         </nav>
+        <div className="ml-auto flex items-center">
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );
