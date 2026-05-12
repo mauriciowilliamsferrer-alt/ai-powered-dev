@@ -193,31 +193,31 @@ export default function MarketingGuidePage() {
             </Card>
 
             <div className="grid gap-4 md:grid-cols-3">
-              <Card className="border-green-200 bg-green-50/50">
+              <Card className="border-green-500/30 bg-green-500/5 dark:bg-green-500/10">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-base text-green-800">Iniciante</CardTitle>
+                  <CardTitle className="text-base text-green-700 dark:text-green-400">Iniciante</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-2xl font-bold text-green-700 mb-2">R$ 50-100/h</p>
-                  <p className="text-sm text-green-600">Primeiros projetos, construindo portfólio</p>
+                  <p className="text-2xl font-bold text-green-600 dark:text-green-300 mb-2">R$ 50-100/h</p>
+                  <p className="text-sm text-muted-foreground">Primeiros projetos, construindo portfólio</p>
                 </CardContent>
               </Card>
-              <Card className="border-blue-200 bg-blue-50/50">
+              <Card className="border-blue-500/30 bg-blue-500/5 dark:bg-blue-500/10">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-base text-blue-800">Intermediário</CardTitle>
+                  <CardTitle className="text-base text-blue-700 dark:text-blue-400">Intermediário</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-2xl font-bold text-blue-700 mb-2">R$ 100-200/h</p>
-                  <p className="text-sm text-blue-600">2+ anos, projetos de referência</p>
+                  <p className="text-2xl font-bold text-blue-600 dark:text-blue-300 mb-2">R$ 100-200/h</p>
+                  <p className="text-sm text-muted-foreground">2+ anos, projetos de referência</p>
                 </CardContent>
               </Card>
-              <Card className="border-purple-200 bg-purple-50/50">
+              <Card className="border-purple-500/30 bg-purple-500/5 dark:bg-purple-500/10">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-base text-purple-800">Especialista</CardTitle>
+                  <CardTitle className="text-base text-purple-700 dark:text-purple-400">Especialista</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-2xl font-bold text-purple-700 mb-2">R$ 200-500/h</p>
-                  <p className="text-sm text-purple-600">Expert reconhecido, resultados comprovados</p>
+                  <p className="text-2xl font-bold text-purple-600 dark:text-purple-300 mb-2">R$ 200-500/h</p>
+                  <p className="text-sm text-muted-foreground">Expert reconhecido, resultados comprovados</p>
                 </CardContent>
               </Card>
             </div>

@@ -1,128 +1,46 @@
-
-# Navegacao Global — Tornar Todas as Rotas Acessiveis
+# Correção de Contraste no Tema Escuro
 
 ## Problema
 
-Nenhuma pagina do site tem um menu de navegacao global com links reais para as rotas. Os componentes `MobileNavigation`, `MobileBottomNav` e `MobileHeader` apenas disparam callbacks de scroll em secoes — nao navegam entre paginas. As unicas formas de chegar a `/indice`, `/projetos`, `/divulgacao` ou `/devtools-guide` sao links espalhados dentro do conteudo das paginas.
+Vários componentes usam cores fixas (`bg-white`, `bg-gray-100`, `bg-blue-50`, `text-blue-700`, `text-gray-600` etc.) em vez dos tokens semânticos do design system. No tema escuro essas combinações ficam ilegíveis — texto azul claro sobre fundo azul claro, página inteira branca, badges e cards sem contraste.
 
-## Solucao
+## Telas/componentes afetados
 
-Criar um **header de navegacao global** que apareca em todas as paginas com links diretos para as rotas principais, e atualizar o `MobileBottomNav` para navegar entre rotas usando `react-router-dom`.
+1. **`src/pages/NotFound.tsx`** — fundo `bg-gray-100` e texto `text-gray-600` fixos.
+2. **`src/pages/MarketingGuidePage.tsx`** — 3 cards de preços (`bg-blue-50/50`, `bg-purple-50/50`, `text-blue-700`, `text-purple-700`, etc.) viram texto colorido sobre fundo quase invisível no escuro.
+3. **`src/components/MobileToolCard.tsx`** — fallback `bg-gray-100 text-gray-800` para badges de dificuldade desconhecida.
+4. **`src/components/EnhancedToolCard.tsx`** — estrelas vazias com `text-gray-300` somem no escuro.
+5. **`src/pages/NewToolsBanner` e gradientes "purple-500 → pink-500"** — funcionam em ambos os temas, mas vou revisar contraste do texto `text-white` quando aplicável (ok manter).
 
-## Componentes
+Também faço um sweep geral procurando por `text-gray-*`, `bg-gray-*`, `bg-white`, `bg-blue-50`, `bg-purple-50` em qualquer outro arquivo que apareça e troco pelos tokens.
 
-### 1. Novo: `src/components/GlobalHeader.tsx`
+## Solução
 
-Header fixo no topo com:
-- Logo/titulo "AI-Powered Dev" com link para `/`
-- Links de navegacao desktop (visivel em `md+`):
-  - Inicio (`/`)
-  - Indice de Ferramentas (`/indice`)
-  - Projetos IA (`/projetos`)
-  - Marketing (`/divulgacao`)
-- Menu hamburger mobile (Sheet) com os mesmos links
-- Badge de novidades no link do Indice (usando `useNewToolsAlert`)
+Substituir cores fixas pelos tokens semânticos já definidos em `index.css` / `tailwind.config.ts`:
 
-```text
-Desktop:
-+---------------------------------------------------------------+
-| AI-Powered Dev   | Inicio | Indice | Projetos | Marketing     |
-+---------------------------------------------------------------+
+| Antes | Depois |
+|---|---|
+| `bg-gray-100`, `bg-white` | `bg-background` ou `bg-card` |
+| `text-gray-600`, `text-gray-800` | `text-muted-foreground` ou `text-foreground` |
+| `bg-blue-50/50` (card destacado) | `bg-muted/50` + `border-border` |
+| `text-blue-700` em destaque | manter cor da marca via `text-primary` ou criar variante |
+| `text-gray-300` (estrela vazia) | `text-muted-foreground/40` |
 
-Mobile:
-+---------------------------------------------------------------+
-| [Menu]   AI-Powered Dev                                       |
-+---------------------------------------------------------------+
-```
+Para os cards de preços de Marketing (Iniciante/Intermediário/Especialista), uso uma única abordagem consistente: `bg-card` + `border-border` + título em `text-foreground` + valor em `text-primary` + descrição em `text-muted-foreground`. Mantenho diferenciação visual via ícone ou pequeno acento colorido.
 
-### 2. Modificar: `src/components/MobileBottomNav.tsx`
+## Arquivos a modificar
 
-Trocar callbacks `onTabChange` por navegacao real com `useNavigate`:
-- Inicio → `/`
-- Ferramentas → `/indice`
-- Projetos → `/projetos`
-- Marketing → `/divulgacao`
+- `src/pages/NotFound.tsx`
+- `src/pages/MarketingGuidePage.tsx`
+- `src/components/MobileToolCard.tsx`
+- `src/components/EnhancedToolCard.tsx`
+- (Possíveis outros descobertos durante o sweep — vou listar antes de tocar)
 
-Usar `useLocation` para destacar o tab ativo baseado na rota atual.
+## Validação
 
-### 3. Modificar: `src/pages/LandingPage.tsx`
+Após as edições, abro a preview no tema escuro e verifico:
+- Página `/divulgacao` (cards de preços legíveis)
+- Página 404 (fundo e texto adaptam-se)
+- Cards de ferramentas (badges e estrelas visíveis)
 
-- Adicionar `GlobalHeader` no topo
-- Adicionar `MobileBottomNav` no final (com navegacao por rotas)
-
-### 4. Modificar: Todas as sub-paginas
-
-Adicionar `GlobalHeader` nas paginas que ainda nao tem header consistente:
-- `src/pages/LandingPage.tsx`
-- `src/pages/DevToolsGuide.tsx` (substituir header local)
-- `src/pages/MarketingGuidePage.tsx` (substituir header local)
-- `src/pages/ProjectSuggestionsPage.tsx` (substituir header local)
-- `src/pages/ToolIndexHub.tsx`
-
-Alternativa mais limpa: adicionar o `GlobalHeader` diretamente no `App.tsx` (acima do `<Routes>`) para que apareca em todas as paginas automaticamente, sem precisar editar cada pagina individualmente.
-
-## Arquivos
-
-### Criar
-- `src/components/GlobalHeader.tsx`
-
-### Modificar
-- `src/App.tsx` — adicionar `GlobalHeader` e `MobileBottomNav` no layout global
-- `src/components/MobileBottomNav.tsx` — usar `Link`/`useNavigate` em vez de callbacks
-
-### Remover dependencia
-- Headers locais duplicados em sub-paginas podem ser simplificados (manter apenas botao "Voltar" onde necessario)
-
-## Secao Tecnica
-
-### GlobalHeader
-
-```typescript
-// Rotas do menu
-const navItems = [
-  { path: "/", label: "Inicio", icon: Home },
-  { path: "/indice", label: "Ferramentas", icon: BookOpen },
-  { path: "/projetos", label: "Projetos IA", icon: Sparkles },
-  { path: "/divulgacao", label: "Marketing", icon: Megaphone },
-];
-```
-
-Usa `useLocation()` para destacar a rota ativa e `Link` do `react-router-dom` para navegacao.
-
-### MobileBottomNav Atualizado
-
-```typescript
-import { Link, useLocation } from "react-router-dom";
-
-const tabs = [
-  { path: "/", label: "Inicio", icon: Home },
-  { path: "/indice", label: "Ferramentas", icon: Search },
-  { path: "/projetos", label: "Projetos", icon: Sparkles },
-  { path: "/divulgacao", label: "Marketing", icon: Megaphone },
-];
-
-// Cada tab sera um <Link to={tab.path}>
-// useLocation().pathname determina qual esta ativo
-```
-
-### Integracao no App.tsx
-
-```typescript
-const AppRoutes = () => (
-  <>
-    <GlobalHeader />
-    <Suspense fallback={<LoadingFallback />}>
-      <Routes>...</Routes>
-    </Suspense>
-    <MobileBottomNav />
-    <FloatingButton />
-  </>
-);
-```
-
-## Resultado
-
-- Todas as rotas acessiveis de qualquer pagina
-- Navegacao consistente em desktop e mobile
-- Header global com destaque de rota ativa
-- Bottom nav mobile funcional com rotas reais
+Sem mudanças de comportamento — só ajustes visuais para respeitar o tema.

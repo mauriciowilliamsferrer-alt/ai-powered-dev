@@ -105,7 +105,7 @@ export const EnhancedToolCard = ({ tool, onFavorite, isFavorited = false }: Enha
                 {[...Array(5)].map((_, i) => (
                   <Star 
                     key={i} 
-                    className={`h-3 w-3 ${i < Math.floor(tool.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} 
+                    className={`h-3 w-3 ${i < Math.floor(tool.rating) ? 'text-yellow-400 fill-current' : 'text-muted-foreground/40'}`} 
                   />
                 ))}
               </div>
