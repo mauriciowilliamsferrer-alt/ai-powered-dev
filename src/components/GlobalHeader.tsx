@@ -102,6 +102,9 @@ export const GlobalHeader = () => {
             );
           })}
         </nav>
+        <div className="ml-auto flex items-center">
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );
