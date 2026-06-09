@@ -92,16 +92,16 @@ export default {
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
 			},
-			keyframes: {
-				'accordion-down': {
-					from: {
-						height: '0'
-			},
 			fontFamily: {
 				sans: ['"Work Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
 				serif: ['"Instrument Serif"', 'ui-serif', 'Georgia', 'serif'],
 				display: ['"Instrument Serif"', 'ui-serif', 'Georgia', 'serif']
 			},
+			keyframes: {
+				'accordion-down': {
+					from: {
+						height: '0'
+					},
 					to: {
 						height: 'var(--radix-accordion-content-height)'
 					}
