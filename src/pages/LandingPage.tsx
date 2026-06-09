@@ -414,53 +414,57 @@ export default function LandingPage() {
         </div>
       </div>
 
-      {/* Hero Section */}
-      <section className="relative overflow-hidden py-12 md:py-20">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/10 -z-10" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent -z-10" />
-        
-        <div className="container mx-auto px-4 text-center space-y-8">
-          <div className="space-y-4 animate-fade-in">
-            <Badge variant="outline" className="px-4 py-1 text-sm border-primary/30">
-              <Zap className="w-3 h-3 mr-1 inline" />
-              Guia Completo de Desenvolvimento com IA
-            </Badge>
-            
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold">
-              <span className="bg-gradient-to-r from-primary via-primary/80 to-accent bg-clip-text text-transparent">
-                Da Ideia ao Deploy
-              </span>
-              <br />
-              <span className="text-foreground/90">com Inteligência Artificial</span>
-            </h1>
-            
-            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Domine o fluxo completo de desenvolvimento moderno: desde a descoberta de oportunidades 
-              de mercado até o deploy em produção, utilizando as melhores ferramentas de IA como seu time virtual.
-            </p>
-          </div>
-
-          {/* Stats - DINÂMICOS */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto pt-4 animate-fade-in" style={{ animationDelay: "0.2s" }}>
-            <Card className="p-4 text-center bg-card/50 border-primary/10 hover:border-primary/30 transition-colors">
-              <div className="text-2xl md:text-3xl font-bold text-primary">{allTools.length}</div>
-              <p className="text-xs md:text-sm text-muted-foreground">Ferramentas</p>
-            </Card>
-            <Card className="p-4 text-center bg-card/50 border-primary/10 hover:border-primary/30 transition-colors">
-              <div className="text-2xl md:text-3xl font-bold text-primary">{workflowSteps.length}</div>
-              <p className="text-xs md:text-sm text-muted-foreground">Fases do Workflow</p>
-            </Card>
-            <Card className="p-4 text-center bg-card/50 border-primary/10 hover:border-primary/30 transition-colors">
-              <div className="text-2xl md:text-3xl font-bold text-primary">{categoryGroups.length}</div>
-              <p className="text-xs md:text-sm text-muted-foreground">Categorias</p>
-            </Card>
-            <Card className="p-4 text-center bg-card/50 border-primary/10 hover:border-primary/30 transition-colors relative">
-              <div className="text-2xl md:text-3xl font-bold text-primary flex items-center justify-center gap-1">
-                {newTools.length}
-                <Star className="w-4 h-4 text-accent fill-accent" />
+      {/* Hero — editorial */}
+      <section className="relative border-b border-border/60">
+        <div className="container mx-auto px-4 md:px-8 pt-16 md:pt-28 pb-16 md:pb-24">
+          <div className="grid md:grid-cols-12 gap-10 md:gap-16 items-end">
+            <div className="md:col-span-8 space-y-8">
+              <div className="flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                <span className="h-px w-8 bg-primary/60" />
+                <span>Edição 2025 — Guia de campo</span>
               </div>
-              <p className="text-xs md:text-sm text-muted-foreground">Novidades 2025</p>
-            </Card>
+
+              <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight text-foreground">
+                Da ideia ao deploy,
+                <br />
+                <em className="text-primary not-italic font-serif">com método.</em>
+              </h1>
+
+              <p className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
+                Um caminho honesto para construir produtos digitais usando IA como time —
+                pesquisa, decisão, código e operação. Sem atalhos vazios.
+              </p>
+
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                <Button asChild size="lg" className="rounded-none px-6 h-12 text-sm tracking-wide">
+                  <Link to="/projetos">Começar pela ideia <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                </Button>
+                <Button asChild variant="ghost" size="lg" className="rounded-none px-6 h-12 text-sm tracking-wide hover:bg-transparent hover:text-primary">
+                  <Link to="/indice">Ver índice de ferramentas →</Link>
+                </Button>
+              </div>
+            </div>
+
+            <aside className="md:col-span-4 border-l border-border/60 md:pl-10">
+              <dl className="grid grid-cols-2 md:grid-cols-1 gap-x-6 gap-y-8">
+                <div>
+                  <dt className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-2">Ferramentas catalogadas</dt>
+                  <dd className="font-serif text-4xl md:text-5xl text-foreground">{allTools.length}</dd>
+                </div>
+                <div>
+                  <dt className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-2">Fases do workflow</dt>
+                  <dd className="font-serif text-4xl md:text-5xl text-foreground">{workflowSteps.length}</dd>
+                </div>
+                <div>
+                  <dt className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-2">Categorias</dt>
+                  <dd className="font-serif text-4xl md:text-5xl text-foreground">{categoryGroups.length}</dd>
+                </div>
+                <div>
+                  <dt className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-2">Novidades</dt>
+                  <dd className="font-serif text-4xl md:text-5xl text-primary">{newTools.length}</dd>
+                </div>
+              </dl>
+            </aside>
           </div>
         </div>
       </section>
