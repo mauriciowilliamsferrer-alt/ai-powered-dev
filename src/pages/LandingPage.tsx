@@ -397,7 +397,7 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background xl:pl-52">
       {/* New Tools Banner - Fixed no topo */}
       <NewToolsBanner />
 
