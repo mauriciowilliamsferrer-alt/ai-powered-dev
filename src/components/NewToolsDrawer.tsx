@@ -103,7 +103,7 @@ export const NewToolsDrawer = ({ open, onOpenChange }: NewToolsDrawerProps) => {
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
-      <DrawerContent className="max-h-[85vh]">
+      <DrawerContent className="max-h-[90vh] flex flex-col">
         <DrawerHeader className="border-b">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
@@ -120,7 +120,7 @@ export const NewToolsDrawer = ({ open, onOpenChange }: NewToolsDrawerProps) => {
           </div>
         </DrawerHeader>
 
-        <ScrollArea className="flex-1 p-4 max-h-[50vh]">
+        <ScrollArea className="flex-1 min-h-0 p-4">
           <div className="space-y-6">
             {Object.entries(groupedTools).map(([category, tools]) => (
               <div key={category}>
