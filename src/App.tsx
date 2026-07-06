@@ -18,6 +18,7 @@ const ToolIndexHub = React.lazy(() => import("./pages/ToolIndexHub"));
 const ToolCategoryPage = React.lazy(() => import("./pages/ToolCategoryPage"));
 const ProjectSuggestionsPage = React.lazy(() => import("./pages/ProjectSuggestionsPage"));
 const MarketingGuidePage = React.lazy(() => import("./pages/MarketingGuidePage"));
+const BacklinkAnalyzerPage = React.lazy(() => import("./pages/BacklinkAnalyzerPage"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -51,6 +52,7 @@ const AppRoutes = () => (
         <Route path="/divulgacao" element={<MarketingGuidePage />} />
         <Route path="/dashboard" element={<Index />} />
         <Route path="/devtools-guide" element={<DevToolsGuide />} />
+        <Route path="/backlinks" element={<BacklinkAnalyzerPage />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
