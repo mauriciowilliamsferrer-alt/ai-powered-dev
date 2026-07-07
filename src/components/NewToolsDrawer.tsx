@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { 
@@ -103,8 +102,8 @@ export const NewToolsDrawer = ({ open, onOpenChange }: NewToolsDrawerProps) => {
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
-      <DrawerContent className="max-h-[90vh] flex flex-col">
-        <DrawerHeader className="border-b">
+      <DrawerContent className="max-h-[calc(100dvh-1rem)] overflow-y-auto overscroll-contain mobile-scroll">
+        <DrawerHeader className="sticky top-0 z-10 border-b bg-background">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
               <Sparkles className="h-5 w-5 text-primary" />
@@ -120,7 +119,7 @@ export const NewToolsDrawer = ({ open, onOpenChange }: NewToolsDrawerProps) => {
           </div>
         </DrawerHeader>
 
-        <ScrollArea className="flex-1 min-h-0 p-4">
+        <div className="p-4 pb-28">
           <div className="space-y-6">
             {Object.entries(groupedTools).map(([category, tools]) => (
               <div key={category}>
@@ -152,9 +151,9 @@ export const NewToolsDrawer = ({ open, onOpenChange }: NewToolsDrawerProps) => {
               </div>
             )}
           </div>
-        </ScrollArea>
+        </div>
 
-        <DrawerFooter className="border-t">
+        <DrawerFooter className="sticky bottom-0 z-10 border-t bg-background/95 pb-[calc(1rem+env(safe-area-inset-bottom))] backdrop-blur supports-[backdrop-filter]:bg-background/85">
           <div className="flex gap-2 w-full">
             <DrawerClose asChild>
               <Button variant="outline" className="flex-1">
