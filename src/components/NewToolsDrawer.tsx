@@ -102,8 +102,8 @@ export const NewToolsDrawer = ({ open, onOpenChange }: NewToolsDrawerProps) => {
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
-      <DrawerContent className="h-[min(90dvh,720px)] max-h-[calc(100dvh-1rem)] overflow-hidden">
-        <DrawerHeader className="shrink-0 border-b">
+      <DrawerContent className="max-h-[calc(100dvh-1rem)] overflow-y-auto overscroll-contain mobile-scroll">
+        <DrawerHeader className="sticky top-0 z-10 border-b bg-background">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
               <Sparkles className="h-5 w-5 text-primary" />
@@ -119,7 +119,7 @@ export const NewToolsDrawer = ({ open, onOpenChange }: NewToolsDrawerProps) => {
           </div>
         </DrawerHeader>
 
-        <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain p-4 mobile-scroll">
+        <div className="p-4 pb-28">
           <div className="space-y-6">
             {Object.entries(groupedTools).map(([category, tools]) => (
               <div key={category}>
@@ -153,7 +153,7 @@ export const NewToolsDrawer = ({ open, onOpenChange }: NewToolsDrawerProps) => {
           </div>
         </div>
 
-        <DrawerFooter className="shrink-0 border-t bg-background pb-[calc(1rem+env(safe-area-inset-bottom))]">
+        <DrawerFooter className="sticky bottom-0 z-10 border-t bg-background/95 pb-[calc(1rem+env(safe-area-inset-bottom))] backdrop-blur supports-[backdrop-filter]:bg-background/85">
           <div className="flex gap-2 w-full">
             <DrawerClose asChild>
               <Button variant="outline" className="flex-1">
